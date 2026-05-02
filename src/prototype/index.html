@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HUE Glint — No Clasp. No Compromise.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --black: #0A0A0A;
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --white: #FFFFFF;
+    --gray: #8A8A8A;
+    --cream-dark: #EDE7D9;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--black);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; font-weight: 400; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--white);
+    letter-spacing: 0.15em;
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-cta {
+    background: var(--gold);
+    color: var(--black) !important;
+    padding: 10px 24px;
+    font-weight: 600 !important;
+    letter-spacing: 0.1em;
+    transition: background 0.3s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--black) !important; }
+
+  /* HERO */
+  .hero {
+    height: 100vh; min-height: 700px;
+    background: var(--black);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 30% 80%, rgba(201,168,76,0.04) 0%, transparent 50%);
+  }
+
+  .hero-chain-anim {
+    position: absolute; right: 0; top: 0; bottom: 0; width: 55%;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0.15;
+  }
+
+  .chain-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    animation: pulse-ring 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse-ring {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.05); }
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 60px;
+    max-width: 680px;
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 40px; height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(56px, 7vw, 96px);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 13px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.6);
+    max-width: 420px;
+    margin-bottom: 48px;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--black);
+    padding: 16px 36px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    padding: 16px 36px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.4);
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  .hero-scroll {
+    position: absolute; bottom: 40px; left: 60px;
+    display: flex; align-items: center; gap: 12px;
+    color: rgba(255,255,255,0.4);
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 40px; height: 1px;
+    background: rgba(255,255,255,0.2);
+    position: relative; overflow: hidden;
+  }
+
+  .scroll-line::after {
+    content: '';
+    position: absolute; left: -100%; top: 0;
+    width: 100%; height: 100%;
+    background: var(--gold);
+    animation: scroll-anim 2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-anim {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  /* TRUST BAR */
+  .trust-bar {
+    background: var(--cream-dark);
+    border-top: 1px solid rgba(201,168,76,0.2);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 32px 60px;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+  }
+
+  .trust-item {
+    padding: 0 24px;
+    border-right: 1px solid rgba(201,168,76,0.25);
+  }
+  .trust-item:last-child { border-right: none; }
+
+  .trust-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .trust-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  /* SECTION COMMON */
+  section { padding: 100px 60px; }
+
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .section-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 64px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .section-sub {
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--gray);
+    max-width: 520px;
+    font-weight: 300;
+  }
+
+  /* HOW IT WORKS */
+  .how-it-works { background: var(--cream); }
+
+  .how-header { text-align: center; margin-bottom: 72px; }
+  .how-header .section-sub { margin: 0 auto; }
+
+  .steps-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.15);
+    margin-bottom: 60px;
+  }
+
+  .step {
+    background: var(--cream);
+    padding: 56px 48px;
+    position: relative;
+  }
+
+  .step-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+    color: rgba(201,168,76,0.12);
+    line-height: 1;
+    position: absolute;
+    top: 32px; right: 32px;
+  }
+
+  .step-icon {
+    width: 48px; height: 48px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 28px;
+    color: var(--gold);
+    font-size: 18px;
+  }
+
+  .step h3 {
+    font-size: 24px;
+    margin-bottom: 12px;
+    font-weight: 400;
+  }
+
+  .step p {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--gray);
+    font-weight: 300;
+  }
+
+  .how-cta { text-align: center; }
+
+  /* TIERS */
+  .tiers-section {
+    background: var(--black);
+    padding: 100px 60px;
+  }
+
+  .tiers-header { text-align: center; margin-bottom: 72px; }
+  .tiers-header .section-heading { color: var(--white); }
+  .tiers-header .section-sub { color: rgba(255,255,255,0.5); margin: 0 auto; }
+
+  .tiers-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(201,168,76,0.15);
+  }
+
+  .tier-card {
+    background: #0E0E0E;
+    padding: 64px 48px;
+    position: relative;
+    transition: background 0.4s;
+    cursor: default;
+  }
+
+  .tier-card:hover { background: #141414; }
+
+  .tier-card.featured {
+    background: var(--gold);
+  }
+
+  .tier-card.featured .tier-name,
+  .tier-card.featured .tier-price,
+  .tier-card.featured .tier-desc,
+  .tier-card.featured .tier-feature,
+  .tier-card.featured .tier-cta { color: var(--black); }
+
+  .tier-card.featured .tier-cta { border-color: var(--black); }
+  .tier-card.featured .tier-number { color: rgba(0,0,0,0.06); }
+
+  .tier-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 100px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    position: absolute;
+    top: 24px; right: 24px;
+  }
+
+  .tier-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .tier-card.featured .tier-label { color: rgba(0,0,0,0.5); }
+
+  .tier-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+
+  .tier-material {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.05em;
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+
+  .tier-card.featured .tier-material { color: rgba(0,0,0,0.5); }
+
+  .tier-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .tier-price-note {
+    font-size: 10px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.1em;
+    margin-bottom: 36px;
+  }
+
+  .tier-card.featured .tier-price-note { color: rgba(0,0,0,0.4); }
+
+  .tier-features { list-style: none; margin-bottom: 40px; }
+
+  .tier-feature {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 300;
+  }
+
+  .tier-feature::before {
+    content: '✦';
+    color: var(--gold);
+    font-size: 8px;
+    flex-shrink: 0;
+  }
+
+  .tier-card.featured .tier-feature::before { color: var(--black); }
+
+  .tier-cta {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--white);
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 4px;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .tier-cta:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* SERVICES */
+  .services-section { background: var(--cream); }
+
+  .services-header { margin-bottom: 60px; }
+
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .service-card {
+    background: var(--cream);
+    padding: 48px 40px;
+    transition: background 0.3s;
+    cursor: default;
+  }
+
+  .service-card:hover { background: var(--cream-dark); }
+
+  .service-icon {
+    font-size: 24px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .service-card h3 {
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+
+  .service-card p {
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--gray);
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+
+  .service-link {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    padding-bottom: 3px;
+    transition: border-color 0.3s;
+  }
+
+  .service-link:hover { border-color: var(--gold); }
+
+  /* TESTIMONIALS */
+  .testimonials { background: var(--black); padding: 100px 60px; }
+
+  .testimonials-header { text-align: center; margin-bottom: 72px; }
+  .testimonials-header .section-heading { color: var(--white); }
+
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+  }
+
+  .testimonial {
+    padding: 48px;
+    border: 1px solid rgba(201,168,76,0.12);
+    position: relative;
+  }
+
+  .testimonial::before {
+    content: '"';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 120px;
+    font-weight: 300;
+    color: rgba(201,168,76,0.1);
+    position: absolute;
+    top: -10px; left: 32px;
+    line-height: 1;
+  }
+
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 300;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.6;
+    position: relative; z-index: 1;
+    margin-bottom: 28px;
+  }
+
+  .testimonial-author {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* EMAIL CAPTURE */
+  .email-capture {
+    background: linear-gradient(135deg, #1a1400, #0A0A0A);
+    padding: 100px 60px;
+    border-top: 1px solid rgba(201,168,76,0.2);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .capture-inner {
+    max-width: 600px; margin: 0 auto; text-align: center;
+  }
+
+  .capture-icon {
+    width: 56px; height: 56px;
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 28px;
+    color: var(--gold); font-size: 20px;
+  }
+
+  .capture-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+
+  .capture-sub {
+    font-size: 13px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+
+  .capture-form { display: flex; gap: 0; max-width: 480px; margin: 0 auto; }
+
+  .capture-input {
+    flex: 1;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-right: none;
+    color: var(--white);
+    padding: 16px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .capture-input::placeholder { color: rgba(255,255,255,0.3); }
+  .capture-input:focus { border-color: var(--gold); }
+
+  .capture-btn {
+    background: var(--gold);
+    color: var(--black);
+    border: 1px solid var(--gold);
+    padding: 16px 32px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+
+  .capture-btn:hover { background: var(--gold-light); }
+
+  /* FOOTER */
+  footer {
+    background: #050505;
+    padding: 80px 60px 40px;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 60px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-brand {}
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--white);
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+
+  .footer-logo span { color: var(--gold); }
+
+  .footer-tagline {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .footer-social { display: flex; gap: 16px; }
+
+  .social-link {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none; font-size: 14px;
+    transition: all 0.3s;
+  }
+
+  .social-link:hover { border-color: var(--gold); color: var(--gold); }
+
+  .footer-col h4 {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 10px; }
+  .footer-col a {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-weight: 300;
+    transition: color 0.3s;
+  }
+  .footer-col a:hover { color: var(--white); }
+
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+  }
+
+  .footer-legal { display: flex; gap: 24px; }
+  .footer-legal a {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-legal a:hover { color: rgba(255,255,255,0.5); }
+
+  /* GLINT ANIMATION */
+  .glint-dot {
+    display: inline-block;
+    animation: glint 3s ease-in-out infinite;
+  }
+
+  @keyframes glint {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; text-shadow: 0 0 12px rgba(201,168,76,0.8); }
+  }
+
+  /* FADE IN ON SCROLL */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* GOLD LINE DIVIDER */
+  .gold-line {
+    width: 40px; height: 1px;
+    background: var(--gold);
+    margin: 0 0 32px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 72px 24px; }
+    .hero-content { padding: 0 24px; }
+    .trust-bar { padding: 24px; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .trust-item { border-right: none; }
+    .steps-grid, .tiers-grid, .services-grid, .testimonials-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">HUE <span>✦</span> GLINT</a>
+  <ul class="nav-links">
+    <li><a href="configurator.html">Design Your Chain</a></li>
+    <li><a href="#">Services</a></li>
+    <li><a href="#">Collaborations</a></li>
+    <li><a href="#">Collections</a></li>
+    <li><a href="#">Shop</a></li>
+    <li><a href="configurator.html" class="nav-cta">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-chain-anim">
+    <div class="chain-ring" style="width:300px;height:300px;animation-delay:0s"></div>
+    <div class="chain-ring" style="width:500px;height:500px;animation-delay:0.8s"></div>
+    <div class="chain-ring" style="width:700px;height:700px;animation-delay:1.6s"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">HUE Glint ✦ Permanent Jewelry Studio</div>
+    <h1 class="hero-headline">No Clasp.<br><em>No Compromise.</em></h1>
+    <p class="hero-sub">Permanent jewelry welded to your exact body. Gold, silver, or steel. Three tiers. Seven body locations. One ten-second weld. Yours forever.</p>
+    <div class="hero-ctas">
+      <a href="configurator.html" class="btn-primary">Design Your Chain →</a>
+      <a href="configurator.html" class="btn-outline">Book a Session</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item">
+    <div class="trust-number">3</div>
+    <div class="trust-label">Metal Tiers</div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-number">7</div>
+    <div class="trust-label">Body Locations</div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-number">30</div>
+    <div class="trust-label">Day Weld Warranty</div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-number">0</div>
+    <div class="trust-label">Clasps. Ever.</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works">
+  <div class="how-header fade-in">
+    <div class="section-eyebrow">The Process</div>
+    <h2 class="section-heading">Three Steps to Permanent.</h2>
+    <p class="section-sub">From design to weld in under 30 minutes. The experience is simple. The result is forever.</p>
+  </div>
+  <div class="steps-grid">
+    <div class="step fade-in">
+      <div class="step-number">01</div>
+      <div class="step-icon">✦</div>
+      <h3>Design</h3>
+      <p>Choose your body location, metal tier, chain style, and charms using our online configurator. See your exact price before you book.</p>
+    </div>
+    <div class="step fade-in" style="transition-delay:0.15s">
+      <div class="step-number">02</div>
+      <div class="step-icon">◈</div>
+      <h3>Book</h3>
+      <p>Hold your spot with a $25 deposit. We confirm your session, measure your exact fit, and prepare your chain.</p>
+    </div>
+    <div class="step fade-in" style="transition-delay:0.3s">
+      <div class="step-number">03</div>
+      <div class="step-icon">⬡</div>
+      <h3>Weld</h3>
+      <p>Ten seconds. A micro-pulse of energy. A flash of light. The chain closes. No clasp. No hardware. Yours — forever.</p>
+    </div>
+  </div>
+  <div class="how-cta fade-in">
+    <a href="configurator.html" class="btn-primary">Start Designing Your Chain →</a>
+  </div>
+</section>
+
+<!-- THREE TIERS -->
+<section class="tiers-section">
+  <div class="tiers-header fade-in">
+    <div class="section-eyebrow" style="color:var(--gold)">The Collection</div>
+    <h2 class="section-heading">Choose Your Metal.</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,0.45)">Three tiers. Three honest answers to three different lives. We'll tell you exactly which one fits yours — and we'll never upsell you past it.</p>
+  </div>
+  <div class="tiers-grid">
+    <div class="tier-card fade-in">
+      <div class="tier-number">I</div>
+      <div class="tier-label">Tier 1</div>
+      <div class="tier-name">Durable<br>Utility</div>
+      <div class="tier-material">316L Stainless Steel · PVD Gold or Silver</div>
+      <div class="tier-price">$42<span style="font-size:20px;color:rgba(255,255,255,0.4)">+</span></div>
+      <div class="tier-price-note">$1.75/in + $30 weld fee</div>
+      <ul class="tier-features">
+        <li class="tier-feature">Zero tarnish, zero maintenance</li>
+        <li class="tier-feature">PVD coating 3–5× harder than plating</li>
+        <li class="tier-feature">Surgical-grade hypoallergenic steel</li>
+        <li class="tier-feature">Built for active, real life</li>
+      </ul>
+      <a href="configurator.html" class="tier-cta">Design in Tier 1 →</a>
+    </div>
+    <div class="tier-card featured fade-in" style="transition-delay:0.15s">
+      <div class="tier-number">II</div>
+      <div class="tier-label">Tier 2 — Most Popular</div>
+      <div class="tier-name">Refined<br>Luxury</div>
+      <div class="tier-material">14k Gold-Filled · Argentium Silver</div>
+      <div class="tier-price">$72<span style="font-size:20px;color:rgba(0,0,0,0.3)">+</span></div>
+      <div class="tier-price-note">$3.75/in + $45 weld fee</div>
+      <ul class="tier-features">
+        <li class="tier-feature">100× thicker than gold plating</li>
+        <li class="tier-feature">Argentium: tarnish-resistant, hypoallergenic</li>
+        <li class="tier-feature">Looks and wears like fine jewelry</li>
+        <li class="tier-feature">Ideal for sensitive skin</li>
+      </ul>
+      <a href="configurator.html" class="tier-cta">Design in Tier 2 →</a>
+    </div>
+    <div class="tier-card fade-in" style="transition-delay:0.3s">
+      <div class="tier-number">III</div>
+      <div class="tier-label">Tier 3</div>
+      <div class="tier-name">Solid<br>Gold</div>
+      <div class="tier-material">14k Yellow Gold · 14k White Gold</div>
+      <div class="tier-price">$145<span style="font-size:20px;color:rgba(255,255,255,0.4)">+</span></div>
+      <div class="tier-price-note">$10.00/in + $75 weld fee</div>
+      <ul class="tier-features">
+        <li class="tier-feature">58.5% pure gold — retains melt value</li>
+        <li class="tier-feature">The most hypoallergenic option</li>
+        <li class="tier-feature">Investment-quality, heirloom piece</li>
+        <li class="tier-feature">Outlasts trends. Outlasts decades.</li>
+      </ul>
+      <a href="configurator.html" class="tier-cta">Design in Tier 3 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section">
+  <div class="services-header fade-in">
+    <div class="section-eyebrow">Services</div>
+    <h2 class="section-heading">Every way we weld.</h2>
+    <div class="gold-line"></div>
+    <p class="section-sub">In-studio appointments, mobile pop-ups, bridal experiences, corporate events — permanent jewelry that goes wherever the occasion calls.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-in">
+      <span class="service-icon">◈</span>
+      <h3>In-Studio Weld</h3>
+      <p>One-on-one appointment in our studio. Design, measure, and weld your permanent chain from $42. $25 deposit holds your spot.</p>
+      <a href="configurator.html" class="service-link">Book Now →</a>
+    </div>
+    <div class="service-card fade-in" style="transition-delay:0.1s">
+      <span class="service-icon">✦✦✦</span>
+      <h3>Stacking Session</h3>
+      <p>Book 3 or more chains in one sitting and receive 10% off the total. Mix wrists, ankles, and tiers in a single 60-minute session.</p>
+      <a href="configurator.html" class="service-link">Book Now →</a>
+    </div>
+    <div class="service-card fade-in" style="transition-delay:0.2s">
+      <span class="service-icon">◯</span>
+      <h3>Glow & Glint</h3>
+      <p>Spray tan at deSoleil + permanent weld at HUE Glint, same day. Combined 10% savings on both services. The ultimate afternoon.</p>
+      <a href="configurator.html" class="service-link">Book Now →</a>
+    </div>
+    <div class="service-card fade-in" style="transition-delay:0.1s">
+      <span class="service-icon">♡</span>
+      <h3>Bridal & Bachelorette</h3>
+      <p>We bring the studio to your venue. Minimum 4 guests. Host always receives a complimentary Tier 1 chain. Perfect for every wedding event.</p>
+      <a href="#" class="service-link">Inquire →</a>
+    </div>
+    <div class="service-card fade-in" style="transition-delay:0.2s">
+      <span class="service-icon">⬡</span>
+      <h3>Party Favor Events</h3>
+      <p>Host a permanent jewelry experience for your guests. From $38/guest in Tier 1. Host always wins — complimentary chain, always.</p>
+      <a href="#" class="service-link">Inquire →</a>
+    </div>
+    <div class="service-card fade-in" style="transition-delay:0.3s">
+      <span class="service-icon">◈</span>
+      <h3>Collaborations</h3>
+      <p>We partner with local businesses for pop-ups, branded events, and dual-service packages. Your venue. Our studio. Both audiences.</p>
+      <a href="#" class="service-link">Learn More →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="testimonials-header fade-in">
+    <div class="section-eyebrow">Client Stories</div>
+    <h2 class="section-heading" style="color:var(--white)">What stays, stays.</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial fade-in">
+      <p class="testimonial-text">"I haven't taken it off in 8 months. Through a red-eye flight, a wedding, and roughly 240 showers."</p>
+      <div class="testimonial-author">Inner Circle Member</div>
+    </div>
+    <div class="testimonial fade-in" style="transition-delay:0.15s">
+      <p class="testimonial-text">"My whole bachelorette group got matching anklets. We still text each other photos of them."</p>
+      <div class="testimonial-author">Bachelorette Pop-Up Client</div>
+    </div>
+    <div class="testimonial fade-in" style="transition-delay:0.3s">
+      <p class="testimonial-text">"My daughter and I got mother-daughter bracelets for her graduation. She's across the country now. I look at mine every day."</p>
+      <div class="testimonial-author">Studio Client</div>
+    </div>
+  </div>
+</section>
+
+<!-- EMAIL CAPTURE -->
+<section class="email-capture">
+  <div class="capture-inner fade-in">
+    <div class="capture-icon">✦</div>
+    <h2 class="capture-heading">Join the Inner Circle.</h2>
+    <p class="capture-sub">Early access to new chain styles and charms. Member pricing on events and bundles. Your personal referral code — $20 credit every time a friend books. Plus a free printable measurement guide.</p>
+    <form class="capture-form" onsubmit="return false;">
+      <input type="email" class="capture-input" placeholder="Your email address">
+      <button class="capture-btn">Join →</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">HUE <span>✦</span> GLINT</div>
+      <div class="footer-tagline">No Clasp. No Compromise.</div>
+      <div class="footer-social">
+        <a href="#" class="social-link">ig</a>
+        <a href="#" class="social-link">tk</a>
+        <a href="#" class="social-link">pt</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="configurator.html">Design Your Chain</a></li>
+        <li><a href="#">In-Studio Weld</a></li>
+        <li><a href="#">Stacking Session</a></li>
+        <li><a href="#">Bridal Pop-Up</a></li>
+        <li><a href="#">Party Favors</a></li>
+        <li><a href="#">Glow & Glint</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Learn</h4>
+      <ul>
+        <li><a href="#">What Is Permanent Jewelry?</a></li>
+        <li><a href="#">Which Tier Is Right for Me?</a></li>
+        <li><a href="#">Aftercare Guide</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">The HUE Journal</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Studio</h4>
+      <ul>
+        <li><a href="#">About HUE Glint</a></li>
+        <li><a href="#">Collaborations</a></li>
+        <li><a href="#">Gift Cards</a></li>
+        <li><a href="#">Aftercare Shop</a></li>
+        <li><a href="#">Inner Circle</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 HUE Co. All rights reserved. glint.hue-co.com</div>
+    <div class="footer-legal">
+      <a href="#">Terms of Service</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Aftercare Policy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Fade-in on scroll
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  fadeEls.forEach(el => observer.observe(el));
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.padding = window.scrollY > 80 ? '12px 60px' : '20px 60px';
+  });
+</script>
+</body>
+</html>

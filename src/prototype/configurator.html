@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Your Chain — HUE Glint</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #F5F0E8; --black: #0A0A0A; --gold: #C9A84C;
+    --gold-light: #E8D5A3; --white: #FFFFFF; --gray: #8A8A8A;
+    --cream-dark: #EDE7D9; --border: rgba(201,168,76,0.2);
+  }
+  body { background: var(--cream); color: var(--black); font-family: 'Montserrat', sans-serif; font-weight: 300; }
+  h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; font-weight: 400; }
+
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 20px 60px;
+    background: rgba(10,10,10,0.96);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:500; color:var(--white); letter-spacing:0.15em; text-decoration:none; }
+  .nav-logo span { color:var(--gold); }
+  .nav-back { font-size:10px; font-weight:500; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.5); text-decoration:none; transition:color 0.3s; }
+  .nav-back:hover { color:var(--gold); }
+
+  /* LAYOUT */
+  .configurator-layout {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    min-height: 100vh;
+    padding-top: 64px;
+  }
+
+  .config-main { padding: 60px; }
+
+  /* PROGRESS */
+  .progress-bar {
+    display: flex; align-items: center; gap: 0;
+    margin-bottom: 56px;
+  }
+
+  .progress-step {
+    display: flex; align-items: center; gap: 10px;
+    cursor: pointer;
+  }
+
+  .step-dot {
+    width: 32px; height: 32px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600;
+    color: var(--gray);
+    transition: all 0.3s;
+    background: var(--cream);
+  }
+
+  .progress-step.active .step-dot {
+    border-color: var(--gold);
+    background: var(--gold);
+    color: var(--black);
+  }
+
+  .progress-step.completed .step-dot {
+    border-color: var(--gold);
+    background: var(--gold);
+    color: var(--black);
+  }
+
+  .step-label {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gray); white-space: nowrap;
+  }
+  .progress-step.active .step-label { color: var(--black); }
+
+  .progress-connector {
+    flex: 1; height: 1px;
+    background: rgba(0,0,0,0.1);
+    margin: 0 8px;
+    min-width: 20px;
+  }
+
+  /* STEP PANELS */
+  .step-panel { display: none; }
+  .step-panel.active { display: block; }
+
+  .step-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px; font-weight: 300; line-height: 1.1;
+    margin-bottom: 8px;
+  }
+
+  .step-sub {
+    font-size: 12px; color: var(--gray); line-height: 1.8; margin-bottom: 40px; font-weight: 300;
+  }
+
+  /* OPTION CARDS */
+  .option-grid {
+    display: grid; gap: 12px; margin-bottom: 40px;
+  }
+
+  .option-grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .option-grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .option-grid-6 { grid-template-columns: repeat(6, 1fr); }
+
+  .option-card {
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 24px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--white);
+    position: relative;
+  }
+
+  .option-card:hover { border-color: var(--gold); }
+  .option-card.selected { border-color: var(--gold); background: rgba(201,168,76,0.06); }
+
+  .option-card.selected::after {
+    content: '✓';
+    position: absolute; top: 12px; right: 14px;
+    width: 20px; height: 20px;
+    background: var(--gold); color: var(--black);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700;
+    line-height: 20px; text-align: center;
+  }
+
+  .option-icon { font-size: 24px; margin-bottom: 10px; display: block; }
+  .option-title { font-family:'Cormorant Garamond',serif; font-size: 20px; font-weight: 400; margin-bottom: 4px; }
+  .option-desc { font-size: 11px; color: var(--gray); font-weight: 300; line-height: 1.6; }
+  .option-price { font-size: 13px; font-weight: 500; color: var(--gold); margin-top: 8px; }
+
+  /* TIER CARDS — bigger */
+  .tier-option { padding: 36px 28px; }
+  .tier-badge {
+    font-size: 9px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 8px;
+  }
+  .tier-option .option-title { font-size: 26px; margin-bottom: 4px; }
+  .tier-material { font-size: 11px; color: var(--gray); margin-bottom: 16px; }
+  .tier-perks { list-style: none; }
+  .tier-perks li { font-size: 11px; color: var(--gray); padding: 4px 0; display:flex; gap:6px; }
+  .tier-perks li::before { content: '✦'; color: var(--gold); font-size: 8px; flex-shrink:0; margin-top:2px; }
+
+  /* CHAIN STYLE */
+  .chain-card { text-align: center; padding: 20px 12px; }
+  .chain-visual {
+    height: 40px; display: flex; align-items: center; justify-content: center;
+    margin-bottom: 10px; font-size: 22px;
+  }
+  .chain-card .option-title { font-size: 16px; margin-bottom: 4px; }
+
+  /* MEASUREMENT */
+  .measurement-box {
+    background: var(--black);
+    padding: 36px;
+    margin-bottom: 32px;
+    border-left: 3px solid var(--gold);
+  }
+  .measurement-box h3 { color: var(--white); font-size: 22px; margin-bottom: 12px; }
+  .measurement-box p { color: rgba(255,255,255,0.6); font-size: 12px; line-height: 1.8; font-weight: 300; }
+
+  .measurement-input-group { display: flex; gap: 16px; align-items: flex-end; margin-top: 24px; }
+  .measurement-input-group label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); display: block; margin-bottom: 8px; }
+  .measurement-input {
+    flex: 1;
+    border: 1px solid rgba(0,0,0,0.15);
+    padding: 14px 18px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px; font-weight: 400;
+    background: var(--white);
+    outline: none; transition: border-color 0.3s;
+  }
+  .measurement-input:focus { border-color: var(--gold); }
+  .measurement-unit {
+    padding: 14px 20px;
+    background: var(--cream-dark);
+    border: 1px solid rgba(0,0,0,0.1);
+    font-size: 13px; font-weight: 500;
+    color: var(--gray);
+  }
+
+  /* CHARMS */
+  .charm-grid {
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    gap: 12px; margin-bottom: 16px;
+  }
+  .charm-card {
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 16px 8px; text-align: center;
+    cursor: pointer; transition: all 0.2s;
+    background: var(--white); position: relative;
+  }
+  .charm-card:hover { border-color: var(--gold); }
+  .charm-card.selected { border-color: var(--gold); background: rgba(201,168,76,0.06); }
+  .charm-card.selected::after { content: '✓'; position:absolute; top:6px; right:8px; font-size:10px; color:var(--gold); font-weight:700; }
+  .charm-icon { font-size: 22px; display: block; margin-bottom: 6px; }
+  .charm-name { font-size: 10px; color: var(--gray); font-weight: 500; letter-spacing:0.05em; display: block; margin-bottom: 4px; }
+  .charm-price-tag { font-size: 11px; font-weight: 600; color: var(--gold); display: block; }
+  .charm-limit { font-size: 11px; color: var(--gray); margin-bottom: 24px; }
+
+  /* NAVIGATION BUTTONS */
+  .step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; }
+  .btn-back {
+    background: transparent; border: 1px solid rgba(0,0,0,0.15);
+    padding: 14px 28px; font-family:'Montserrat',sans-serif; font-size:11px; font-weight:500;
+    letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.3s;
+    color: var(--gray);
+  }
+  .btn-back:hover { border-color: var(--black); color: var(--black); }
+  .btn-next {
+    background: var(--black); color: var(--white);
+    padding: 14px 36px; font-family:'Montserrat',sans-serif; font-size:11px; font-weight:600;
+    letter-spacing:0.15em; text-transform:uppercase; border:none; cursor:pointer; transition:all 0.3s;
+  }
+  .btn-next:hover { background: var(--gold); color: var(--black); }
+  .btn-book {
+    background: var(--gold); color: var(--black);
+    padding: 18px 48px; font-family:'Montserrat',sans-serif; font-size:12px; font-weight:700;
+    letter-spacing:0.15em; text-transform:uppercase; border:none; cursor:pointer; transition:all 0.3s;
+  }
+  .btn-book:hover { background: var(--gold-light); }
+
+  /* SIDEBAR */
+  .config-sidebar {
+    background: var(--black);
+    position: sticky; top: 64px; height: calc(100vh - 64px);
+    padding: 48px 40px;
+    display: flex; flex-direction: column;
+    overflow-y: auto;
+    border-left: 1px solid rgba(201,168,76,0.12);
+  }
+
+  /* BODY MOCKUP */
+  .body-mockup {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    margin-bottom: 32px; min-height: 300px;
+  }
+
+  .body-svg { position: relative; }
+  .body-svg svg { width: 140px; }
+
+  .jewelry-dot {
+    position: absolute;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 1px solid rgba(255,255,255,0.3);
+    transition: all 0.4s;
+    opacity: 0;
+    box-shadow: 0 0 8px rgba(201,168,76,0.6);
+  }
+
+  .jewelry-dot.active { opacity: 1; animation: dot-pulse 2s ease-in-out infinite; }
+
+  @keyframes dot-pulse {
+    0%, 100% { box-shadow: 0 0 6px rgba(201,168,76,0.6); }
+    50% { box-shadow: 0 0 16px rgba(201,168,76,0.9); }
+  }
+
+  /* PRICE SUMMARY */
+  .price-summary { border-top: 1px solid rgba(201,168,76,0.15); padding-top: 24px; }
+
+  .price-line {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 10px;
+  }
+  .price-line-label { font-size: 11px; color: rgba(255,255,255,0.45); font-weight: 300; }
+  .price-line-value { font-size: 13px; color: rgba(255,255,255,0.7); font-weight: 400; }
+  .price-line-value.gold { color: var(--gold); }
+  .price-total-label { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+  .price-total-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px; font-weight: 300; color: var(--white);
+    line-height: 1;
+  }
+
+  .price-divider { height: 1px; background: rgba(201,168,76,0.15); margin: 14px 0; }
+
+  .selection-summary { margin-bottom: 28px; }
+  .selection-tag {
+    display: inline-block;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 4px 10px;
+    font-size: 10px; font-weight: 500; letter-spacing: 0.08em;
+    color: var(--gold-light);
+    margin: 3px;
+  }
+  .selection-placeholder {
+    font-size: 11px; color: rgba(255,255,255,0.2); font-style: italic;
+  }
+
+  .sidebar-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 300; color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .sidebar-sub { font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 28px; }
+
+  /* SUMMARY STEP */
+  .summary-card {
+    border: 1px solid var(--border);
+    padding: 32px; margin-bottom: 16px;
+    background: var(--white);
+  }
+  .summary-row { display:flex; justify-content:space-between; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .summary-row:last-child { border-bottom: none; }
+  .summary-row-label { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing:0.1em; }
+  .summary-row-value { font-size: 13px; font-weight: 500; }
+  .summary-total { font-size: 36px; font-family: 'Cormorant Garamond', serif; font-weight: 300; color: var(--gold); }
+
+  .deposit-note {
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 20px;
+    font-size: 12px; line-height: 1.7; color: var(--gray);
+  }
+  .deposit-note strong { color: var(--black); }
+
+  @media(max-width:900px) {
+    .configurator-layout { grid-template-columns: 1fr; }
+    .config-sidebar { position: static; height: auto; }
+    .progress-bar { overflow-x: auto; }
+    .charm-grid { grid-template-columns: repeat(4,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">HUE <span>✦</span> GLINT</a>
+  <a href="index.html" class="nav-back">← Back to Home</a>
+</nav>
+
+<div class="configurator-layout">
+  <!-- MAIN CONFIGURATOR -->
+  <div class="config-main">
+
+    <!-- PROGRESS BAR -->
+    <div class="progress-bar" id="progressBar">
+      <div class="progress-step active" data-step="1" onclick="goToStep(1)">
+        <div class="step-dot">1</div>
+        <div class="step-label">Location</div>
+      </div>
+      <div class="progress-connector"></div>
+      <div class="progress-step" data-step="2" onclick="goToStep(2)">
+        <div class="step-dot">2</div>
+        <div class="step-label">Measure</div>
+      </div>
+      <div class="progress-connector"></div>
+      <div class="progress-step" data-step="3" onclick="goToStep(3)">
+        <div class="step-dot">3</div>
+        <div class="step-label">Tier</div>
+      </div>
+      <div class="progress-connector"></div>
+      <div class="progress-step" data-step="4" onclick="goToStep(4)">
+        <div class="step-dot">4</div>
+        <div class="step-label">Style</div>
+      </div>
+      <div class="progress-connector"></div>
+      <div class="progress-step" data-step="5" onclick="goToStep(5)">
+        <div class="step-dot">5</div>
+        <div class="step-label">Charms</div>
+      </div>
+      <div class="progress-connector"></div>
+      <div class="progress-step" data-step="6" onclick="goToStep(6)">
+        <div class="step-dot">6</div>
+        <div class="step-label">Review</div>
+      </div>
+    </div>
+
+    <!-- STEP 1: LOCATION -->
+    <div class="step-panel active" id="step1">
+      <div class="section-eyebrow" style="font-size:10px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Step 1 of 6</div>
+      <h2 class="step-heading">Where will you<br><em style="font-style:italic">wear it?</em></h2>
+      <p class="step-sub">Choose the body location for your permanent chain. Each location has a specific sizing method — we'll guide you through measuring in the next step.</p>
+      <div class="option-grid option-grid-3">
+        <div class="option-card" onclick="selectLocation('wrist', this)">
+          <span class="option-icon">🤎</span>
+          <div class="option-title">Wrist</div>
+          <div class="option-desc">The most popular placement. Bracelet sits just below the hand.</div>
+        </div>
+        <div class="option-card" onclick="selectLocation('ankle', this)">
+          <span class="option-icon">🦶</span>
+          <div class="option-title">Ankle</div>
+          <div class="option-desc">Sits at the narrowest point of the ankle. Slightly looser fit.</div>
+        </div>
+        <div class="option-card" onclick="selectLocation('neck', this)">
+          <span class="option-icon">✨</span>
+          <div class="option-title">Neck</div>
+          <div class="option-desc">Choker (14–16"), princess (17–19"), or matinee (20–24") lengths.</div>
+        </div>
+        <div class="option-card" onclick="selectLocation('belly', this)">
+          <span class="option-icon">⬡</span>
+          <div class="option-title">Belly</div>
+          <div class="option-desc">Drapes loosely at natural waist level. Belly chains sit with ease.</div>
+        </div>
+        <div class="option-card" onclick="selectLocation('upperArm', this)">
+          <span class="option-icon">💪</span>
+          <div class="option-title">Upper Arm</div>
+          <div class="option-desc">Armband at the widest bicep point. Slides on, but doesn't fall.</div>
+        </div>
+        <div class="option-card" onclick="selectLocation('finger', this)">
+          <span class="option-icon">💍</span>
+          <div class="option-title">Finger / Toe</div>
+          <div class="option-desc">Measured at the knuckle. Permanent ring — very precise fit.</div>
+        </div>
+      </div>
+      <div class="step-nav">
+        <div></div>
+        <button class="btn-next" onclick="nextStep()">Next: Measure →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: MEASUREMENT -->
+    <div class="step-panel" id="step2">
+      <div class="section-eyebrow" style="font-size:10px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Step 2 of 6</div>
+      <h2 class="step-heading">Measure your<br><em style="font-style:italic">exact fit.</em></h2>
+      <p class="step-sub">Permanent chains are sized precisely to your body. Follow the instructions below to measure correctly — we add the appropriate ease for your location.</p>
+      <div class="measurement-box">
+        <h3 id="measureInstructions">Select a location in Step 1 first.</h3>
+        <p id="measureDetails">Your measurement instructions will appear here.</p>
+        <div class="measurement-input-group">
+          <div style="flex:1">
+            <label>Your measurement</label>
+            <input type="number" class="measurement-input" id="lengthInput" placeholder="6.5" min="3" max="36" step="0.25" oninput="updateLength(this.value)">
+          </div>
+          <div class="measurement-unit">inches</div>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--gray);line-height:1.8;font-weight:300">
+        <strong style="font-weight:500">Don't have a tape measure?</strong> Use a strip of paper, wrap it around your wrist, mark where it meets, then measure the paper strip flat. Or download our <strong style="font-weight:500;color:var(--gold)">free printable measurement guide →</strong>
+      </p>
+      <div class="step-nav">
+        <button class="btn-back" onclick="prevStep()">← Back</button>
+        <button class="btn-next" onclick="nextStep()">Next: Choose Tier →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: TIER -->
+    <div class="step-panel" id="step3">
+      <div class="section-eyebrow" style="font-size:10px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Step 3 of 6</div>
+      <h2 class="step-heading">Choose your<br><em style="font-style:italic">metal.</em></h2>
+      <p class="step-sub">Three honest tiers. We'll tell you which one fits your life — and we'll never push you toward something you don't need.</p>
+      <div class="option-grid option-grid-3" style="margin-bottom:40px">
+        <div class="option-card tier-option" onclick="selectTier('tier1', this)">
+          <div class="tier-badge">Tier 1</div>
+          <div class="option-title">Durable Utility</div>
+          <div class="tier-material">316L Stainless Steel + PVD Gold or Silver</div>
+          <div class="option-price">From $42 · $1.75/in</div>
+          <ul class="tier-perks" style="margin-top:12px">
+            <li>Zero tarnish. Zero maintenance.</li>
+            <li>PVD coating 3–5× harder than plating</li>
+            <li>Built for active, everyday life</li>
+          </ul>
+        </div>
+        <div class="option-card tier-option" onclick="selectTier('tier2', this)">
+          <div class="tier-badge">Tier 2 — Most Popular</div>
+          <div class="option-title">Refined Luxury</div>
+          <div class="tier-material">14k Gold-Filled or Argentium Silver</div>
+          <div class="option-price">From $72 · $3.75/in</div>
+          <ul class="tier-perks" style="margin-top:12px">
+            <li>100× thicker than gold plating</li>
+            <li>Ideal for sensitive skin</li>
+            <li>Looks and wears like fine jewelry</li>
+          </ul>
+        </div>
+        <div class="option-card tier-option" onclick="selectTier('tier3', this)">
+          <div class="tier-badge">Tier 3</div>
+          <div class="option-title">Solid Gold</div>
+          <div class="tier-material">14k Yellow or White Gold</div>
+          <div class="option-price">From $145 · $10.00/in</div>
+          <ul class="tier-perks" style="margin-top:12px">
+            <li>Retains melt value</li>
+            <li>Most hypoallergenic option</li>
+            <li>Investment-quality, heirloom piece</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="prevStep()">← Back</button>
+        <button class="btn-next" onclick="nextStep()">Next: Chain Style →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: CHAIN STYLE -->
+    <div class="step-panel" id="step4">
+      <div class="section-eyebrow" style="font-size:10px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Step 4 of 6</div>
+      <h2 class="step-heading">Choose your<br><em style="font-style:italic">chain style.</em></h2>
+      <p class="step-sub">Six classic styles, each available in multiple widths. Every style works in all three tiers.</p>
+      <div class="option-grid option-grid-3">
+        <div class="option-card chain-card" onclick="selectStyle('box', this)">
+          <div class="chain-visual">⬛ ⬛ ⬛</div>
+          <div class="option-title">Box</div>
+          <div class="option-desc">Square links with clean, geometric edges. Modern and precise.</div>
+        </div>
+        <div class="option-card chain-card" onclick="selectStyle('cable', this)">
+          <div class="chain-visual">○ ○ ○</div>
+          <div class="option-title">Cable</div>
+          <div class="option-desc">Classic round oval links. The most versatile, universally flattering style.</div>
+        </div>
+        <div class="option-card chain-card" onclick="selectStyle('figaro', this)">
+          <div class="chain-visual">○ ○ ⬭ ○</div>
+          <div class="option-title">Figaro</div>
+          <div class="option-desc">Three small links + one long oval. Italian-inspired, strong visual presence.</div>
+        </div>
+        <div class="option-card chain-card" onclick="selectStyle('rope', this)">
+          <div class="chain-visual">〰️</div>
+          <div class="option-title">Rope</div>
+          <div class="option-desc">Twisted spiral links. Catches light beautifully. Substantial without being heavy.</div>
+        </div>
+        <div class="option-card chain-card" onclick="selectStyle('snake', this)">
+          <div class="chain-visual">━━━</div>
+          <div class="option-title">Snake</div>
+          <div class="option-desc">Smooth, flexible, liquid movement. The most delicate and refined silhouette.</div>
+        </div>
+        <div class="option-card chain-card" onclick="selectStyle('curb', this)">
+          <div class="chain-visual">◈ ◈ ◈</div>
+          <div class="option-title">Curb</div>
+          <div class="option-desc">Flat interlocking links. The boldest style. Works especially well for men.</div>
+        </div>
+      </div>
+      <div class="step-nav">
+        <button class="btn-back" onclick="prevStep()">← Back</button>
+        <button class="btn-next" onclick="nextStep()">Next: Charms →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: CHARMS -->
+    <div class="step-panel" id="step5">
+      <div class="section-eyebrow" style="font-size:10px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Step 5 of 6</div>
+      <h2 class="step-heading">Add your<br><em style="font-style:italic">charms.</em></h2>
+      <p class="step-sub">Optional. Up to 3 charms per chain. Each is permanently attached — choose what means something to you.</p>
+      <p class="charm-limit" id="charmCountDisplay">0 of 3 charms selected</p>
+      <div class="charm-grid" id="charmGrid">
+        <!-- Charms populated by JS -->
+      </div>
+      <p style="font-size:11px;color:var(--gray);line-height:1.8;font-weight:300;margin-bottom:32px">Charm prices are in addition to chain cost and vary by tier. Charms must match or exceed your chain tier.</p>
+      <div class="step-nav">
+        <button class="btn-back" onclick="prevStep()">← Back</button>
+        <button class="btn-next" onclick="nextStep()">Next: Review →</button>
+      </div>
+    </div>
+
+    <!-- STEP 6: REVIEW + BOOK -->
+    <div class="step-panel" id="step6">
+      <div class="section-eyebrow" style="font-size:10px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Step 6 of 6</div>
+      <h2 class="step-heading">Your chain,<br><em style="font-style:italic">confirmed.</em></h2>
+      <p class="step-sub">Review your selections below. A $25 deposit holds your spot and is applied toward the total at your appointment.</p>
+      <div class="summary-card" id="summaryCard">
+        <!-- populated by JS -->
+      </div>
+      <div class="deposit-note">
+        <strong>$25 deposit</strong> is required to confirm your booking. The remaining balance is collected at your in-studio appointment after final measurement and confirmation. <strong>Your deposit is fully refundable</strong> with 24 hours' notice.
+      </div>
+      <div class="step-nav" style="margin-top:32px">
+        <button class="btn-back" onclick="prevStep()">← Edit</button>
+        <button class="btn-book" onclick="bookNow()">Hold My Spot — $25 Deposit →</button>
+      </div>
+    </div>
+
+  </div><!-- /config-main -->
+
+  <!-- SIDEBAR -->
+  <div class="config-sidebar">
+    <div class="sidebar-heading">Your Design</div>
+    <div class="sidebar-sub">Live preview</div>
+
+    <!-- BODY MOCKUP -->
+    <div class="body-mockup">
+      <div class="body-svg" style="position:relative">
+        <!-- Simple body silhouette SVG -->
+        <svg viewBox="0 0 100 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Head -->
+          <circle cx="50" cy="20" r="14" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          <!-- Neck -->
+          <line x1="44" y1="34" x2="44" y2="52" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          <line x1="56" y1="34" x2="56" y2="52" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          <!-- Shoulders -->
+          <path d="M44 52 Q20 56 16 70" stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="none"/>
+          <path d="M56 52 Q80 56 84 70" stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="none"/>
+          <!-- Arms -->
+          <path d="M16 70 Q12 100 14 130" stroke="rgba(255,255,255,0.12)" stroke-width="1" fill="none"/>
+          <path d="M84 70 Q88 100 86 130" stroke="rgba(255,255,255,0.12)" stroke-width="1" fill="none"/>
+          <!-- Torso -->
+          <path d="M44 52 Q38 80 38 120" stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="none"/>
+          <path d="M56 52 Q62 80 62 120" stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="none"/>
+          <!-- Waist -->
+          <path d="M38 120 Q50 124 62 120" stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="none"/>
+          <!-- Hips -->
+          <path d="M38 120 Q30 140 32 160" stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="none"/>
+          <path d="M62 120 Q70 140 68 160" stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="none"/>
+          <!-- Legs -->
+          <line x1="32" y1="160" x2="30" y2="230" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+          <line x1="68" y1="160" x2="70" y2="230" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+          <!-- Feet -->
+          <path d="M28 228 Q26 234 32 235" stroke="rgba(255,255,255,0.1)" stroke-width="1" fill="none"/>
+          <path d="M72 228 Q74 234 68 235" stroke="rgba(255,255,255,0.1)" stroke-width="1" fill="none"/>
+        </svg>
+
+        <!-- Jewelry dots - positioned on body -->
+        <div class="jewelry-dot" id="dot-wrist" style="left:-8px; top:128px"></div>
+        <div class="jewelry-dot" id="dot-ankle" style="left:-2px; top:208px"></div>
+        <div class="jewelry-dot" id="dot-neck" style="left:38px; top:46px"></div>
+        <div class="jewelry-dot" id="dot-belly" style="left:43px; top:115px"></div>
+        <div class="jewelry-dot" id="dot-upperArm" style="left:-2px; top:88px"></div>
+        <div class="jewelry-dot" id="dot-finger" style="left:8px; top:138px"></div>
+      </div>
+    </div>
+
+    <!-- SELECTION TAGS -->
+    <div class="selection-summary" id="selectionTags">
+      <span class="selection-placeholder">Make selections to see your design</span>
+    </div>
+
+    <!-- PRICE -->
+    <div class="price-summary">
+      <div class="price-divider"></div>
+      <div class="price-line">
+        <span class="price-line-label">Chain</span>
+        <span class="price-line-value gold" id="priceChain">—</span>
+      </div>
+      <div class="price-line">
+        <span class="price-line-label">Weld fee</span>
+        <span class="price-line-value gold" id="priceWeld">—</span>
+      </div>
+      <div class="price-line">
+        <span class="price-line-label">Charms</span>
+        <span class="price-line-value gold" id="priceCharms">—</span>
+      </div>
+      <div class="price-divider"></div>
+      <div class="price-line" style="align-items:flex-end">
+        <span class="price-total-label">Est. Total</span>
+        <div class="price-total-value" id="priceTotal">$—</div>
+      </div>
+      <p style="font-size:10px;color:rgba(255,255,255,0.2);margin-top:8px;line-height:1.6;font-weight:300">Final price confirmed at appointment after exact measurement. Deposit of $25 applied to total.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // CONFIG STATE
+  const state = {
+    step: 1,
+    location: null,
+    length: null,
+    tier: null,
+    style: null,
+    charms: []
+  };
+
+  const TIERS = {
+    tier1: { name: 'Tier 1 — Stainless PVD', ratePerInch: 1.75, weldFee: 30, charmPrice: 12 },
+    tier2: { name: 'Tier 2 — Gold-Filled/Argentium', ratePerInch: 3.75, weldFee: 45, charmPrice: 28 },
+    tier3: { name: 'Tier 3 — Solid Gold', ratePerInch: 10, weldFee: 75, charmPrice: 75 }
+  };
+
+  const LOCATION_EASE = {
+    wrist: 0.75, ankle: 1.0, neck: 1.0, belly: 1.5, upperArm: 0.5, finger: 0.25
+  };
+
+  const LOCATION_NAMES = {
+    wrist: 'Wrist', ankle: 'Ankle', neck: 'Neck', belly: 'Belly', upperArm: 'Upper Arm', finger: 'Finger'
+  };
+
+  const MEASURE_INSTRUCTIONS = {
+    wrist: { title: 'Measuring your wrist', detail: 'Wrap a flexible tape measure snugly around your wrist bone just below the hand. Record in inches. We add 0.75" for a comfortable permanent fit.' },
+    ankle: { title: 'Measuring your ankle', detail: 'Measure around the narrowest part of your ankle, just above the ankle bone. Record in inches. We add 1" for movement ease — ankle chains sit slightly looser than bracelets.' },
+    neck: { title: 'Measuring your neck', detail: 'Choker (14–16"): Measure around the base of your neck and add 1". Princess (17–19"): Measure from collarbone to desired drop. Matinee (20–24"): Measure desired drape length.' },
+    belly: { title: 'Measuring your waist', detail: 'Measure around your natural waist at navel level while relaxed. We add 1.5" for comfortable drape. Belly chains sit loosely — don\'t measure too snugly.' },
+    upperArm: { title: 'Measuring your upper arm', detail: 'Flex your bicep slightly and measure around the widest point. We add 0.5" for movement. Upper arm bands should slide on but not fall.' },
+    finger: { title: 'Measuring your finger', detail: 'Measure the circumference of your chosen finger at the knuckle — the widest point it must pass over. We add 0.25" for permanent comfort.' }
+  };
+
+  const CHARMS = [
+    { id: 'star', icon: '⭐', name: 'Star' },
+    { id: 'moon', icon: '🌙', name: 'Crescent Moon' },
+    { id: 'heart', icon: '♡', name: 'Heart' },
+    { id: 'evil-eye', icon: '👁', name: 'Evil Eye' },
+    { id: 'initial', icon: 'A', name: 'Initial (A–Z)' },
+    { id: 'butterfly', icon: '🦋', name: 'Butterfly' },
+    { id: 'bolt', icon: '⚡', name: 'Lightning Bolt' },
+    { id: 'cross', icon: '✝', name: 'Cross' },
+    { id: 'infinity', icon: '∞', name: 'Infinity' },
+    { id: 'pearl', icon: '●', name: 'Pearl Drop' },
+    { id: 'sunburst', icon: '✵', name: 'Sunburst' },
+    { id: 'wave', icon: '〰', name: 'Wave' }
+  ];
+
+  // BUILD CHARM GRID
+  function buildCharmGrid() {
+    const grid = document.getElementById('charmGrid');
+    grid.innerHTML = '';
+    CHARMS.forEach(charm => {
+      const price = state.tier ? TIERS[state.tier].charmPrice : 12;
+      const div = document.createElement('div');
+      div.className = 'charm-card' + (state.charms.includes(charm.id) ? ' selected' : '');
+      div.id = 'charm-' + charm.id;
+      div.onclick = () => toggleCharm(charm.id);
+      div.innerHTML = `<span class="charm-icon">${charm.icon}</span><span class="charm-name">${charm.name}</span><span class="charm-price-tag">$${price}</span>`;
+      grid.appendChild(div);
+    });
+  }
+
+  function toggleCharm(id) {
+    const max = 3;
+    if (state.charms.includes(id)) {
+      state.charms = state.charms.filter(c => c !== id);
+      document.getElementById('charm-' + id).classList.remove('selected');
+    } else {
+      if (state.charms.length >= max) { alert('Maximum 3 charms per chain.'); return; }
+      state.charms.push(id);
+      document.getElementById('charm-' + id).classList.add('selected');
+    }
+    document.getElementById('charmCountDisplay').textContent = `${state.charms.length} of 3 charms selected`;
+    updatePricePanel();
+  }
+
+  function selectLocation(loc, card) {
+    state.location = loc;
+    document.querySelectorAll('#step1 .option-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    // Update measurement instructions
+    const inst = MEASURE_INSTRUCTIONS[loc] || {};
+    document.getElementById('measureInstructions').textContent = inst.title || '';
+    document.getElementById('measureDetails').textContent = inst.detail || '';
+    // Activate body dot
+    document.querySelectorAll('.jewelry-dot').forEach(d => d.classList.remove('active'));
+    const dot = document.getElementById('dot-' + loc);
+    if (dot) dot.classList.add('active');
+    updatePricePanel();
+  }
+
+  function updateLength(val) {
+    state.length = parseFloat(val) || null;
+    updatePricePanel();
+  }
+
+  function selectTier(tier, card) {
+    state.tier = tier;
+    document.querySelectorAll('#step3 .option-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    buildCharmGrid();
+    updatePricePanel();
+  }
+
+  function selectStyle(style, card) {
+    state.style = style;
+    document.querySelectorAll('#step4 .option-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    updatePricePanel();
+  }
+
+  function calcTotal() {
+    if (!state.tier || !state.length) return null;
+    const tier = TIERS[state.tier];
+    const ease = LOCATION_EASE[state.location] || 0.75;
+    const totalLength = state.length + ease;
+    const chainCost = totalLength * tier.ratePerInch;
+    const charmCost = state.charms.length * tier.charmPrice;
+    return { chain: chainCost, weld: tier.weldFee, charms: charmCost, total: chainCost + tier.weldFee + charmCost };
+  }
+
+  function fmt(n) { return '$' + n.toFixed(2); }
+
+  function updatePricePanel() {
+    const tags = [];
+    if (state.location) tags.push(LOCATION_NAMES[state.location]);
+    if (state.length) tags.push(state.length + '"');
+    if (state.tier) tags.push(TIERS[state.tier].name);
+    if (state.style) tags.push(state.style.charAt(0).toUpperCase() + state.style.slice(1) + ' chain');
+    if (state.charms.length) tags.push(state.charms.length + ' charm' + (state.charms.length > 1 ? 's' : ''));
+
+    const tagsEl = document.getElementById('selectionTags');
+    if (tags.length) {
+      tagsEl.innerHTML = tags.map(t => `<span class="selection-tag">${t}</span>`).join('');
+    } else {
+      tagsEl.innerHTML = '<span class="selection-placeholder">Make selections to see your design</span>';
+    }
+
+    const calc = calcTotal();
+    if (calc) {
+      document.getElementById('priceChain').textContent = fmt(calc.chain);
+      document.getElementById('priceWeld').textContent = fmt(calc.weld);
+      document.getElementById('priceCharms').textContent = calc.charms > 0 ? fmt(calc.charms) : '—';
+      document.getElementById('priceTotal').textContent = fmt(calc.total);
+    } else {
+      document.getElementById('priceChain').textContent = '—';
+      document.getElementById('priceWeld').textContent = '—';
+      document.getElementById('priceCharms').textContent = '—';
+      document.getElementById('priceTotal').textContent = '$—';
+    }
+  }
+
+  function goToStep(n) {
+    state.step = n;
+    document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('step' + n).classList.add('active');
+    document.querySelectorAll('.progress-step').forEach(s => {
+      const sn = parseInt(s.dataset.step);
+      s.classList.toggle('active', sn === n);
+      s.classList.toggle('completed', sn < n);
+    });
+    if (n === 5) buildCharmGrid();
+    if (n === 6) buildSummary();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function nextStep() { if (state.step < 6) goToStep(state.step + 1); }
+  function prevStep() { if (state.step > 1) goToStep(state.step - 1); }
+
+  function buildSummary() {
+    const calc = calcTotal();
+    const card = document.getElementById('summaryCard');
+    const rows = [
+      ['Location', state.location ? LOCATION_NAMES[state.location] : '—'],
+      ['Measurement', state.length ? state.length + '"' : '—'],
+      ['Metal Tier', state.tier ? TIERS[state.tier].name : '—'],
+      ['Chain Style', state.style ? state.style.charAt(0).toUpperCase() + state.style.slice(1) : '—'],
+      ['Charms', state.charms.length ? state.charms.length + ' charm(s)' : 'None'],
+      ['Estimated Total', calc ? `<span class="summary-total">${fmt(calc.total)}</span>` : '—'],
+    ];
+    card.innerHTML = rows.map(([l, v]) => `<div class="summary-row"><span class="summary-row-label">${l}</span><span class="summary-row-value">${v}</span></div>`).join('');
+  }
+
+  function bookNow() {
+    alert('In the live Wix site, this button triggers a $25 deposit payment via Wix Payments and then redirects to the Wix Bookings calendar to select your appointment time.\n\nAll selections are saved and confirmed with your booking.');
+  }
+
+  // Init
+  buildCharmGrid();
+</script>
+</body>
+</html>
