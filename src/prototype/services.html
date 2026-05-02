@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HUE Glint — Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --black: #0A0A0A;
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --white: #FFFFFF;
+    --gray: #8A8A8A;
+    --cream-dark: #EDE7D9;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--black);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; font-weight: 400; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    transition: padding 0.3s;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 500;
+    color: var(--white); letter-spacing: 0.15em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a.active { color: var(--gold); }
+
+  .nav-cta {
+    background: var(--gold);
+    color: var(--black) !important;
+    padding: 10px 24px;
+    font-weight: 600 !important;
+    letter-spacing: 0.1em;
+    transition: background 0.3s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--black) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 70vh;
+    background: var(--black);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 140px 60px 100px;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 50%, rgba(201,168,76,0.07) 0%, transparent 55%),
+                radial-gradient(ellipse at 20% 80%, rgba(201,168,76,0.04) 0%, transparent 50%);
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 700px; }
+
+  .hero-eyebrow {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .hero-eyebrow::after {
+    content: ''; display: block;
+    width: 40px; height: 1px; background: var(--gold);
+  }
+
+  .hero-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 6.5vw, 90px);
+    font-weight: 300; line-height: 1.02;
+    color: var(--white); margin-bottom: 24px;
+  }
+
+  .hero-sub {
+    font-size: 13px; line-height: 1.9;
+    color: rgba(255,255,255,0.55);
+    max-width: 520px; font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── SECTION COMMON ── */
+  .section-eyebrow {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 14px;
+  }
+
+  .section-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 3.5vw, 56px);
+    font-weight: 300; line-height: 1.1; margin-bottom: 16px;
+  }
+
+  .gold-line { width: 40px; height: 1px; background: var(--gold); margin: 0 0 28px; }
+
+  /* ── SERVICE DETAIL SECTIONS ── */
+  .service-detail {
+    padding: 100px 60px;
+  }
+  .service-detail:nth-child(odd) { background: var(--cream); }
+  .service-detail:nth-child(even) { background: var(--cream-dark); }
+
+  .service-row {
+    display: grid; grid-template-columns: 1fr 420px;
+    gap: 80px; align-items: start;
+    max-width: 1200px; margin: 0 auto;
+  }
+
+  .service-text {}
+
+  .service-tag {
+    display: inline-block;
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px;
+    padding: 6px 14px;
+    border: 1px solid rgba(201,168,76,0.35);
+  }
+
+  .service-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(30px, 3vw, 48px);
+    font-weight: 400; line-height: 1.1;
+    margin-bottom: 24px;
+  }
+
+  .service-body {
+    font-size: 13px; line-height: 1.9;
+    color: #3a3a3a; font-weight: 300;
+    max-width: 480px; margin-bottom: 32px;
+  }
+
+  .service-bullets { list-style: none; margin-bottom: 36px; }
+  .service-bullets li {
+    font-size: 12px; color: var(--gray);
+    padding: 9px 0; border-bottom: 1px solid rgba(0,0,0,0.07);
+    display: flex; align-items: center; gap: 10px; font-weight: 300;
+  }
+  .service-bullets li::before {
+    content: '✦'; color: var(--gold); font-size: 7px; flex-shrink: 0;
+  }
+
+  /* Price panel */
+  .price-panel {
+    background: var(--black);
+    padding: 48px 40px;
+    position: sticky; top: 100px;
+  }
+
+  .price-panel-label {
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35); margin-bottom: 24px;
+  }
+
+  .price-rows {}
+
+  .price-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .price-row:last-child { border-bottom: none; }
+
+  .price-tier {
+    font-size: 11px; font-weight: 500;
+    color: rgba(255,255,255,0.45); letter-spacing: 0.08em;
+  }
+
+  .price-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 300; color: var(--gold);
+  }
+
+  .price-note {
+    font-size: 11px; line-height: 1.7;
+    color: rgba(255,255,255,0.4);
+    margin: 20px 0 28px; font-weight: 300;
+  }
+
+  .price-divider {
+    width: 100%; height: 1px;
+    background: rgba(201,168,76,0.2);
+    margin: 24px 0;
+  }
+
+  /* Buttons */
+  .btn-gold {
+    display: inline-block;
+    background: var(--gold); color: var(--black);
+    padding: 14px 32px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all 0.3s; width: 100%; text-align: center;
+  }
+  .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .btn-outline-dark {
+    display: inline-block;
+    background: transparent; color: var(--white);
+    padding: 14px 32px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.25); cursor: pointer;
+    transition: all 0.3s; width: 100%; text-align: center;
+  }
+  .btn-outline-dark:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── PARTY FAVOR TABLE ── */
+  .party-favor-section {
+    background: var(--cream-dark); padding: 100px 60px;
+  }
+
+  .pf-inner { max-width: 1200px; margin: 0 auto; }
+
+  .pf-header { margin-bottom: 60px; }
+
+  .pf-body-text {
+    font-size: 13px; line-height: 1.9;
+    color: #3a3a3a; font-weight: 300;
+    max-width: 540px; margin-bottom: 36px;
+  }
+
+  .pf-table-wrap {
+    background: var(--black);
+    padding: 60px;
+  }
+
+  .pf-table-label {
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35); text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .pf-table {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: rgba(201,168,76,0.15);
+    margin-bottom: 40px;
+  }
+
+  .pf-col {
+    background: #0E0E0E;
+    padding: 48px 36px;
+    text-align: center;
+  }
+  .pf-col.highlighted { background: #141414; border-top: 2px solid var(--gold); }
+
+  .pf-col-tier {
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 12px;
+  }
+
+  .pf-col-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px; font-weight: 300; color: var(--white);
+    line-height: 1; margin-bottom: 6px;
+  }
+
+  .pf-col-sub {
+    font-size: 10px; color: rgba(255,255,255,0.3);
+    letter-spacing: 0.1em; margin-bottom: 20px;
+  }
+
+  .pf-col-material {
+    font-size: 11px; color: rgba(255,255,255,0.45);
+    line-height: 1.6; font-weight: 300;
+  }
+
+  .pf-notes {
+    border-top: 1px solid rgba(201,168,76,0.15);
+    padding-top: 32px;
+  }
+
+  .pf-note {
+    display: flex; gap: 14px; align-items: flex-start;
+    margin-bottom: 14px;
+    font-size: 12px; color: rgba(255,255,255,0.45);
+    line-height: 1.7; font-weight: 300;
+  }
+  .pf-note::before {
+    content: '✦'; color: var(--gold); font-size: 7px;
+    flex-shrink: 0; margin-top: 4px;
+  }
+
+  .pf-cta-row {
+    display: flex; gap: 16px; margin-top: 40px;
+  }
+
+  /* ── RE-WELD SECTION ── */
+  .reweld-section {
+    background: var(--cream); padding: 100px 60px;
+  }
+  .reweld-header { text-align: center; margin-bottom: 64px; }
+  .reweld-header .section-heading { margin: 0 auto; }
+
+  .reweld-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.15);
+    max-width: 1200px; margin: 0 auto;
+  }
+
+  .reweld-card {
+    background: var(--cream);
+    padding: 48px 36px;
+    transition: background 0.3s;
+  }
+  .reweld-card:hover { background: var(--cream-dark); }
+
+  .reweld-icon {
+    width: 44px; height: 44px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-size: 16px;
+    margin-bottom: 24px;
+  }
+
+  .reweld-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 400; margin-bottom: 8px;
+  }
+
+  .reweld-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px; font-weight: 300; color: var(--gold);
+    margin-bottom: 12px; line-height: 1;
+  }
+
+  .reweld-desc {
+    font-size: 12px; line-height: 1.8;
+    color: var(--gray); font-weight: 300;
+  }
+
+  /* ── POLICY STRIP ── */
+  .policy-strip {
+    background: var(--black); padding: 80px 60px;
+  }
+
+  .policy-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(201,168,76,0.1);
+    max-width: 1200px; margin: 0 auto;
+  }
+
+  .policy-item {
+    background: var(--black);
+    padding: 48px 40px;
+  }
+
+  .policy-icon {
+    font-size: 20px; color: var(--gold);
+    margin-bottom: 20px; display: block;
+  }
+
+  .policy-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 400;
+    color: var(--white); margin-bottom: 12px;
+  }
+
+  .policy-desc {
+    font-size: 12px; line-height: 1.8;
+    color: rgba(255,255,255,0.45); font-weight: 300;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #050505;
+    padding: 80px 60px 40px;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px; margin-bottom: 60px; padding-bottom: 60px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 400;
+    color: var(--white); letter-spacing: 0.1em; margin-bottom: 16px;
+  }
+  .footer-logo span { color: var(--gold); }
+
+  .footer-tagline {
+    font-size: 11px; color: rgba(255,255,255,0.35);
+    letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 24px;
+  }
+
+  .footer-social { display: flex; gap: 16px; }
+
+  .social-link {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.4); text-decoration: none; font-size: 14px;
+    transition: all 0.3s;
+  }
+  .social-link:hover { border-color: var(--gold); color: var(--gold); }
+
+  .footer-col h4 {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 10px; }
+  .footer-col a {
+    font-size: 12px; color: rgba(255,255,255,0.4);
+    text-decoration: none; font-weight: 300; transition: color 0.3s;
+  }
+  .footer-col a:hover { color: var(--white); }
+
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy {
+    font-size: 11px; color: rgba(255,255,255,0.2);
+    font-weight: 300; letter-spacing: 0.05em;
+  }
+  .footer-legal { display: flex; gap: 24px; }
+  .footer-legal a {
+    font-size: 11px; color: rgba(255,255,255,0.2);
+    text-decoration: none; transition: color 0.3s;
+  }
+  .footer-legal a:hover { color: rgba(255,255,255,0.5); }
+
+  /* ── FADE-IN ── */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 120px 24px 80px; }
+    .service-detail { padding: 72px 24px; }
+    .service-row { grid-template-columns: 1fr; gap: 48px; }
+    .price-panel { position: static; }
+    .party-favor-section { padding: 72px 24px; }
+    .pf-table-wrap { padding: 32px 24px; }
+    .pf-table { grid-template-columns: 1fr; }
+    .pf-cta-row { flex-direction: column; }
+    .reweld-section { padding: 72px 24px; }
+    .reweld-grid { grid-template-columns: repeat(2, 1fr); }
+    .policy-strip { padding: 60px 24px; }
+    .policy-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; }
+  }
+
+  @media (max-width: 600px) {
+    .reweld-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="index.html" class="nav-logo">HUE <span>✦</span> GLINT</a>
+  <ul class="nav-links">
+    <li><a href="configurator.html">Design Your Chain</a></li>
+    <li><a href="services.html" class="active">Services</a></li>
+    <li><a href="collaborations.html">Collaborations</a></li>
+    <li><a href="#">Collections</a></li>
+    <li><a href="#">Shop</a></li>
+    <li><a href="configurator.html" class="nav-cta">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content fade-in">
+    <div class="hero-eyebrow">Services</div>
+    <h1 class="hero-headline">Every way<br>we weld.</h1>
+    <p class="hero-sub">In-studio, mobile, bridal, corporate — permanent jewelry for every occasion and every guest count.</p>
+  </div>
+</section>
+
+<!-- ── 1. IN-STUDIO WELD ── -->
+<div class="service-detail">
+  <div class="service-row">
+    <div class="service-text fade-in">
+      <div class="service-tag">01 — In-Studio</div>
+      <h2 class="service-title">In-Studio<br>Weld Session</h2>
+      <div class="gold-line"></div>
+      <p class="service-body">The core experience. One-on-one in our studio — you arrive, we design together, we weld. 30 minutes from door to door. The chain is yours before you leave.</p>
+      <ul class="service-bullets">
+        <li>7 body locations available</li>
+        <li>6 chain styles to choose from</li>
+        <li>Up to 3 charms per piece</li>
+        <li>$25 deposit to book — applied to total</li>
+      </ul>
+    </div>
+    <div class="price-panel fade-in" style="transition-delay:0.15s">
+      <div class="price-panel-label">Starting From</div>
+      <div class="price-rows">
+        <div class="price-row">
+          <span class="price-tier">Tier 1 — Stainless Steel</span>
+          <span class="price-amount">$42</span>
+        </div>
+        <div class="price-row">
+          <span class="price-tier">Tier 2 — Gold-Filled</span>
+          <span class="price-amount">$72</span>
+        </div>
+        <div class="price-row">
+          <span class="price-tier">Tier 3 — Solid 14k Gold</span>
+          <span class="price-amount">$145</span>
+        </div>
+      </div>
+      <p class="price-note">$25 deposit required at booking. Applied in full to your session total. Final price depends on chain length and charm selection.</p>
+      <div class="price-divider"></div>
+      <a href="configurator.html" class="btn-gold">Book Now →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── 2. STACKING SESSION ── -->
+<div class="service-detail">
+  <div class="service-row">
+    <div class="service-text fade-in">
+      <div class="service-tag">02 — Stacking</div>
+      <h2 class="service-title">Stacking Session<br><em style="font-style:italic;font-size:0.85em;color:var(--gold)">3+ Chains</em></h2>
+      <div class="gold-line"></div>
+      <p class="service-body">Three chains. Ten percent off. One perfect afternoon. Stack the same wrist, mix wrist and ankle, bring a friend and get matching sets.</p>
+      <ul class="service-bullets">
+        <li>10% off when booking 3 or more chains</li>
+        <li>Mix and match tiers, locations, and styles</li>
+        <li>Bring a friend — split or stack individually</li>
+        <li>Session runs approximately 60 minutes</li>
+      </ul>
+    </div>
+    <div class="price-panel fade-in" style="transition-delay:0.15s">
+      <div class="price-panel-label">Discount Applied Automatically</div>
+      <div class="price-rows">
+        <div class="price-row">
+          <span class="price-tier">Savings</span>
+          <span class="price-amount">10%</span>
+        </div>
+        <div class="price-row">
+          <span class="price-tier">Minimum</span>
+          <span class="price-amount">3 chains</span>
+        </div>
+        <div class="price-row">
+          <span class="price-tier">3 × Tier 1 — Starting From</span>
+          <span class="price-amount">$126</span>
+        </div>
+      </div>
+      <p class="price-note">Discount applies to the full session total. Mix any tiers and body locations — savings apply across the board.</p>
+      <div class="price-divider"></div>
+      <a href="configurator.html" class="btn-gold">Book a Stack →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── 3. GLOW & GLINT ── -->
+<div class="service-detail">
+  <div class="service-row">
+    <div class="service-text fade-in">
+      <div class="service-tag">03 — Package</div>
+      <h2 class="service-title">Glow &amp; Glint<br>Package</h2>
+      <div class="gold-line"></div>
+      <p class="service-body">In partnership with deSoleil Spray Tanning. A spray tan takes 20 minutes. A permanent bracelet takes 10. Together they're the most efficient glow-up in existence — and 10% off both services when booked same day.</p>
+      <ul class="service-bullets">
+        <li>Book both services on the same day</li>
+        <li>Tan develops while you're getting welded</li>
+        <li>No tan lines — the chain is part of you</li>
+        <li>10% savings applied to each service separately</li>
+      </ul>
+    </div>
+    <div class="price-panel fade-in" style="transition-delay:0.15s">
+      <div class="price-panel-label">Combined Day Package</div>
+      <div class="price-rows">
+        <div class="price-row">
+          <span class="price-tier">Spray Tan — deSoleil</span>
+          <span class="price-amount">$35+</span>
+        </div>
+        <div class="price-row">
+          <span class="price-tier">Chain — HUE Glint</span>
+          <span class="price-amount">$42+</span>
+        </div>
+        <div class="price-row">
+          <span class="price-tier">Combined Savings</span>
+          <span class="price-amount">10%</span>
+        </div>
+      </div>
+      <p class="price-note">Book same-day at both studios to unlock the savings. Both studios share your booking — one seamless afternoon.</p>
+      <div class="price-divider"></div>
+      <a href="configurator.html" class="btn-gold">Book Glow &amp; Glint →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── 4. BRIDAL & BACHELORETTE ── -->
+<div class="service-detail">
+  <div class="service-row">
+    <div class="service-text fade-in">
+      <div class="service-tag">04 — Bridal</div>
+      <h2 class="service-title">Bridal &amp;<br>Bachelorette Pop-Up</h2>
+      <div class="gold-line"></div>
+      <p class="service-body">We bring the full studio to your venue. Every bride deserves a chain. Every bridesmaid deserves a moment. Host always gets a complimentary Tier 1 chain.</p>
+      <ul class="service-bullets">
+        <li>Minimum 4 guests to book</li>
+        <li>Host always receives a free Tier 1 chain ($42 value)</li>
+        <li>Available at Airbnbs, hotels, vineyards, salons</li>
+        <li>$25 deposit per guest to reserve</li>
+        <li>Travel fee from $35 + $2/mile over 15 miles</li>
+      </ul>
+    </div>
+    <div class="price-panel fade-in" style="transition-delay:0.15s">
+      <div class="price-panel-label">Per-Guest Pricing</div>
+      <div class="price-rows">
+        <div class="price-row">
+          <span class="price-tier">Tier 1 — per guest</span>
+          <span class="price-amount">$42+</span>
+        </div>
+        <div class="price-row">
+          <span class="price-tier">Tier 2 — per guest</span>
+          <span class="price-amount">$72+</span>
+        </div>
+        <div class="price-row">
+          <span class="price-tier">Tier 3 — per guest</span>
+          <span class="price-amount">$145+</span>
+        </div>
+      </div>
+      <p class="price-note">Same per-person pricing as studio sessions. Travel fee from $35 base + $2/mile over 15 miles. $25 deposit per guest secures the date.</p>
+      <div class="price-divider"></div>
+      <a href="mailto:hello@hueglint.com" class="btn-gold">Inquire About Bridal →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── 5. PARTY FAVOR EVENTS ── -->
+<div class="party-favor-section">
+  <div class="pf-inner">
+    <div class="pf-header fade-in">
+      <div class="section-eyebrow">05 — Corporate &amp; Events</div>
+      <h2 class="section-heading">Party Favor Events</h2>
+      <div class="gold-line"></div>
+      <p class="pf-body-text">Transform any gathering into an unforgettable experience. Permanent jewelry as the party favor — guests leave with something that lasts. Ideal for corporate events, milestone birthdays, brand launches, and bespoke celebrations.</p>
+    </div>
+    <div class="pf-table-wrap fade-in" style="transition-delay:0.1s">
+      <div class="pf-table-label">Per-Guest Pricing by Tier</div>
+      <div class="pf-table">
+        <div class="pf-col">
+          <div class="pf-col-tier">Tier 1</div>
+          <div class="pf-col-price">$38</div>
+          <div class="pf-col-sub">per guest</div>
+          <div class="pf-col-material">316L Stainless Steel<br>PVD Gold or Silver</div>
+        </div>
+        <div class="pf-col highlighted">
+          <div class="pf-col-tier">Tier 2 — Most Requested</div>
+          <div class="pf-col-price">$72</div>
+          <div class="pf-col-sub">per guest</div>
+          <div class="pf-col-material">14k Gold-Filled<br>Argentium Silver</div>
+        </div>
+        <div class="pf-col">
+          <div class="pf-col-tier">Tier 3</div>
+          <div class="pf-col-price">$175</div>
+          <div class="pf-col-sub">per guest</div>
+          <div class="pf-col-material">Solid 14k Yellow<br>or White Gold</div>
+        </div>
+      </div>
+      <div class="pf-notes">
+        <div class="pf-note">Host receives a complimentary Tier 1 chain ($38 value) with every event — no exceptions.</div>
+        <div class="pf-note">Travel fee: $50–75 base depending on guest count + $2/mile over 15 miles.</div>
+        <div class="pf-note">Minimum 4 guests. Full equipment and all chain styles included. Deposit required to confirm date.</div>
+      </div>
+      <div class="pf-cta-row">
+        <a href="mailto:hello@hueglint.com" class="btn-gold" style="flex:1;display:inline-block;text-align:center;">Get a Quote →</a>
+        <a href="collaborations.html" class="btn-outline-dark" style="flex:1;display:inline-block;text-align:center;">Learn About Collaborations →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 6. RE-WELD & MAINTENANCE ── -->
+<div class="reweld-section">
+  <div class="reweld-header fade-in">
+    <div class="section-eyebrow">06 — Maintenance</div>
+    <h2 class="section-heading">Re-Weld &amp; Aftercare</h2>
+  </div>
+  <div class="reweld-grid">
+    <div class="reweld-card fade-in">
+      <div class="reweld-icon">◈</div>
+      <h3>Re-Weld</h3>
+      <div class="reweld-price">$20 <span style="font-size:16px;color:var(--gray)">T1/T2</span> · <span style="font-size:36px">$35</span> <span style="font-size:16px;color:var(--gray)">T3</span></div>
+      <p class="reweld-desc">Your chain came loose or broke. We weld it back on — same precision, same finish, same result.</p>
+    </div>
+    <div class="reweld-card fade-in" style="transition-delay:0.1s">
+      <div class="reweld-icon">✦</div>
+      <h3>Charm Swap</h3>
+      <div class="reweld-price">$10 <span style="font-size:16px;color:var(--gray)">+ charm cost</span></div>
+      <p class="reweld-desc">Cut off the old charm, attach something new. Your chain stays on while we make the swap.</p>
+    </div>
+    <div class="reweld-card fade-in" style="transition-delay:0.2s">
+      <div class="reweld-icon">○</div>
+      <h3>Chain Removal</h3>
+      <div class="reweld-price">Free</div>
+      <p class="reweld-desc">Need it off for surgery or imaging? We snip it free of charge. Come back whenever you're ready — we'll re-weld it on.</p>
+    </div>
+    <div class="reweld-card fade-in" style="transition-delay:0.3s">
+      <div class="reweld-icon">◯</div>
+      <h3>Virtual Consult</h3>
+      <div class="reweld-price">Free <span style="font-size:16px;color:var(--gray)">15 min</span></div>
+      <p class="reweld-desc">Not sure what to choose? Talk to us first. We'll walk you through tiers, body locations, and chain styles before you commit to anything.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── POLICY STRIP ── -->
+<div class="policy-strip">
+  <div class="policy-grid">
+    <div class="policy-item fade-in">
+      <span class="policy-icon">◈</span>
+      <div class="policy-title">30-Day Weld Warranty</div>
+      <p class="policy-desc">If the weld fails within 30 days of your session, we re-weld it free. No questions. No forms. Just come in.</p>
+    </div>
+    <div class="policy-item fade-in" style="transition-delay:0.1s">
+      <span class="policy-icon">◯</span>
+      <div class="policy-title">24-Hour Cancellation</div>
+      <p class="policy-desc">Cancel or reschedule with 24 or more hours notice and receive a full deposit refund — credited back to your original payment method.</p>
+    </div>
+    <div class="policy-item fade-in" style="transition-delay:0.2s">
+      <span class="policy-icon">✦</span>
+      <div class="policy-title">Age Policy</div>
+      <p class="policy-desc">Clients under 18 require a parent or guardian to be present for the duration of the session. No exceptions.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">HUE <span>✦</span> GLINT</div>
+      <div class="footer-tagline">No Clasp. No Compromise.</div>
+      <div class="footer-social">
+        <a href="#" class="social-link">ig</a>
+        <a href="#" class="social-link">tk</a>
+        <a href="#" class="social-link">pt</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="configurator.html">Design Your Chain</a></li>
+        <li><a href="services.html">In-Studio Weld</a></li>
+        <li><a href="services.html">Stacking Session</a></li>
+        <li><a href="services.html">Bridal Pop-Up</a></li>
+        <li><a href="services.html">Party Favors</a></li>
+        <li><a href="services.html">Glow &amp; Glint</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Learn</h4>
+      <ul>
+        <li><a href="#">What Is Permanent Jewelry?</a></li>
+        <li><a href="#">Which Tier Is Right for Me?</a></li>
+        <li><a href="#">Aftercare Guide</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">The HUE Journal</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Studio</h4>
+      <ul>
+        <li><a href="#">About HUE Glint</a></li>
+        <li><a href="collaborations.html">Collaborations</a></li>
+        <li><a href="#">Gift Cards</a></li>
+        <li><a href="#">Aftercare Shop</a></li>
+        <li><a href="#">Inner Circle</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 HUE Co. All rights reserved. glint.hue-co.com</div>
+    <div class="footer-legal">
+      <a href="#">Terms of Service</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Aftercare Policy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Fade-in on scroll
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  fadeEls.forEach(el => observer.observe(el));
+
+  // Nav scroll shrink
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.padding =
+      window.scrollY > 80 ? '12px 60px' : '20px 60px';
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collections — HUE Glint</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--cream:#F5F0E8;--black:#0A0A0A;--gold:#C9A84C;--gold-light:#E8D5A3;--white:#FFFFFF;--gray:#8A8A8A;--cream-dark:#EDE7D9;--border:rgba(201,168,76,0.2);}
+  body{background:var(--cream);color:var(--black);font-family:'Montserrat',sans-serif;font-weight:300;}
+  h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:400;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 60px;background:rgba(10,10,10,0.96);border-bottom:1px solid var(--border);}
+  .nav-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--white);letter-spacing:0.15em;text-decoration:none;}
+  .nav-logo span{color:var(--gold);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.3s;}
+  .nav-links a:hover{color:var(--gold);}
+  .nav-cta{background:var(--gold);color:var(--black)!important;padding:10px 24px;font-weight:600!important;}
+
+  /* HERO */
+  .hero{background:var(--black);padding:160px 60px 100px;position:relative;overflow:hidden;}
+  .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+  .hero-inner{max-width:700px;}
+  .eyebrow{font-size:10px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  .hero h1{font-size:clamp(48px,6vw,88px);font-weight:300;color:var(--white);line-height:1.05;margin-bottom:20px;}
+  .hero h1 em{font-style:italic;color:var(--gold);}
+  .hero-sub{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.9;max-width:480px;font-weight:300;}
+
+  /* TIER TABS */
+  .tier-tabs{display:flex;border-bottom:1px solid rgba(0,0,0,0.1);background:var(--cream-dark);padding:0 60px;position:sticky;top:64px;z-index:50;}
+  .tier-tab{padding:20px 32px;font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--gray);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.3s;}
+  .tier-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+  .tier-tab:hover{color:var(--black);}
+
+  /* TIER PANEL */
+  .tier-panel{display:none;}
+  .tier-panel.active{display:block;}
+
+  /* TIER HEADER */
+  .tier-header{padding:72px 60px;background:var(--cream);}
+  .tier-header-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
+  .tier-header h2{font-size:clamp(36px,4vw,60px);font-weight:300;margin-bottom:8px;}
+  .tier-header h2 em{font-style:italic;color:var(--gold);}
+  .tier-material-tag{font-size:11px;letter-spacing:0.1em;color:var(--gray);margin-bottom:24px;}
+  .tier-desc{font-size:13px;line-height:1.9;color:var(--gray);font-weight:300;}
+  .tier-price-panel{background:var(--black);padding:40px;border-left:3px solid var(--gold);}
+  .tier-price-from{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:8px;}
+  .tier-price-big{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:300;color:var(--white);line-height:1;}
+  .tier-price-note{font-size:11px;color:rgba(255,255,255,0.35);margin-top:8px;margin-bottom:28px;}
+  .tier-breakdown li{font-size:12px;color:rgba(255,255,255,0.6);padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;}
+  .tier-breakdown li span:last-child{color:var(--gold);font-weight:500;}
+
+  /* CHAIN STYLES GRID */
+  .chains-section{padding:72px 60px;background:var(--cream-dark);}
+  .section-heading{font-size:clamp(28px,3vw,44px);font-weight:300;margin-bottom:8px;}
+  .section-heading em{font-style:italic;color:var(--gold);}
+  .section-sub{font-size:12px;color:var(--gray);line-height:1.8;max-width:480px;margin-bottom:48px;font-weight:300;}
+  .chains-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(0,0,0,0.08);}
+  .chain-card{background:var(--cream);padding:40px 32px;transition:background 0.3s;}
+  .chain-card:hover{background:var(--white);}
+  .chain-visual{height:48px;display:flex;align-items:center;margin-bottom:16px;}
+  .chain-links{display:flex;gap:6px;align-items:center;}
+  .chain-link{width:20px;height:14px;border:1.5px solid var(--gold);border-radius:50%;}
+  .chain-link.square{border-radius:2px;}
+  .chain-link.large{width:32px;}
+  .chain-link.flat{height:8px;}
+  .chain-card h3{font-size:26px;font-weight:400;margin-bottom:8px;}
+  .chain-card p{font-size:12px;color:var(--gray);line-height:1.7;margin-bottom:16px;font-weight:300;}
+  .width-chips{display:flex;gap:8px;flex-wrap:wrap;}
+  .width-chip{font-size:10px;font-weight:600;letter-spacing:0.1em;padding:4px 10px;border:1px solid rgba(201,168,76,0.3);color:var(--gold);}
+
+  /* CHARMS */
+  .charms-section{padding:72px 60px;background:var(--black);}
+  .charms-section .section-heading{color:var(--white);}
+  .charms-section .section-sub{color:rgba(255,255,255,0.45);}
+  .charms-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:48px;}
+  .charm-card{background:#111;border:1px solid rgba(201,168,76,0.1);padding:24px 16px;text-align:center;transition:all 0.3s;cursor:default;}
+  .charm-card:hover{border-color:var(--gold);background:#161616;}
+  .charm-icon{font-size:28px;display:block;margin-bottom:10px;}
+  .charm-name{font-size:11px;color:rgba(255,255,255,0.5);display:block;margin-bottom:10px;font-weight:300;}
+  .charm-prices{display:flex;justify-content:space-between;}
+  .charm-tier-price{font-size:9px;color:rgba(255,255,255,0.3);text-align:center;}
+  .charm-tier-price span{display:block;font-size:11px;font-weight:500;color:var(--gold-light);}
+
+  /* CHARM RULES */
+  .charm-rules{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,168,76,0.1);}
+  .charm-rule{background:#0a0a0a;padding:32px 28px;}
+  .charm-rule-icon{font-size:20px;color:var(--gold);margin-bottom:12px;}
+  .charm-rule h4{font-size:16px;color:var(--white);margin-bottom:8px;}
+  .charm-rule p{font-size:12px;color:rgba(255,255,255,0.45);line-height:1.7;font-weight:300;}
+
+  /* COMPARISON TABLE */
+  .comparison-section{padding:72px 60px;background:var(--cream);}
+  .comparison-table{width:100%;border-collapse:collapse;margin-top:48px;}
+  .comparison-table th{padding:20px 24px;text-align:left;font-size:10px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;border-bottom:2px solid rgba(201,168,76,0.3);}
+  .comparison-table th:not(:first-child){text-align:center;color:var(--gold);}
+  .comparison-table td{padding:16px 24px;font-size:12px;border-bottom:1px solid rgba(0,0,0,0.06);}
+  .comparison-table td:not(:first-child){text-align:center;font-weight:500;}
+  .comparison-table tr:hover td{background:rgba(201,168,76,0.03);}
+  .check{color:var(--gold);font-size:14px;}
+  .dash{color:rgba(0,0,0,0.2);}
+
+  /* CTA STRIP */
+  .cta-strip{background:var(--black);padding:80px 60px;text-align:center;}
+  .cta-strip h2{font-size:48px;font-weight:300;color:var(--white);margin-bottom:16px;}
+  .cta-strip h2 em{font-style:italic;color:var(--gold);}
+  .cta-strip p{font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:40px;font-weight:300;}
+  .btn-primary{background:var(--gold);color:var(--black);padding:16px 40px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:all 0.3s;}
+  .btn-primary:hover{background:var(--gold-light);}
+
+  /* FOOTER */
+  footer{background:#050505;padding:60px;border-top:1px solid rgba(201,168,76,0.1);}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;}
+  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--white);}
+  .footer-logo span{color:var(--gold);}
+  .footer-copy{font-size:11px;color:rgba(255,255,255,0.2);}
+
+  /* FADE */
+  .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.7s ease,transform 0.7s ease;}
+  .fade-in.visible{opacity:1;transform:translateY(0);}
+
+  @media(max-width:900px){
+    nav{padding:16px 24px;}
+    .hero,.tier-header,.chains-section,.charms-section,.comparison-section{padding:60px 24px;}
+    .tier-tabs{padding:0 24px;}
+    .tier-header-inner{grid-template-columns:1fr;}
+    .chains-grid{grid-template-columns:repeat(2,1fr);}
+    .charms-grid{grid-template-columns:repeat(3,1fr);}
+    .charm-rules{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">HUE <span>✦</span> GLINT</a>
+  <ul class="nav-links">
+    <li><a href="configurator.html">Design Your Chain</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="collaborations.html">Collaborations</a></li>
+    <li><a href="collections.html">Collections</a></li>
+    <li><a href="configurator.html" class="nav-cta">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner fade-in">
+    <div class="eyebrow">The Collections</div>
+    <h1>Wear what <em>lasts.</em></h1>
+    <p class="hero-sub">Three metal tiers. Six chain styles. Twelve charms. Every combination is permanent, hypoallergenic, and welded to your exact body. No clasp. No compromise.</p>
+  </div>
+</section>
+
+<!-- TIER TABS -->
+<div class="tier-tabs">
+  <div class="tier-tab active" onclick="showTier('t1',this)">Tier 1 — Stainless</div>
+  <div class="tier-tab" onclick="showTier('t2',this)">Tier 2 — Gold-Filled / Silver</div>
+  <div class="tier-tab" onclick="showTier('t3',this)">Tier 3 — Solid Gold</div>
+</div>
+
+<!-- TIER 1 -->
+<div class="tier-panel active" id="t1">
+  <div class="tier-header fade-in">
+    <div class="tier-header-inner">
+      <div>
+        <div class="eyebrow">Tier 1</div>
+        <h2>Durable <em>Utility</em></h2>
+        <div class="tier-material-tag">316L Stainless Steel · PVD Gold · PVD Silver</div>
+        <p class="tier-desc">The workhorse of permanent jewelry. 316L surgical-grade stainless steel is corrosion-resistant, hypoallergenic, and virtually indestructible under daily wear. The PVD (Physical Vapor Deposition) coating is 3–5× harder than traditional gold plating — it won't rub off, chip, or fade. Zero maintenance. Zero tarnish.<br><br>Best for: Active lifestyles · First-time permanent jewelry · Daily swimmers and gym-goers · Budget-conscious luxury · Gifting</p>
+      </div>
+      <div class="tier-price-panel">
+        <div class="tier-price-from">Starting from</div>
+        <div class="tier-price-big">$42</div>
+        <div class="tier-price-note">Includes weld fee. Final price based on exact length.</div>
+        <ul class="tier-breakdown" style="list-style:none;margin-top:16px;">
+          <li><span>Per inch</span><span>$1.75</span></li>
+          <li><span>Weld fee</span><span>$30</span></li>
+          <li><span>Charm (each)</span><span>$12</span></li>
+          <li><span>Wrist (avg 7.25")</span><span>~$43</span></li>
+          <li><span>Ankle (avg 9.5")</span><span>~$47</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TIER 2 -->
+<div class="tier-panel" id="t2">
+  <div class="tier-header fade-in">
+    <div class="tier-header-inner">
+      <div>
+        <div class="eyebrow">Tier 2 — Most Popular</div>
+        <h2>Refined <em>Luxury</em></h2>
+        <div class="tier-material-tag">14k Gold-Filled · Argentium Silver (93.5%)</div>
+        <p class="tier-desc">14k Gold-Filled is not gold plating. By law, the gold layer must be at least 5% of total weight — that's 100× thicker than standard plating. It looks, feels, and wears like solid gold at a fraction of the cost. Argentium Silver replaces copper with germanium, making it tarnish-resistant, brighter, and hypoallergenic. Both materials are ideal for sensitive skin.<br><br>Best for: Sensitive skin · Daily wearers · Lasting color without solid gold pricing · The "fine jewelry" look</p>
+      </div>
+      <div class="tier-price-panel">
+        <div class="tier-price-from">Starting from</div>
+        <div class="tier-price-big">$72</div>
+        <div class="tier-price-note">Includes weld fee. Final price based on exact length.</div>
+        <ul class="tier-breakdown" style="list-style:none;margin-top:16px;">
+          <li><span>Per inch</span><span>$3.75</span></li>
+          <li><span>Weld fee</span><span>$45</span></li>
+          <li><span>Charm (each)</span><span>$28</span></li>
+          <li><span>Wrist (avg 7.25")</span><span>~$72</span></li>
+          <li><span>Ankle (avg 9.5")</span><span>~$81</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TIER 3 -->
+<div class="tier-panel" id="t3">
+  <div class="tier-header fade-in">
+    <div class="tier-header-inner">
+      <div>
+        <div class="eyebrow">Tier 3</div>
+        <h2>Solid <em>Gold</em></h2>
+        <div class="tier-material-tag">14k Yellow Gold · 14k White Gold (58.5% pure)</div>
+        <p class="tier-desc">14k solid gold is 58.5% pure gold. It retains melt value — the gold in your chain is always worth something. It does not tarnish, does not fade, and is the most hypoallergenic material available. Solid gold permanent jewelry is an investment. It can be cut off, melted down, redesigned. It outlives trends, decades, and generations.<br><br>Best for: Investment pieces · Milestone moments · Most sensitive skin · Heirloom quality · Men's chains</p>
+      </div>
+      <div class="tier-price-panel">
+        <div class="tier-price-from">Starting from</div>
+        <div class="tier-price-big">$145</div>
+        <div class="tier-price-note">Includes weld fee. Final price based on exact length.</div>
+        <ul class="tier-breakdown" style="list-style:none;margin-top:16px;">
+          <li><span>Per inch</span><span>$10.00</span></li>
+          <li><span>Weld fee</span><span>$75</span></li>
+          <li><span>Charm (each)</span><span>$75</span></li>
+          <li><span>Wrist (avg 7.25")</span><span>~$148</span></li>
+          <li><span>Ankle (avg 9.5")</span><span>~$170</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAIN STYLES -->
+<section class="chains-section">
+  <div class="fade-in">
+    <div class="eyebrow">Chain Styles</div>
+    <h2 class="section-heading">Six styles. <em>Every tier.</em></h2>
+    <p class="section-sub">All six chain styles are available in all three tiers. Width options vary by tier. Mix styles across chains for a curated stack.</p>
+  </div>
+  <div class="chains-grid">
+    <div class="chain-card fade-in">
+      <div class="chain-visual"><div class="chain-links"><div class="chain-link square"></div><div class="chain-link square"></div><div class="chain-link square"></div><div class="chain-link square"></div><div class="chain-link square"></div></div></div>
+      <h3>Box</h3>
+      <p>Square links with clean, geometric edges. Modern, architectural, precise. Works beautifully at any body location.</p>
+      <div class="width-chips"><span class="width-chip">1mm</span><span class="width-chip">1.5mm</span><span class="width-chip">2mm</span></div>
+    </div>
+    <div class="chain-card fade-in" style="transition-delay:0.1s">
+      <div class="chain-visual"><div class="chain-links"><div class="chain-link"></div><div class="chain-link"></div><div class="chain-link"></div><div class="chain-link"></div><div class="chain-link"></div></div></div>
+      <h3>Cable</h3>
+      <p>Classic round oval links. The most versatile and universally flattering permanent chain style. The safest first choice.</p>
+      <div class="width-chips"><span class="width-chip">1mm</span><span class="width-chip">1.5mm</span><span class="width-chip">2mm</span></div>
+    </div>
+    <div class="chain-card fade-in" style="transition-delay:0.2s">
+      <div class="chain-visual"><div class="chain-links"><div class="chain-link"></div><div class="chain-link"></div><div class="chain-link large"></div><div class="chain-link"></div><div class="chain-link"></div></div></div>
+      <h3>Figaro</h3>
+      <p>Three small links, one large elongated link. Italian-inspired pattern with strong visual presence. Especially bold in 2–3mm.</p>
+      <div class="width-chips"><span class="width-chip">1.5mm</span><span class="width-chip">2mm</span><span class="width-chip">3mm</span></div>
+    </div>
+    <div class="chain-card fade-in">
+      <div class="chain-visual"><div class="chain-links" style="transform:rotate(-15deg);"><div class="chain-link" style="transform:rotate(30deg)"></div><div class="chain-link" style="transform:rotate(-30deg)"></div><div class="chain-link" style="transform:rotate(30deg)"></div><div class="chain-link" style="transform:rotate(-30deg)"></div></div></div>
+      <h3>Rope</h3>
+      <p>Twisted spiral links that catch light at every angle. Substantial without being heavy. The most textured style in the collection.</p>
+      <div class="width-chips"><span class="width-chip">1.5mm</span><span class="width-chip">2mm</span><span class="width-chip">3mm</span></div>
+    </div>
+    <div class="chain-card fade-in" style="transition-delay:0.1s">
+      <div class="chain-visual"><div style="height:2px;width:80px;background:linear-gradient(90deg,transparent,var(--gold),transparent);"></div></div>
+      <h3>Snake</h3>
+      <p>Smooth, flexible metal scales that flow like liquid. The most delicate and refined silhouette. Skin-to-chain contact at every point.</p>
+      <div class="width-chips"><span class="width-chip">1mm</span><span class="width-chip">1.5mm</span><span class="width-chip">2mm</span></div>
+    </div>
+    <div class="chain-card fade-in" style="transition-delay:0.2s">
+      <div class="chain-visual"><div class="chain-links"><div class="chain-link flat square"></div><div class="chain-link flat square"></div><div class="chain-link flat square"></div><div class="chain-link flat square"></div><div class="chain-link flat square"></div></div></div>
+      <h3>Curb</h3>
+      <p>Flat interlocking links that lie uniformly flat. The boldest silhouette. Especially popular for men. Dramatic at 2–3mm.</p>
+      <div class="width-chips"><span class="width-chip">1.5mm</span><span class="width-chip">2mm</span><span class="width-chip">3mm</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHARMS -->
+<section class="charms-section">
+  <div class="fade-in">
+    <div class="eyebrow" style="color:var(--gold)">Charms</div>
+    <h2 class="section-heading">Permanent <em>meaning.</em></h2>
+    <p class="section-sub">Up to 3 charms per chain. Permanently attached — choose what matters. Priced per tier. Available in all tiers where noted.</p>
+  </div>
+  <div class="charms-grid">
+    <div class="charm-card fade-in"><span class="charm-icon">⭐</span><span class="charm-name">Star</span><div class="charm-prices"><div class="charm-tier-price">T1<span>$12</span></div><div class="charm-tier-price">T2<span>$28</span></div><div class="charm-tier-price">T3<span>$75</span></div></div></div>
+    <div class="charm-card fade-in"><span class="charm-icon">🌙</span><span class="charm-name">Crescent Moon</span><div class="charm-prices"><div class="charm-tier-price">T1<span>$12</span></div><div class="charm-tier-price">T2<span>$28</span></div><div class="charm-tier-price">T3<span>$75</span></div></div></div>
+    <div class="charm-card fade-in"><span class="charm-icon">♡</span><span class="charm-name">Heart</span><div class="charm-prices"><div class="charm-tier-price">T1<span>$12</span></div><div class="charm-tier-price">T2<span>$28</span></div><div class="charm-tier-price">T3<span>$75</span></div></div></div>
+    <div class="charm-card fade-in"><span class="charm-icon">👁</span><span class="charm-name">Evil Eye</span><div class="charm-prices"><div class="charm-tier-price">T1<span>$12</span></div><div class="charm-tier-price">T2<span>$28</span></div><div class="charm-tier-price">T3<span>$75</span></div></div></div>
+    <div class="charm-card fade-in"><span class="charm-icon">A</span><span class="charm-name">Initial A–Z</span><div class="charm-prices"><div class="charm-tier-price">T1<span>$12</span></div><div class="charm-tier-price">T2<span>$28</span></div><div class="charm-tier-price">T3<span>$75</span></div></div></div>
+    <div class="charm-card fade-in"><span class="charm-icon">🦋</span><span class="charm-name">Butterfly</span><div class="charm-prices"><div class="charm-tier-price">T1<span>$12</span></div><div class="charm-tier-price">T2<span>$28</span></div><div class="charm-tier-price">T3<span>$75</span></div></div></div>
+    <div class="charm-card fade-in"><span class="charm-icon">⚡</span><span class="charm-name">Lightning Bolt</span><div class="charm-prices"><div class="charm-tier-price">T1<span>$12</span></div><div class="charm-tier-price">T2<span>$28</span></div><div class="charm-tier-price">T3<span>$75</span></div></div></div>
+    <div class="charm-card fade-in"><span class="charm-icon">∞</span><span class="charm-name">Infinity</span><div class="charm-prices"><div class="charm-tier-price">T1<span>$12</span></div><div class="charm-tier-price">T2<span>$28</span></div><div class="charm-tier-price">T3<span>$75</span></div></div></div>
+    <div class="charm-card fade-in"><span class="charm-icon">✵</span><span class="charm-name">Sunburst</span><div class="charm-prices"><div class="charm-tier-price">T1<span>$12</span></div><div class="charm-tier-price">T2<span>$28</span></div><div class="charm-tier-price">T3<span>$75</span></div></div></div>
+    <div class="charm-card fade-in"><span class="charm-icon">♎</span><span class="charm-name">Zodiac Sign</span><div class="charm-prices"><div class="charm-tier-price">T1<span>$18</span></div><div class="charm-tier-price">T2<span>$40</span></div><div class="charm-tier-price">T3<span>$95</span></div></div></div>
+    <div class="charm-card fade-in"><span class="charm-icon">●</span><span class="charm-name">Pearl Drop</span><div class="charm-prices"><div class="charm-tier-price">T1<span>$15</span></div><div class="charm-tier-price">T2<span>$35</span></div><div class="charm-tier-price">T3<span>$85</span></div></div></div>
+    <div class="charm-card fade-in"><span class="charm-icon">🔒</span><span class="charm-name">Lock & Key Set</span><div class="charm-prices"><div class="charm-tier-price">T1<span>$20</span></div><div class="charm-tier-price">T2<span>$45</span></div><div class="charm-tier-price">T3<span>$110</span></div></div></div>
+  </div>
+  <div class="charm-rules">
+    <div class="charm-rule fade-in"><div class="charm-rule-icon">✦</div><h4>Maximum 3 charms</h4><p>Each chain accommodates up to 3 permanently attached charms. Choose placement during your appointment.</p></div>
+    <div class="charm-rule fade-in"><div class="charm-rule-icon">◈</div><h4>Tier matching rule</h4><p>Charms must match or exceed your chain tier. A Tier 1 charm cannot be placed on a Tier 3 chain.</p></div>
+    <div class="charm-rule fade-in"><div class="charm-rule-icon">⬡</div><h4>Charm swap available</h4><p>Changed your mind? The Charm Swap service removes an old charm and attaches a new one for $10 + charm cost.</p></div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="comparison-section">
+  <div class="fade-in">
+    <div class="eyebrow">Compare Tiers</div>
+    <h2 class="section-heading">Side by side. <em>Honest.</em></h2>
+  </div>
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Tier 1<br><small style="color:var(--gray);font-weight:300">Stainless PVD</small></th>
+        <th>Tier 2<br><small style="color:var(--gray);font-weight:300">Gold-Filled / Argentium</small></th>
+        <th>Tier 3<br><small style="color:var(--gray);font-weight:300">Solid Gold</small></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Starting price</td><td>$42</td><td>$72</td><td>$145</td></tr>
+      <tr><td>Per inch</td><td>$1.75</td><td>$3.75</td><td>$10.00</td></tr>
+      <tr><td>Weld fee</td><td>$30</td><td>$45</td><td>$75</td></tr>
+      <tr><td>Zero tarnish</td><td><span class="check">✦</span></td><td><span class="check">✦</span></td><td><span class="check">✦</span></td></tr>
+      <tr><td>Hypoallergenic</td><td><span class="check">✦</span></td><td><span class="check">✦</span></td><td><span class="check">✦</span></td></tr>
+      <tr><td>Retains melt value</td><td><span class="dash">—</span></td><td><span class="dash">—</span></td><td><span class="check">✦</span></td></tr>
+      <tr><td>Suitable for chlorine pools</td><td>Best</td><td>Rinse after</td><td>Rinse after</td></tr>
+      <tr><td>Best for sensitive skin</td><td>Good</td><td>Better</td><td>Best</td></tr>
+      <tr><td>Recommended for</td><td>Active daily wear</td><td>Fine jewelry look</td><td>Heirloom quality</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- CTA -->
+<section class="cta-strip">
+  <h2 class="fade-in">Ready to build <em>yours?</em></h2>
+  <p class="fade-in">Use our chain configurator to design your exact chain, see the live price, and book your appointment with a $25 deposit.</p>
+  <a href="configurator.html" class="btn-primary fade-in">Design Your Chain →</a>
+</section>
+
+<footer>
+  <div class="footer-bottom">
+    <div class="footer-logo">HUE <span>✦</span> GLINT</div>
+    <div class="footer-copy">© 2025 HUE Co. · glint.hue-co.com · No Clasp. No Compromise.</div>
+  </div>
+</footer>
+
+<script>
+  function showTier(id, tab) {
+    document.querySelectorAll('.tier-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tier-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    tab.classList.add('active');
+  }
+  const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.1,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

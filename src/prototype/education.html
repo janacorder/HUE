@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Knowledge Bar — HUE Glint</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{--cream:#F5F0E8;--black:#0A0A0A;--gold:#C9A84C;--gold-light:#E8D5A3;--white:#FFFFFF;--gray:#8A8A8A;--cream-dark:#EDE7D9;--border:rgba(201,168,76,0.2);}
+  body{background:var(--cream);color:var(--black);font-family:'Montserrat',sans-serif;font-weight:300;}
+  h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:400;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 60px;background:rgba(10,10,10,0.96);border-bottom:1px solid var(--border);}
+  .nav-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--white);letter-spacing:0.15em;text-decoration:none;}
+  .nav-logo span{color:var(--gold);}
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{color:rgba(255,255,255,0.7);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.3s;}
+  .nav-links a:hover{color:var(--gold);}
+  .nav-cta{background:var(--gold);color:var(--black)!important;padding:10px 24px;font-weight:600!important;}
+
+  /* HERO */
+  .hero{background:var(--black);padding:160px 60px 100px;}
+  .hero-inner{max-width:700px;}
+  .eyebrow{font-size:10px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  .hero h1{font-size:clamp(48px,6vw,88px);font-weight:300;color:var(--white);line-height:1.05;margin-bottom:20px;}
+  .hero h1 em{font-style:italic;color:var(--gold);}
+  .hero-sub{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.9;max-width:520px;font-weight:300;}
+
+  /* LAYOUT */
+  .edu-layout{display:grid;grid-template-columns:260px 1fr;min-height:60vh;}
+
+  /* SIDEBAR NAV */
+  .edu-nav{background:var(--cream-dark);border-right:1px solid rgba(0,0,0,0.08);padding:48px 32px;position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;}
+  .edu-nav-heading{font-size:9px;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:var(--gray);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(0,0,0,0.1);}
+  .edu-nav-link{display:block;padding:10px 12px;font-size:12px;color:var(--gray);text-decoration:none;border-left:2px solid transparent;transition:all 0.2s;font-weight:300;margin-bottom:2px;}
+  .edu-nav-link:hover{color:var(--black);border-left-color:var(--gold);}
+  .edu-nav-link.active{color:var(--black);border-left-color:var(--gold);background:rgba(201,168,76,0.06);font-weight:500;}
+
+  /* CONTENT */
+  .edu-content{padding:72px 72px 100px;}
+
+  .edu-section{margin-bottom:80px;padding-bottom:80px;border-bottom:1px solid rgba(0,0,0,0.08);}
+  .edu-section:last-child{border-bottom:none;}
+
+  .edu-section h2{font-size:clamp(28px,3vw,44px);font-weight:300;margin-bottom:12px;}
+  .edu-section h2 em{font-style:italic;color:var(--gold);}
+  .edu-section h3{font-size:22px;font-weight:400;margin-bottom:10px;margin-top:32px;}
+  .edu-section p{font-size:13px;line-height:1.95;color:var(--gray);font-weight:300;margin-bottom:16px;}
+  .edu-section p strong{color:var(--black);font-weight:500;}
+
+  /* FAQ ACCORDION */
+  .faq-list{margin-top:24px;}
+  .faq-item{border-bottom:1px solid rgba(0,0,0,0.08);}
+  .faq-q{padding:20px 0;font-size:14px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--black);}
+  .faq-q::after{content:'+';font-size:20px;font-weight:300;color:var(--gold);transition:transform 0.3s;flex-shrink:0;margin-left:16px;}
+  .faq-item.open .faq-q::after{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s ease;}
+  .faq-item.open .faq-a{max-height:400px;}
+  .faq-a-inner{padding-bottom:20px;font-size:13px;line-height:1.9;color:var(--gray);font-weight:300;}
+  .faq-a-inner a{color:var(--gold);text-decoration:none;}
+
+  /* INFO BOXES */
+  .info-box{background:var(--black);border-left:3px solid var(--gold);padding:28px 32px;margin:24px 0;}
+  .info-box p{color:rgba(255,255,255,0.7);margin:0;}
+  .info-box strong{color:var(--gold);}
+
+  /* TIER COMPARISON MINI */
+  .mini-table{width:100%;border-collapse:collapse;margin:24px 0;}
+  .mini-table th{padding:12px 16px;text-align:left;font-size:10px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;background:var(--cream-dark);border:1px solid rgba(0,0,0,0.08);}
+  .mini-table td{padding:12px 16px;font-size:12px;border:1px solid rgba(0,0,0,0.06);}
+  .mini-table tr:nth-child(even) td{background:rgba(201,168,76,0.02);}
+
+  /* MEASUREMENT GUIDE */
+  .measure-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:24px;}
+  .measure-card{background:var(--white);border:1px solid rgba(0,0,0,0.08);padding:24px;}
+  .measure-card h4{font-size:18px;font-weight:400;margin-bottom:8px;}
+  .measure-card .location-tag{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:block;}
+  .measure-card p{font-size:12px;color:var(--gray);line-height:1.7;font-weight:300;}
+
+  /* EMAIL CAPTURE INLINE */
+  .inline-capture{background:var(--black);padding:40px;margin-top:32px;text-align:center;}
+  .inline-capture h3{font-size:28px;font-weight:300;color:var(--white);margin-bottom:8px;}
+  .inline-capture p{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:24px;font-weight:300;}
+  .inline-form{display:flex;gap:0;max-width:400px;margin:0 auto;}
+  .inline-input{flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(201,168,76,0.2);border-right:none;color:var(--white);padding:14px 18px;font-family:'Montserrat',sans-serif;font-size:12px;outline:none;}
+  .inline-btn{background:var(--gold);color:var(--black);border:none;padding:14px 24px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
+
+  /* FOOTER */
+  footer{background:#050505;padding:40px 60px;border-top:1px solid rgba(201,168,76,0.1);}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;}
+  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--white);}
+  .footer-logo span{color:var(--gold);}
+  .footer-copy{font-size:11px;color:rgba(255,255,255,0.2);}
+
+  /* FADE */
+  .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.7s,transform 0.7s;}
+  .fade-in.visible{opacity:1;transform:translateY(0);}
+
+  @media(max-width:900px){
+    nav{padding:16px 24px;}
+    .hero{padding:120px 24px 60px;}
+    .edu-layout{grid-template-columns:1fr;}
+    .edu-nav{display:none;}
+    .edu-content{padding:40px 24px 60px;}
+    .measure-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">HUE <span>✦</span> GLINT</a>
+  <ul class="nav-links">
+    <li><a href="configurator.html">Design Your Chain</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="collections.html">Collections</a></li>
+    <li><a href="education.html">Learn</a></li>
+    <li><a href="configurator.html" class="nav-cta">Book Now</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner fade-in">
+    <div class="eyebrow">The Knowledge Bar</div>
+    <h1>Everything you need<br>to know <em>before you weld.</em></h1>
+    <p class="hero-sub">The most comprehensive permanent jewelry education resource available. Read it all, or jump to your question. We answer everything — including the questions you didn't know to ask.</p>
+  </div>
+</section>
+
+<div class="edu-layout">
+  <nav class="edu-nav">
+    <div class="edu-nav-heading">Topics</div>
+    <a href="#what-is" class="edu-nav-link active">What Is Permanent Jewelry?</a>
+    <a href="#how-it-works" class="edu-nav-link">How the Weld Works</a>
+    <a href="#tiers" class="edu-nav-link">Choosing Your Metal</a>
+    <a href="#locations" class="edu-nav-link">Body Locations</a>
+    <a href="#measurement" class="edu-nav-link">Measuring at Home</a>
+    <a href="#safety" class="edu-nav-link">Safety & Skin</a>
+    <a href="#aftercare" class="edu-nav-link">Aftercare</a>
+    <a href="#faq" class="edu-nav-link">FAQ</a>
+  </nav>
+
+  <div class="edu-content">
+
+    <section class="edu-section fade-in" id="what-is">
+      <div class="eyebrow">Basics</div>
+      <h2>What is <em>permanent jewelry?</em></h2>
+      <p>Permanent jewelry is a bracelet, anklet, necklace, ring, or other body adornment that is welded directly onto your body with no clasp — and no way to remove it without cutting it off. It stays through showers, workouts, beach trips, sleep, and years of daily life.</p>
+      <p>If you've noticed a chain on someone's wrist with no visible clasp — seamless, uninterrupted, like it grew there — that's permanent jewelry. The concept has existed in various forms for centuries. The modern version, using a micro-pulse argon welder, has exploded in popularity over the last five years.</p>
+      <p>At HUE Glint, permanent jewelry is offered in three metal tiers: <strong>316L stainless steel with PVD coating</strong> (Tier 1), <strong>14k gold-filled and Argentium silver</strong> (Tier 2), and <strong>14k solid gold</strong> (Tier 3). Every chain is sized to your exact body and welded in the studio or at a mobile event.</p>
+    </section>
+
+    <section class="edu-section fade-in" id="how-it-works">
+      <div class="eyebrow">The Process</div>
+      <h2>How the <em>weld works.</em></h2>
+      <p>The tool used in permanent jewelry is a <strong>micro-pulse argon welder</strong> — a precision instrument that delivers a controlled burst of energy to fuse two chain ends together. The process uses argon gas as a shielding element to prevent oxidation at the weld point, keeping the metal clean and the join strong.</p>
+      <p>The jeweler holds both ends of the chain at the weld point — a small distance from the skin — and activates the welder for less than one second. You will see a small flash of light. That's the argon arc, not fire. You will feel nothing.</p>
+      <div class="info-box"><p><strong>The weld itself is often stronger than the chain links.</strong> If a chain ever breaks from stress or impact, it almost always breaks at a chain link — not at the weld. This is by design: the chain sacrifices itself to protect the skin.</p></div>
+      <h3>Step by step at your appointment</h3>
+      <p><strong>1. Choose your location.</strong> We discuss where you want to wear the chain and talk through sizing considerations specific to that body part.</p>
+      <p><strong>2. Select your tier, style, and charms.</strong> We lay out your options. You choose the metal tier, chain style, width, and any charms you want permanently attached.</p>
+      <p><strong>3. Measure.</strong> We measure the exact circumference of your body location and add the appropriate ease for that location (wrist gets 0.75", ankle gets 1", etc.). The chain is cut to this exact length.</p>
+      <p><strong>4. Weld.</strong> The chain is draped around your body and the ends held together. The micro-pulse welder fires. The chain is closed. The session is over.</p>
+      <p><strong>5. Review and aftercare.</strong> We inspect the weld, review your care instructions, and send you off with branded packaging and a care card.</p>
+    </section>
+
+    <section class="edu-section fade-in" id="tiers">
+      <div class="eyebrow">Metal Selection</div>
+      <h2>Choosing <em>your metal.</em></h2>
+      <p>The right tier depends on your lifestyle, skin sensitivity, and what the piece means to you. Here's the honest breakdown — not the upsell version.</p>
+      <table class="mini-table">
+        <thead><tr><th>Tier</th><th>Material</th><th>Per Inch</th><th>Weld Fee</th><th>Best For</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Tier 1</strong></td><td>316L Stainless + PVD</td><td>$1.75</td><td>$30</td><td>Active wear, first-timers, gifting</td></tr>
+          <tr><td><strong>Tier 2</strong></td><td>14k Gold-Filled / Argentium</td><td>$3.75</td><td>$45</td><td>Fine jewelry look, sensitive skin</td></tr>
+          <tr><td><strong>Tier 3</strong></td><td>14k Solid Gold</td><td>$10.00</td><td>$75</td><td>Investment, heirloom, most sensitive</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Tier 1</strong> in 316L surgical-grade stainless steel is virtually indestructible. The PVD (Physical Vapor Deposition) coating is 3–5× harder than traditional plating. This tier is right if you live in your jewelry and want zero maintenance.</p>
+      <p><strong>Tier 2</strong> in 14k gold-filled is not gold plating — by law, the gold layer must be at least 5% of total weight (100× thicker than plating). Argentium silver replaces the copper in sterling with germanium, making it tarnish-resistant, brighter, and hypoallergenic. Tier 2 is ideal for sensitive skin and those who want the lasting look of fine jewelry.</p>
+      <p><strong>Tier 3</strong> in 14k solid gold retains melt value and is the most hypoallergenic material available. It does not tarnish. It does not fade. It is the right choice if you want the real thing — an investment piece that outlives trends.</p>
+    </section>
+
+    <section class="edu-section fade-in" id="locations">
+      <div class="eyebrow">Body Locations</div>
+      <h2>Where will you <em>wear it?</em></h2>
+      <p>HUE Glint offers permanent chains at 7 body locations. Each has different sizing requirements and fit considerations.</p>
+      <div class="measure-grid">
+        <div class="measure-card"><span class="location-tag">Wrist</span><h4>Bracelet</h4><p>The most popular location. Sits just below the hand, above the wrist bone. We add 0.75" ease for comfortable permanent wear. Average wrist measures 6–7" before ease.</p></div>
+        <div class="measure-card"><span class="location-tag">Ankle</span><h4>Anklet</h4><p>Sits at the narrowest point of the ankle, just above the ankle bone. We add 1" ease — ankle chains sit slightly looser than bracelets to allow for movement.</p></div>
+        <div class="measure-card"><span class="location-tag">Neck</span><h4>Necklace</h4><p>Three common lengths: Choker (14–16"), Princess (17–19"), Matinee (20–24"). Measurement method depends on the look you want.</p></div>
+        <div class="measure-card"><span class="location-tag">Belly</span><h4>Belly Chain</h4><p>Measures around the natural waist at navel level while relaxed. We add 1.5" for comfortable drape. Belly chains are deliberately loose — measure generously.</p></div>
+        <div class="measure-card"><span class="location-tag">Upper Arm</span><h4>Armband</h4><p>Measured around the widest point of the bicep with a slight flex. We add 0.5" for movement. Upper arm bands should slide on but not fall.</p></div>
+        <div class="measure-card"><span class="location-tag">Finger / Toe</span><h4>Ring</h4><p>Measured at the knuckle — the widest point the ring must pass over. We add 0.25" for permanent comfort. Toe rings measure loosely around the toe base.</p></div>
+      </div>
+    </section>
+
+    <section class="edu-section fade-in" id="measurement">
+      <div class="eyebrow">Measuring at Home</div>
+      <h2>Get your <em>exact fit.</em></h2>
+      <p>You don't need a tape measure. You need a strip of paper or a non-stretchy piece of thread.</p>
+      <p><strong>The paper method:</strong> Cut a strip of paper about 0.5" wide. Wrap it around your body location snugly — not tight, not loose. Mark where the paper meets itself. Remove and measure the marked length with a ruler. That's your circumference. We add the appropriate ease at your appointment.</p>
+      <p><strong>If you use the online configurator:</strong> Enter your measured circumference. The tool adds the correct ease automatically based on your body location. The price displayed is based on your total fitted length.</p>
+      <div class="inline-capture">
+        <h3>Free Measurement Guide</h3>
+        <p>Printable PDF with templates for all 7 body locations — sized to 100% scale so you can measure directly on the page.</p>
+        <form class="inline-form" onsubmit="return false;">
+          <input type="email" class="inline-input" placeholder="Your email">
+          <button class="inline-btn">Get the Guide →</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="edu-section fade-in" id="safety">
+      <div class="eyebrow">Safety</div>
+      <h2>Is permanent jewelry <em>safe?</em></h2>
+      <p>Yes. The micro-pulse argon welder produces a focused flash of energy at the metal tip — there is no heat transfer to skin, no open flame, and no risk of burns. The process is completely non-invasive and requires no numbing.</p>
+      <p><strong>Metal safety by tier:</strong></p>
+      <p>Tier 1 uses 316L surgical-grade stainless steel — the same alloy used in medical implants and body jewelry. It is nickel-free and safe for virtually all skin types.</p>
+      <p>Tier 2 uses 14k gold-filled (solid gold layer, not plating) and Argentium silver (germanium replaces the copper that causes most "silver allergies"). Both are hypoallergenic.</p>
+      <p>Tier 3 uses 14k solid gold — the most universally biocompatible jewelry metal available.</p>
+      <div class="info-box"><p><strong>Age policy:</strong> Clients under 18 are welcome with a parent or guardian present and consenting. We do not weld minors without explicit adult consent and presence at the appointment.</p></div>
+      <h3>MRI and medical imaging</h3>
+      <p>Inform your medical team about any permanent jewelry before imaging. For most MRI procedures, the tiny amount of metal in a bracelet or anklet is not a concern. If removal is required, we cut it free at no charge and re-weld it when you're ready.</p>
+    </section>
+
+    <section class="edu-section fade-in" id="aftercare">
+      <div class="eyebrow">Aftercare</div>
+      <h2>Keeping it <em>perfect.</em></h2>
+      <p>Permanent jewelry is low-maintenance — but the first 48 hours matter.</p>
+      <p><strong>First 24 hours:</strong> Keep the chain completely dry. No showering, no pool, no ocean.</p>
+      <p><strong>24–48 hours:</strong> You can shower. Pat dry after — do not rub. Still avoid submerging in pools, hot tubs, or salt water.</p>
+      <p><strong>After 48 hours:</strong> Normal life. Shower, swim, sleep, work out with the chain on. Rinse after chlorine exposure. Avoid applying perfume, lotion, or sunscreen directly on the chain.</p>
+      <p><strong>Chlorine:</strong> The one universal threat across all tiers. Rinse immediately if exposed to chlorinated water. For frequent swimmers, Tier 1 or Tier 3 are the most resistant options.</p>
+      <p>For deeper cleaning, HUE Glint's <strong>Chain Cleanse Drops</strong> and <strong>Polishing Cloth</strong> are formulated for all three tiers. The <strong>Glow & Glint Aftercare Set</strong> ($32) includes both plus a Charm Keeper Pouch in a branded gift box.</p>
+    </section>
+
+    <section class="edu-section fade-in" id="faq">
+      <div class="eyebrow">FAQ</div>
+      <h2>Your questions, <em>answered.</em></h2>
+      <div class="faq-list">
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Does permanent jewelry set off airport security?</div><div class="faq-a"><div class="faq-a-inner">Almost never. The amount of metal in a permanent bracelet is far below the threshold that triggers airport metal detectors. The overwhelming majority of our clients travel frequently with no issues. In rare cases with highly sensitive full-body scanners, the chain may show visually but not trigger an alarm. You can inform TSA you have a permanent bracelet — they've seen it.</div></div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can you shower with permanent jewelry?</div><div class="faq-a"><div class="faq-a-inner">Yes — after the first 24 hours. Keep it dry for the first 24 hours while the weld fully sets, then shower normally. Pat dry rather than rubbing. That's the whole point of permanent jewelry: it's yours through everything.</div></div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What happens if my chain breaks?</div><div class="faq-a"><div class="faq-a-inner">Bring it in — we'll re-weld it. The Re-Weld service is $20 for Tier 1/2 and $35 for Tier 3. Most breaks happen at chain links (not the weld) from unusual stress. If the weld fails within 30 days of your appointment, the re-weld is free — that's our weld warranty.</div></div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How do I remove permanent jewelry?</div><div class="faq-a"><div class="faq-a-inner">It must be cut off — that's the definition of permanent. Use small scissors, wire cutters, or come to us and we'll cut it for free. Removal takes about 30 seconds. Re-welding afterward is $20–35.</div></div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How long does the appointment take?</div><div class="faq-a"><div class="faq-a-inner">A single in-studio weld session takes about 20–30 minutes total. The actual weld is under 10 seconds. Most of the time is spent choosing your chain and getting measured — which is the enjoyable part.</div></div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can I get permanent jewelry if I have a nickel allergy?</div><div class="faq-a"><div class="faq-a-inner">Yes. All three tiers at HUE Glint are nickel-free. 316L stainless is specifically formulated to be nickel-safe. 14k gold-filled, Argentium silver, and 14k solid gold are all hypoallergenic. If you have extreme metal sensitivity, we recommend Tier 3 solid gold — it's the most universally biocompatible option.</div></div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Does the weld ever come undone on its own?</div><div class="faq-a"><div class="faq-a-inner">No. A properly executed weld does not "come undone" — it is a physical fusion of metal. The only way a chain comes off is if a link breaks from stress (like catching on something), or if you cut it. Our 30-day weld warranty covers the rare case of an improperly executed weld.</div></div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is the minimum age?</div><div class="faq-a"><div class="faq-a-inner">There is no minimum age, but clients under 18 require a parent or guardian present and consenting at the appointment. A parent signature is required on the consent form.</div></div></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <div class="footer-logo">HUE <span>✦</span> GLINT</div>
+    <div class="footer-copy">© 2025 HUE Co. · glint.hue-co.com</div>
+  </div>
+</footer>
+
+<script>
+  function toggleFaq(el) {
+    const item = el.closest('.faq-item');
+    item.classList.toggle('open');
+  }
+  const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.1});
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  // Highlight active edu-nav-link on scroll
+  const sections = document.querySelectorAll('.edu-section');
+  const navLinks = document.querySelectorAll('.edu-nav-link');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if(window.scrollY >= s.offsetTop - 120) current = s.id; });
+    navLinks.forEach(l => {
+      l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+</body>
+</html>

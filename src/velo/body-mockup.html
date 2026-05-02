@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<!--
+  HUE Glint — Body Mockup Component
+  Embed as an HTML iFrame component in Wix Studio on the Design Your Chain page.
+  Width: 100%, Height: 600px recommended.
+  Post messages from Wix page code to update the selected location and chain style.
+
+  Usage from Wix Velo:
+    const mockup = $w('#bodyMockup');
+    mockup.postMessage({ location: 'wrist', tier: 'tier2', chainStyle: 'cable' });
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HUE Glint — Body Mockup</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #F5F0E8;
+      font-family: 'Montserrat', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+    }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      color: #0A0A0A;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #8B7355;
+      margin-bottom: 24px;
+    }
+
+    .location-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .tab {
+      padding: 6px 14px;
+      border: 1px solid #C9A84C;
+      background: transparent;
+      color: #8B7355;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.25s ease;
+    }
+
+    .tab.active, .tab:hover {
+      background: #C9A84C;
+      color: #0A0A0A;
+    }
+
+    .mockup-container {
+      position: relative;
+      width: 220px;
+      height: 380px;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Jewelry highlight ring */
+    .jewelry-spot {
+      animation: glint 2s ease-in-out infinite;
+    }
+
+    @keyframes glint {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; filter: drop-shadow(0 0 4px #C9A84C); }
+    }
+
+    .price-hint {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #8B7355;
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+
+    .chain-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      color: #C9A84C;
+      margin-top: 8px;
+      text-align: center;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h2>Your Design Preview</h2>
+  <p class="subtitle">Select a body location below</p>
+
+  <div class="location-tabs">
+    <button class="tab active" onclick="setLocation('wrist')">Wrist</button>
+    <button class="tab" onclick="setLocation('ankle')">Ankle</button>
+    <button class="tab" onclick="setLocation('neck')">Neck</button>
+    <button class="tab" onclick="setLocation('belly')">Belly</button>
+    <button class="tab" onclick="setLocation('upperArm')">Upper Arm</button>
+    <button class="tab" onclick="setLocation('finger')">Finger</button>
+  </div>
+
+  <div class="mockup-container">
+    <!-- Body silhouette SVG — elegant minimal female/neutral form -->
+    <svg id="bodySvg" viewBox="0 0 220 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Body outline -->
+      <ellipse cx="110" cy="60" rx="28" ry="35" fill="#E8E0D0" stroke="#C9A84C" stroke-width="1"/>
+      <!-- Neck -->
+      <rect x="102" y="92" width="16" height="22" rx="4" fill="#E8E0D0" stroke="#C9A84C" stroke-width="0.5"/>
+      <!-- Shoulders/torso -->
+      <path d="M60 115 Q80 108 110 110 Q140 108 160 115 L165 200 Q145 210 110 212 Q75 210 55 200 Z" fill="#E8E0D0" stroke="#C9A84C" stroke-width="1"/>
+      <!-- Left arm -->
+      <path d="M60 115 L38 180 Q36 188 40 192 L52 192 Q56 188 58 180 L65 130" fill="#E8E0D0" stroke="#C9A84C" stroke-width="1"/>
+      <!-- Right arm -->
+      <path d="M160 115 L182 180 Q184 188 180 192 L168 192 Q164 188 162 180 L155 130" fill="#E8E0D0" stroke="#C9A84C" stroke-width="1"/>
+      <!-- Left hand/wrist -->
+      <ellipse cx="43" cy="198" rx="9" ry="7" fill="#E8E0D0" stroke="#C9A84C" stroke-width="0.5"/>
+      <!-- Right hand/wrist -->
+      <ellipse cx="177" cy="198" rx="9" ry="7" fill="#E8E0D0" stroke="#C9A84C" stroke-width="0.5"/>
+      <!-- Hips/legs -->
+      <path d="M55 200 Q70 230 80 280 L82 370 L105 370 L110 280 L115 370 L138 370 L140 280 Q150 230 165 200" fill="#E8E0D0" stroke="#C9A84C" stroke-width="1"/>
+      <!-- Left ankle -->
+      <ellipse cx="83" cy="355" rx="10" ry="6" fill="#E8E0D0" stroke="#C9A84C" stroke-width="0.5"/>
+      <!-- Right ankle -->
+      <ellipse cx="137" cy="355" rx="10" ry="6" fill="#E8E0D0" stroke="#C9A84C" stroke-width="0.5"/>
+
+      <!-- JEWELRY INDICATORS — shown/hidden by JS -->
+
+      <!-- Wrist chain (left) -->
+      <g id="jewelry-wrist" class="jewelry-spot">
+        <ellipse cx="43" cy="193" rx="11" ry="3" fill="none" stroke="#C9A84C" stroke-width="2.5"/>
+        <text x="18" y="188" font-family="Montserrat" font-size="7" fill="#C9A84C">WRIST</text>
+      </g>
+
+      <!-- Ankle chain (left) -->
+      <g id="jewelry-ankle" class="jewelry-spot" visibility="hidden">
+        <ellipse cx="83" cy="352" rx="12" ry="3" fill="none" stroke="#C9A84C" stroke-width="2.5"/>
+        <text x="56" y="347" font-family="Montserrat" font-size="7" fill="#C9A84C">ANKLE</text>
+      </g>
+
+      <!-- Neck chain -->
+      <g id="jewelry-neck" class="jewelry-spot" visibility="hidden">
+        <path d="M90 112 Q110 125 130 112" fill="none" stroke="#C9A84C" stroke-width="2.5"/>
+        <text x="98" y="108" font-family="Montserrat" font-size="7" fill="#C9A84C">NECK</text>
+      </g>
+
+      <!-- Belly chain -->
+      <g id="jewelry-belly" class="jewelry-spot" visibility="hidden">
+        <path d="M80 200 Q110 208 140 200" fill="none" stroke="#C9A84C" stroke-width="2.5"/>
+        <text x="95" y="196" font-family="Montserrat" font-size="7" fill="#C9A84C">BELLY</text>
+      </g>
+
+      <!-- Upper arm -->
+      <g id="jewelry-upperArm" class="jewelry-spot" visibility="hidden">
+        <ellipse cx="52" cy="148" rx="9" ry="3" fill="none" stroke="#C9A84C" stroke-width="2.5"/>
+        <text x="24" y="143" font-family="Montserrat" font-size="7" fill="#C9A84C">UPPER ARM</text>
+      </g>
+
+      <!-- Finger -->
+      <g id="jewelry-finger" class="jewelry-spot" visibility="hidden">
+        <ellipse cx="43" cy="204" rx="5" ry="2" fill="none" stroke="#C9A84C" stroke-width="2"/>
+        <text x="18" y="213" font-family="Montserrat" font-size="7" fill="#C9A84C">FINGER</text>
+      </g>
+    </svg>
+  </div>
+
+  <p class="chain-label" id="chainLabel">Wrist Chain</p>
+  <p class="price-hint" id="priceHint">Starting from $42 for a 7" wrist chain</p>
+
+  <script>
+    const LOCATION_DATA = {
+      wrist:    { label: "Wrist Chain",     hint: "Starting from $42 for a 7\" wrist chain",    svgId: "jewelry-wrist" },
+      ankle:    { label: "Ankle Chain",     hint: "Starting from $44 for a 9\" ankle chain",    svgId: "jewelry-ankle" },
+      neck:     { label: "Neck Chain",      hint: "Starting from $55 for a 16\" neck chain",    svgId: "jewelry-neck" },
+      belly:    { label: "Belly Chain",     hint: "Starting from $79 for a 32\" belly chain",   svgId: "jewelry-belly" },
+      upperArm: { label: "Upper Arm Band",  hint: "Starting from $46 for a 10\" arm band",      svgId: "jewelry-upperArm" },
+      finger:   { label: "Finger Chain",   hint: "Starting from $33 for a 2\" finger ring",    svgId: "jewelry-finger" },
+    };
+
+    let currentLocation = "wrist";
+
+    function setLocation(loc) {
+      // Hide all jewelry spots
+      Object.values(LOCATION_DATA).forEach(d => {
+        const el = document.getElementById(d.svgId);
+        if (el) el.setAttribute("visibility", "hidden");
+      });
+
+      // Show selected
+      const data = LOCATION_DATA[loc];
+      if (!data) return;
+      const el = document.getElementById(data.svgId);
+      if (el) el.setAttribute("visibility", "visible");
+
+      // Update labels
+      document.getElementById("chainLabel").textContent = data.label;
+      document.getElementById("priceHint").textContent = data.hint;
+
+      // Update tab active state
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      event.target.classList.add("active");
+
+      currentLocation = loc;
+
+      // Post to parent Wix page
+      try {
+        window.parent.postMessage({ type: "locationSelected", location: loc }, "*");
+      } catch(e) {}
+    }
+
+    // Listen for messages from Wix page (tier/chain updates)
+    window.addEventListener("message", (event) => {
+      if (event.data && event.data.location) {
+        setLocation(event.data.location);
+      }
+      if (event.data && event.data.priceHint) {
+        document.getElementById("priceHint").textContent = event.data.priceHint;
+      }
+    });
+  </script>
+</body>
+</html>
