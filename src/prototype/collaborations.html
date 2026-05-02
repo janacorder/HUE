@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HUE Glint — Collaborations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --black: #0A0A0A;
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --white: #FFFFFF;
+    --gray: #8A8A8A;
+    --cream-dark: #EDE7D9;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--black);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; font-weight: 400; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    transition: padding 0.3s;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 500;
+    color: var(--white); letter-spacing: 0.15em; text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75); text-decoration: none;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a.active { color: var(--gold); }
+
+  .nav-cta {
+    background: var(--gold); color: var(--black) !important;
+    padding: 10px 24px; font-weight: 600 !important;
+    letter-spacing: 0.1em; transition: background 0.3s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--black) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 70vh;
+    background: var(--black);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 140px 60px 100px;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 75% 45%, rgba(201,168,76,0.08) 0%, transparent 55%),
+                radial-gradient(ellipse at 25% 85%, rgba(201,168,76,0.04) 0%, transparent 50%);
+  }
+
+  .hero-deco {
+    position: absolute; right: -100px; top: 50%;
+    transform: translateY(-50%);
+    width: 700px; height: 700px;
+    border: 1px solid rgba(201,168,76,0.06); border-radius: 50%;
+  }
+  .hero-deco::before {
+    content: ''; position: absolute;
+    inset: 60px; border: 1px solid rgba(201,168,76,0.06);
+    border-radius: 50%;
+  }
+  .hero-deco::after {
+    content: ''; position: absolute;
+    inset: 140px; border: 1px solid rgba(201,168,76,0.06);
+    border-radius: 50%;
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 680px; }
+
+  .hero-eyebrow {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .hero-eyebrow::after {
+    content: ''; display: block; width: 40px; height: 1px; background: var(--gold);
+  }
+
+  .hero-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 6vw, 86px);
+    font-weight: 300; line-height: 1.06;
+    color: var(--white); margin-bottom: 24px;
+  }
+
+  .hero-sub {
+    font-size: 13px; line-height: 1.9;
+    color: rgba(255,255,255,0.55); max-width: 500px;
+    font-weight: 300; letter-spacing: 0.02em;
+  }
+
+  /* ── FEATURED COLLAB ── */
+  .featured-collab {
+    background: var(--cream); padding: 120px 60px;
+    position: relative; overflow: hidden;
+  }
+
+  .featured-collab-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 480px;
+    gap: 100px; align-items: center;
+  }
+
+  .featured-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 64px);
+    font-weight: 300; line-height: 1.1; margin-bottom: 8px;
+  }
+
+  .featured-partner-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3vw, 48px);
+    font-weight: 400; color: var(--gold);
+    font-style: italic; margin-bottom: 32px;
+  }
+
+  .featured-body {
+    font-size: 13px; line-height: 1.95;
+    color: #3a3a3a; font-weight: 300; margin-bottom: 40px;
+  }
+
+  .stats-bar {
+    display: flex; gap: 0;
+    border: 1px solid rgba(201,168,76,0.3);
+    margin-bottom: 36px;
+  }
+
+  .stat-item {
+    flex: 1; padding: 20px 24px; text-align: center;
+    border-right: 1px solid rgba(201,168,76,0.3);
+  }
+  .stat-item:last-child { border-right: none; }
+
+  .stat-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 400; color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--gold); color: var(--black);
+    padding: 16px 40px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all 0.3s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .featured-visual {
+    background: var(--black);
+    padding: 60px 48px;
+    position: relative;
+  }
+
+  .featured-visual-tag {
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3); margin-bottom: 32px;
+  }
+
+  .featured-visual-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px; font-weight: 300;
+    color: var(--white); line-height: 1.15; margin-bottom: 20px;
+  }
+  .featured-visual-heading em { color: var(--gold); font-style: italic; }
+
+  .featured-visual-sub {
+    font-size: 12px; line-height: 1.8;
+    color: rgba(255,255,255,0.4); font-weight: 300;
+  }
+
+  .featured-deco-line {
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+    margin: 28px 0;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how-works-section {
+    background: var(--cream-dark); padding: 100px 60px;
+  }
+
+  .how-works-header { text-align: center; margin-bottom: 72px; }
+
+  .section-eyebrow {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 14px;
+  }
+
+  .section-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 3.5vw, 56px);
+    font-weight: 300; line-height: 1.1; margin-bottom: 16px;
+  }
+
+  .section-sub {
+    font-size: 13px; line-height: 1.9;
+    color: var(--gray); max-width: 520px;
+    font-weight: 300; margin: 0 auto;
+  }
+
+  .steps-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.15);
+    max-width: 1200px; margin: 0 auto;
+  }
+
+  .step {
+    background: var(--cream-dark); padding: 56px 48px;
+    position: relative;
+  }
+
+  .step-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px; font-weight: 300;
+    color: rgba(201,168,76,0.12);
+    position: absolute; top: 32px; right: 32px;
+    line-height: 1;
+  }
+
+  .step-icon {
+    width: 48px; height: 48px;
+    border: 1px solid var(--gold); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-size: 18px; margin-bottom: 28px;
+  }
+
+  .step h3 { font-size: 26px; margin-bottom: 14px; font-weight: 400; }
+
+  .step p {
+    font-size: 13px; line-height: 1.8; color: var(--gray); font-weight: 300;
+  }
+
+  /* ── COLLAB GRID ── */
+  .collab-grid-section {
+    background: var(--black); padding: 100px 60px;
+  }
+
+  .collab-grid-header { text-align: center; margin-bottom: 72px; }
+  .collab-grid-header .section-heading { color: var(--white); }
+  .collab-grid-header .section-sub { color: rgba(255,255,255,0.45); }
+
+  .collab-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: rgba(201,168,76,0.12);
+    max-width: 1200px; margin: 0 auto;
+  }
+
+  .collab-card {
+    background: #0D0D0D; padding: 36px 28px;
+    position: relative; overflow: hidden;
+    transition: background 0.3s; cursor: default;
+  }
+  .collab-card:hover { background: #131313; }
+
+  .collab-card-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px; font-weight: 300;
+    color: rgba(201,168,76,0.05);
+    position: absolute; top: 8px; right: 16px;
+    line-height: 1;
+  }
+
+  .collab-industry {
+    display: inline-block;
+    font-size: 8px; font-weight: 600;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    padding: 4px 10px;
+    border: 1px solid rgba(201,168,76,0.25);
+  }
+
+  .collab-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 400;
+    color: var(--white); line-height: 1.2; margin-bottom: 12px;
+  }
+
+  .collab-concept {
+    font-size: 12px; line-height: 1.7;
+    color: var(--gray); font-weight: 300; margin-bottom: 20px;
+  }
+
+  .collab-link {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3); text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 3px; transition: all 0.3s;
+  }
+  .collab-link:hover { color: var(--gold); border-color: rgba(201,168,76,0.4); }
+
+  /* ── INQUIRY FORM ── */
+  .inquiry-section {
+    background: var(--cream); padding: 100px 60px;
+  }
+
+  .inquiry-inner {
+    max-width: 800px; margin: 0 auto;
+  }
+
+  .inquiry-header { text-align: center; margin-bottom: 64px; }
+  .inquiry-header .section-heading { margin-bottom: 16px; }
+  .inquiry-header .section-sub { color: var(--gray); margin: 0 auto; max-width: 520px; }
+
+  .inquiry-form {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group.full { grid-column: 1 / -1; }
+
+  .form-label {
+    font-size: 9px; font-weight: 600;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    background: var(--cream-dark);
+    border: 1px solid rgba(201,168,76,0.2);
+    color: var(--black);
+    padding: 14px 18px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px; font-weight: 300;
+    outline: none; width: 100%;
+    transition: border-color 0.3s;
+    -webkit-appearance: none; appearance: none;
+  }
+
+  .form-input::placeholder,
+  .form-textarea::placeholder { color: rgba(10,10,10,0.3); }
+
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    border-color: var(--gold);
+    background: #F9F5EE;
+  }
+
+  .form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23C9A84C'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    padding-right: 40px; cursor: pointer;
+  }
+
+  .form-textarea { resize: vertical; min-height: 140px; }
+
+  .form-submit-row {
+    grid-column: 1 / -1; margin-top: 8px;
+    display: flex; justify-content: center;
+  }
+
+  .btn-submit {
+    background: var(--gold); color: var(--black);
+    padding: 16px 56px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    border: none; cursor: pointer; transition: all 0.3s;
+  }
+  .btn-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .form-notice {
+    grid-column: 1 / -1; text-align: center;
+    font-size: 11px; color: var(--gray);
+    margin-top: 12px; font-weight: 300;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #050505;
+    padding: 80px 60px 40px;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px; margin-bottom: 60px; padding-bottom: 60px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 400;
+    color: var(--white); letter-spacing: 0.1em; margin-bottom: 16px;
+  }
+  .footer-logo span { color: var(--gold); }
+
+  .footer-tagline {
+    font-size: 11px; color: rgba(255,255,255,0.35);
+    letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 24px;
+  }
+
+  .footer-social { display: flex; gap: 16px; }
+
+  .social-link {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.4); text-decoration: none;
+    font-size: 14px; transition: all 0.3s;
+  }
+  .social-link:hover { border-color: var(--gold); color: var(--gold); }
+
+  .footer-col h4 {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 10px; }
+  .footer-col a {
+    font-size: 12px; color: rgba(255,255,255,0.4);
+    text-decoration: none; font-weight: 300; transition: color 0.3s;
+  }
+  .footer-col a:hover { color: var(--white); }
+
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy {
+    font-size: 11px; color: rgba(255,255,255,0.2);
+    font-weight: 300; letter-spacing: 0.05em;
+  }
+  .footer-legal { display: flex; gap: 24px; }
+  .footer-legal a {
+    font-size: 11px; color: rgba(255,255,255,0.2);
+    text-decoration: none; transition: color 0.3s;
+  }
+  .footer-legal a:hover { color: rgba(255,255,255,0.5); }
+
+  /* ── FADE-IN ── */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  .gold-line { width: 40px; height: 1px; background: var(--gold); margin: 0 0 28px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .collab-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 960px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 120px 24px 80px; }
+    .featured-collab { padding: 80px 24px; }
+    .featured-collab-inner { grid-template-columns: 1fr; gap: 48px; }
+    .how-works-section { padding: 72px 24px; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .collab-grid-section { padding: 72px 24px; }
+    .collab-grid { grid-template-columns: repeat(2, 1fr); }
+    .inquiry-section { padding: 72px 24px; }
+    .inquiry-form { grid-template-columns: 1fr; }
+    .form-group.full { grid-column: 1; }
+    .form-submit-row { grid-column: 1; }
+    .form-notice { grid-column: 1; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; }
+  }
+
+  @media (max-width: 600px) {
+    .collab-grid { grid-template-columns: 1fr; }
+    .stats-bar { flex-direction: column; }
+    .stat-item { border-right: none; border-bottom: 1px solid rgba(201,168,76,0.3); }
+    .stat-item:last-child { border-bottom: none; }
+    .footer-top { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="index.html" class="nav-logo">HUE <span>✦</span> GLINT</a>
+  <ul class="nav-links">
+    <li><a href="configurator.html">Design Your Chain</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="collaborations.html" class="active">Collaborations</a></li>
+    <li><a href="#">Collections</a></li>
+    <li><a href="#">Shop</a></li>
+    <li><a href="configurator.html" class="nav-cta">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-deco"></div>
+  <div class="hero-content fade-in">
+    <div class="hero-eyebrow">Collaborations</div>
+    <h1 class="hero-headline">Your venue.<br>Our studio.<br>Both audiences.</h1>
+    <p class="hero-sub">HUE Glint partners with local businesses for pop-ups, branded events, and dual-service packages. The pop-up host always benefits.</p>
+  </div>
+</section>
+
+<!-- ── FEATURED COLLAB ── -->
+<section class="featured-collab">
+  <div class="featured-collab-inner">
+    <div class="fade-in">
+      <div class="section-eyebrow">✦ Featured Partner</div>
+      <h2 class="featured-eyebrow">The most natural<br>partnership in beauty.</h2>
+      <div class="featured-partner-name">deSoleil Spray Tanning</div>
+      <p class="featured-body">A spray tan and a permanent chain, same afternoon. Bronzed skin and a gold chain that won't leave tan lines — because it's already part of you. Clients save 10% on both services when they book the Glow &amp; Glint Package same day. Two studios. One seamless afternoon. The glow-up is complete.</p>
+      <div class="stats-bar">
+        <div class="stat-item">
+          <div class="stat-value">10%</div>
+          <div class="stat-label">Combined Savings</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">Same Day</div>
+          <div class="stat-label">Booking</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">2×</div>
+          <div class="stat-label">Audiences Shared</div>
+        </div>
+      </div>
+      <a href="services.html" class="btn-primary">Book Glow &amp; Glint →</a>
+    </div>
+    <div class="featured-visual fade-in" style="transition-delay:0.2s">
+      <div class="featured-visual-tag">Glow &amp; Glint Package</div>
+      <div class="featured-deco-line"></div>
+      <div class="featured-visual-heading">Bronzed skin.<br><em>Gold chain.</em><br>Same afternoon.</div>
+      <div class="featured-deco-line"></div>
+      <p class="featured-visual-sub">Spray tan at deSoleil takes 20 minutes. Your chain takes 10. The result lasts all season — and the chain lasts forever.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="how-works-section">
+  <div class="how-works-header fade-in">
+    <div class="section-eyebrow">The Model</div>
+    <h2 class="section-heading">The collaboration model.</h2>
+    <p class="section-sub">Three roles. Two brands. One event. The structure is always the same — and it always benefits both sides.</p>
+  </div>
+  <div class="steps-grid">
+    <div class="step fade-in">
+      <div class="step-number">01</div>
+      <div class="step-icon">⬡</div>
+      <h3>You Host</h3>
+      <p>Choose your event format — pop-up, dual-service promo, or co-branded event. You provide the venue and promote to your audience. We handle the rest.</p>
+    </div>
+    <div class="step fade-in" style="transition-delay:0.15s">
+      <div class="step-number">02</div>
+      <div class="step-icon">◈</div>
+      <h3>We Bring the Studio</h3>
+      <p>HUE Glint arrives with full equipment — all 3 tiers, all 6 chain styles, the complete charm collection, and our welder. Setup takes 20 minutes.</p>
+    </div>
+    <div class="step fade-in" style="transition-delay:0.3s">
+      <div class="step-number">03</div>
+      <div class="step-icon">✦</div>
+      <h3>Both Brands Win</h3>
+      <p>You get a free chain as host. Your clients get an unforgettable experience. Both brands grow. Both audiences expand. We split the story together.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── COLLAB CONCEPTS GRID ── -->
+<section class="collab-grid-section">
+  <div class="collab-grid-header fade-in">
+    <div class="section-eyebrow" style="color:var(--gold)">Collab Concepts</div>
+    <h2 class="section-heading">Industries we partner with.</h2>
+    <p class="section-sub">Every venue is a potential studio. Every client base is a new audience. Here's how permanent jewelry fits across the beauty and lifestyle landscape.</p>
+  </div>
+  <div class="collab-grid">
+
+    <div class="collab-card fade-in">
+      <div class="collab-card-num">01</div>
+      <div class="collab-industry">Hair</div>
+      <div class="collab-title">Blow Dry Bar</div>
+      <p class="collab-concept">Blown Out + Linked Up. Come for the blowout, stay for the bracelet. The wrist is already extended — might as well make it permanent.</p>
+      <a href="#inquiry" class="collab-link">Learn More →</a>
+    </div>
+
+    <div class="collab-card fade-in" style="transition-delay:0.05s">
+      <div class="collab-card-num">02</div>
+      <div class="collab-industry">Hospitality</div>
+      <div class="collab-title">Wine Bar / Tasting Room</div>
+      <p class="collab-concept">Sip &amp; Glint. An evening pop-up where guests taste and get welded. The chain becomes the souvenir they take home from the night.</p>
+      <a href="#inquiry" class="collab-link">Learn More →</a>
+    </div>
+
+    <div class="collab-card fade-in" style="transition-delay:0.1s">
+      <div class="collab-card-num">03</div>
+      <div class="collab-industry">Beauty</div>
+      <div class="collab-title">Nail Studio</div>
+      <p class="collab-concept">Polish &amp; Permanent. Manicure first, chain after — the wrist is already extended and the hand is already in the spotlight.</p>
+      <a href="#inquiry" class="collab-link">Learn More →</a>
+    </div>
+
+    <div class="collab-card fade-in" style="transition-delay:0.15s">
+      <div class="collab-card-num">04</div>
+      <div class="collab-industry">Wellness</div>
+      <div class="collab-title">Yoga Studio</div>
+      <p class="collab-concept">Post-class glow-up. End a weekend morning class with a pop-up chain session for attendees — the best cool-down in the business.</p>
+      <a href="#inquiry" class="collab-link">Learn More →</a>
+    </div>
+
+    <div class="collab-card fade-in" style="transition-delay:0.05s">
+      <div class="collab-card-num">05</div>
+      <div class="collab-industry">Bridal</div>
+      <div class="collab-title">Bridal Boutique</div>
+      <p class="collab-concept">On-site weld day during dress fittings. Brides leave with a chain and a ring — two permanent commitments from one unforgettable afternoon.</p>
+      <a href="#inquiry" class="collab-link">Learn More →</a>
+    </div>
+
+    <div class="collab-card fade-in" style="transition-delay:0.1s">
+      <div class="collab-card-num">06</div>
+      <div class="collab-industry">Events</div>
+      <div class="collab-title">Floral Designer</div>
+      <p class="collab-concept">Bridal market collaboration. Book your florals and get your bracelet the same day — two permanent additions to the wedding celebration.</p>
+      <a href="#inquiry" class="collab-link">Learn More →</a>
+    </div>
+
+    <div class="collab-card fade-in" style="transition-delay:0.15s">
+      <div class="collab-card-num">07</div>
+      <div class="collab-industry">Fitness &amp; Retail</div>
+      <div class="collab-title">Fitness Studio / Athletic Retail</div>
+      <p class="collab-concept">In-store pop-up during product launch events. The chain is the drop people remember long after the merch sells out.</p>
+      <a href="#inquiry" class="collab-link">Learn More →</a>
+    </div>
+
+    <div class="collab-card fade-in" style="transition-delay:0.2s">
+      <div class="collab-card-num">08</div>
+      <div class="collab-industry">Hospitality</div>
+      <div class="collab-title">Hotel / Resort</div>
+      <p class="collab-concept">Weekend pop-up in the lobby or pool deck. Guests leave with something that travels home with them — and never comes off.</p>
+      <a href="#inquiry" class="collab-link">Learn More →</a>
+    </div>
+
+    <div class="collab-card fade-in" style="transition-delay:0.05s">
+      <div class="collab-card-num">09</div>
+      <div class="collab-industry">Fashion</div>
+      <div class="collab-title">Boutique Clothing Shop</div>
+      <p class="collab-concept">In-store event during trunk shows or new arrivals. The chain matches the moment — and the outfit — perfectly.</p>
+      <a href="#inquiry" class="collab-link">Learn More →</a>
+    </div>
+
+    <div class="collab-card fade-in" style="transition-delay:0.1s">
+      <div class="collab-card-num">10</div>
+      <div class="collab-industry">Art &amp; Body</div>
+      <div class="collab-title">Tattoo Studio</div>
+      <p class="collab-concept">Adjacent experience brands. Permanent art and permanent jewelry — same session, same afternoon, same commitment to wearing your story.</p>
+      <a href="#inquiry" class="collab-link">Learn More →</a>
+    </div>
+
+    <div class="collab-card fade-in" style="transition-delay:0.15s">
+      <div class="collab-card-num">11</div>
+      <div class="collab-industry">Wellness</div>
+      <div class="collab-title">Spa / Med Spa</div>
+      <p class="collab-concept">Add-on experience after a facial, massage, or treatment. The glow continues — and now it's accessorized.</p>
+      <a href="#inquiry" class="collab-link">Learn More →</a>
+    </div>
+
+    <div class="collab-card fade-in" style="transition-delay:0.2s">
+      <div class="collab-card-num">12</div>
+      <div class="collab-industry">Events</div>
+      <div class="collab-title">Event Venue</div>
+      <p class="collab-concept">On-site pop-up during weddings, galas, corporate events. Guests weld as part of the evening — and leave with something permanent.</p>
+      <a href="#inquiry" class="collab-link">Learn More →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── INQUIRY FORM ── -->
+<section class="inquiry-section" id="inquiry">
+  <div class="inquiry-inner">
+    <div class="inquiry-header fade-in">
+      <div class="section-eyebrow">Apply</div>
+      <h2 class="section-heading">Apply to Collaborate.</h2>
+      <p class="section-sub">Fill out the form below and we'll follow up within 48 hours. We partner with businesses across industries — if your clients would love an experience, we want to talk.</p>
+    </div>
+    <form class="inquiry-form fade-in" onsubmit="return handleInquiry(event);" style="transition-delay:0.1s">
+      <div class="form-group">
+        <label class="form-label" for="business-name">Business Name</label>
+        <input class="form-input" type="text" id="business-name" name="business-name" placeholder="Your business name" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="industry">Industry / Type</label>
+        <input class="form-input" type="text" id="industry" name="industry" placeholder="e.g. Nail Studio, Boutique, Yoga" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="contact-name">Contact Name</label>
+        <input class="form-input" type="text" id="contact-name" name="contact-name" placeholder="Your full name" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">Email</label>
+        <input class="form-input" type="email" id="email" name="email" placeholder="hello@yourbusiness.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="phone">Phone</label>
+        <input class="form-input" type="tel" id="phone" name="phone" placeholder="(555) 000-0000">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="event-type">Event Type</label>
+        <select class="form-select" id="event-type" name="event-type" required>
+          <option value="" disabled selected>Select an event type</option>
+          <option value="popup">Pop-Up Event</option>
+          <option value="dual">Dual-Service Package</option>
+          <option value="cobranded">Co-Branded Promotion</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label class="form-label" for="message">Message</label>
+        <textarea class="form-textarea" id="message" name="message" placeholder="Tell us about your space, your audience, and what you have in mind. The more detail, the better."></textarea>
+      </div>
+      <div class="form-submit-row">
+        <button type="submit" class="btn-submit">Send Inquiry →</button>
+      </div>
+      <p class="form-notice">We respond within 48 hours. Your information is never shared.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">HUE <span>✦</span> GLINT</div>
+      <div class="footer-tagline">No Clasp. No Compromise.</div>
+      <div class="footer-social">
+        <a href="#" class="social-link">ig</a>
+        <a href="#" class="social-link">tk</a>
+        <a href="#" class="social-link">pt</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="configurator.html">Design Your Chain</a></li>
+        <li><a href="services.html">In-Studio Weld</a></li>
+        <li><a href="services.html">Stacking Session</a></li>
+        <li><a href="services.html">Bridal Pop-Up</a></li>
+        <li><a href="services.html">Party Favors</a></li>
+        <li><a href="services.html">Glow &amp; Glint</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Learn</h4>
+      <ul>
+        <li><a href="#">What Is Permanent Jewelry?</a></li>
+        <li><a href="#">Which Tier Is Right for Me?</a></li>
+        <li><a href="#">Aftercare Guide</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">The HUE Journal</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Studio</h4>
+      <ul>
+        <li><a href="#">About HUE Glint</a></li>
+        <li><a href="collaborations.html">Collaborations</a></li>
+        <li><a href="#">Gift Cards</a></li>
+        <li><a href="#">Aftercare Shop</a></li>
+        <li><a href="#">Inner Circle</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 HUE Co. All rights reserved. glint.hue-co.com</div>
+    <div class="footer-legal">
+      <a href="#">Terms of Service</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Aftercare Policy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Fade-in on scroll
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  fadeEls.forEach(el => observer.observe(el));
+
+  // Nav scroll shrink
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').style.padding =
+      window.scrollY > 80 ? '12px 60px' : '20px 60px';
+  });
+
+  // Form handler
+  function handleInquiry(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.btn-submit');
+    btn.textContent = 'Sent ✦';
+    btn.style.background = '#3a3a3a';
+    btn.style.color = 'var(--gold)';
+    btn.disabled = true;
+    return false;
+  }
+</script>
+</body>
+</html>
