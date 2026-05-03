@@ -1,15 +1,5 @@
 ---
-export const prerender = false;
 import Layout from '../layouts/Layout.astro';
-
-let wixServices = [];
-try {
-  const { bookings } = await import('@wix/bookings');
-  const result = await bookings.queryServices().find();
-  wixServices = result.items ?? [];
-} catch(e) {
-  wixServices = [];
-}
 ---
 
 <Layout title="Book Your Weld — HUE Co." description="Reserve your permanent jewelry appointment at HUE Co. in Santa Cruz. Choose your service, pick your time — we confirm within 24 hours.">

@@ -1,15 +1,5 @@
 ---
-export const prerender = false;
 import Layout from '../layouts/Layout.astro';
-
-let wixProducts = [];
-try {
-  const { products } = await import('@wix/stores');
-  const result = await products.queryProducts().find();
-  wixProducts = result.items ?? [];
-} catch(e) {
-  wixProducts = [];
-}
 ---
 
 <Layout title="Collections — HUE Co." description="Six chain styles. Three metal tiers. Infinite combinations. All permanently yours. Shop HUE Co. permanent jewelry in Santa Cruz, CA.">
