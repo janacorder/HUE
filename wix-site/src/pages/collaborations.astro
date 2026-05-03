@@ -1,255 +1,618 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
 const industries = [
-  { name: 'Blow Dry Bar', icon: '💇' },
-  { name: 'Wine Bar — Sip & Glint', icon: '🍷' },
-  { name: 'Nail Studio', icon: '💅' },
-  { name: 'Yoga Studio', icon: '🧘' },
-  { name: 'Bridal Boutique', icon: '👰' },
-  { name: 'Floral Designer', icon: '🌸' },
-  { name: 'Fitness Studio', icon: '🏋️' },
-  { name: 'Hotel / Resort', icon: '🏨' },
-  { name: 'Boutique Clothing', icon: '👗' },
-  { name: 'Tattoo Studio', icon: '🖊️' },
-  { name: 'Spa / Med Spa', icon: '🌿' },
-  { name: 'Event Venue', icon: '✨' },
+  'Blow Dry Bar',
+  'Wine Bar',
+  'Nail Studio',
+  'Yoga Studio',
+  'Bridal Boutique',
+  'Floral Designer',
+  'Fitness Studio',
+  'Hotel & Resort',
+  'Boutique Clothing',
+  'Tattoo Studio',
+  'Spa & Med Spa',
+  'Event Venue',
 ];
 ---
-<Layout title="Collaborations — HUE Glint" description="Your venue. Our studio. Both audiences. Partner with HUE Glint for pop-up events, activations, and ongoing referral relationships.">
 
-<!-- Hero -->
-<section class="page-hero section--dark">
-  <div class="container">
-    <span class="eyebrow">Partner With Us</span>
-    <h1 class="page-hero__title">Your venue.<br /><em>Our studio.</em><br />Both audiences.</h1>
-    <p class="page-hero__sub">We bring a fully portable welding setup to your space. Your clients discover HUE Glint. Our clients discover you. The host always walks away with a free chain.</p>
-    <a href="#inquire" class="btn btn--gold" style="margin-top:40px">Start a Collaboration →</a>
-  </div>
-</section>
+<Layout
+  title="Collaborations — HUE Co. · Bring the Studio to You"
+  description="We bring a fully portable welding setup to your space. Your clients discover HUE Co. Our clients discover you. The host always walks away with a free chain."
+>
 
-<!-- Featured Partner -->
-<section class="section section--cream" id="partner">
-  <div class="container">
-    <div class="featured-partner">
-      <div class="featured-partner__badge">Featured Partner</div>
-      <div class="featured-partner__inner">
-        <div>
-          <span class="eyebrow" style="color:#8B7340">Current Collaboration</span>
-          <h2>deSoleil Spray Tanning</h2>
-          <p>Our standing partnership with Santa Cruz's premier spray tan studio. Book a Glow &amp; Glint package — professional spray tan and permanent chain on the same day — and save 10% on both services.</p>
-          <p>This is what collaboration looks like in practice: two complementary services, one afternoon, one beautiful result.</p>
-          <div class="featured-partner__perks">
-            <div class="perk">
-              <strong>10%</strong>
-              <span>off both services</span>
-            </div>
-            <div class="perk">
-              <strong>Same-day</strong>
-              <span>booking available</span>
-            </div>
-            <div class="perk">
-              <strong>Both studios</strong>
-              <span>in Santa Cruz</span>
-            </div>
+  <!-- ── Hero ────────────────────────────────────────────── -->
+  <section class="section--dark collab-hero">
+    <div class="container collab-hero__inner">
+      <div class="collab-hero__text">
+        <h1 class="collab-hero__headline">
+          <em>Your venue.</em>
+          <em>Our studio.</em>
+          <span class="collab-hero__headline-small">Both audiences.</span>
+        </h1>
+        <p class="collab-hero__sub">
+          We bring a fully portable welding setup to your space. Your clients discover
+          HUE Co. Our clients discover you. The host always walks away with a free chain.
+        </p>
+        <a href="#inquiry" class="btn btn--gold collab-hero__cta">Start a Collaboration</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Featured Partner ──────────────────────────────── -->
+  <section class="section--cream section partner-section">
+    <div class="container partner-inner">
+
+      <div class="partner-text">
+        <div class="partner-pill">Featured Partner</div>
+        <h2 class="section-title partner-headline">deSoleil Spray Tanning</h2>
+        <p class="partner-body">
+          Our standing partnership with Santa Cruz's premier spray tan studio. Book a
+          Glow &amp; Glint package — professional spray tan and permanent chain on the
+          same day — and save 10% on both services.
+        </p>
+
+        <div class="partner-perks">
+          <div class="partner-perk">
+            <span class="partner-perk__title">10% Off Both Services</span>
           </div>
-          <a href="/book" class="btn btn--outline-dark">Book Glow &amp; Glint</a>
-        </div>
-        <div class="featured-partner__visual"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- How It Works -->
-<section class="section section--dark" id="how-it-works">
-  <div class="container">
-    <div class="section-header">
-      <span class="eyebrow">The Model</span>
-      <h2 class="section-title">How Collaborations Work</h2>
-    </div>
-    <div class="collab-steps">
-      <div class="collab-step">
-        <div class="collab-step__num">01</div>
-        <h3>You Host</h3>
-        <p>Offer your space, your audience, and your promotion channels. We do all the setup, the welding, and the cleanup. You don't need any equipment or expertise.</p>
-      </div>
-      <div class="collab-step__arrow">→</div>
-      <div class="collab-step">
-        <div class="collab-step__num">02</div>
-        <h3>We Bring the Studio</h3>
-        <p>Our portable setup fits in any space — a boutique back room, a hotel suite, a studio lobby. We bring the welder, the chains, the charms, and the whole HUE Glint experience.</p>
-      </div>
-      <div class="collab-step__arrow">→</div>
-      <div class="collab-step">
-        <div class="collab-step__num">03</div>
-        <h3>Both Brands Win</h3>
-        <p>Your clients get a memorable experience they'll talk about. Our clients discover your space. And as the host, you always receive a complimentary chain on us.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Industry Concepts -->
-<section class="section section--cream" id="industries">
-  <div class="container">
-    <div class="section-header">
-      <span class="eyebrow" style="color:#8B7340">Who We Work With</span>
-      <h2 class="section-title" style="color:var(--black)">Industries That Fit</h2>
-      <p class="section-subtitle" style="margin:0 auto;text-align:center;color:rgba(0,0,0,0.6)">If your clients value beauty, experience, and something that lasts — there's a collab here.</p>
-    </div>
-    <div class="industries-grid">
-      {industries.map(ind => (
-        <div class="industry-card">
-          <span class="industry-card__icon">{ind.icon}</span>
-          <span class="industry-card__name">{ind.name}</span>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
-
-<!-- Inquiry Form -->
-<section class="section section--dark" id="inquire">
-  <div class="container">
-    <div class="inquiry-wrap">
-      <div class="inquiry-header">
-        <span class="eyebrow">Get In Touch</span>
-        <h2>Start a Collaboration</h2>
-        <p>Tell us about your business and what you have in mind. We respond within 48 hours.</p>
-      </div>
-      <form class="inquiry-form" id="collab-form">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Business Name</label>
-            <input type="text" name="businessName" placeholder="Your Business" required />
+          <div class="partner-perk">
+            <span class="partner-perk__title">Same-Day Booking</span>
           </div>
-          <div class="form-group">
-            <label>Industry</label>
-            <input type="text" name="industry" placeholder="e.g. Blow Dry Bar" required />
+          <div class="partner-perk">
+            <span class="partner-perk__title">Both Studios in Santa Cruz</span>
           </div>
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Contact Name</label>
-            <input type="text" name="contactName" placeholder="Your Name" required />
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" name="email" placeholder="you@yourbusiness.com" required />
+
+        <a href="/book" class="btn btn--outline-dark">Book Glow &amp; Glint</a>
+      </div>
+
+      <div class="partner-photo">
+        <div class="photo-block photo-block--portrait photo-block--light partner-photo-block"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── How It Works ──────────────────────────────────── -->
+  <section class="section--dark section how-section">
+    <div class="container">
+
+      <div class="section-header section-header--center">
+        <h2 class="section-title">How Collaborations Work</h2>
+      </div>
+
+      <div class="how-steps">
+
+        <div class="how-step">
+          <div class="how-step__number">01</div>
+          <div class="how-step__content">
+            <h3 class="how-step__name">You Host</h3>
+            <p class="how-step__desc">
+              Provide the venue and your client base. We handle all setup, tools,
+              materials, and the welding itself. You just open the doors.
+            </p>
           </div>
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Phone</label>
-            <input type="tel" name="phone" placeholder="(831) 000-0000" />
+
+        <div class="how-connector" aria-hidden="true"></div>
+
+        <div class="how-step">
+          <div class="how-step__number">02</div>
+          <div class="how-step__content">
+            <h3 class="how-step__name">We Bring the Studio</h3>
+            <p class="how-step__desc">
+              Our portable setup includes chain samples, a welding station, and
+              everything needed for a full service experience — no permanent fixtures
+              required.
+            </p>
           </div>
-          <div class="form-group">
-            <label>Event Type</label>
-            <select name="eventType">
-              <option value="">Select event type</option>
-              <option>One-Time Pop-Up Event</option>
-              <option>Recurring Monthly Pop-Up</option>
-              <option>Standing Referral Partnership</option>
-              <option>Private Party / Corporate Event</option>
-              <option>Bachelorette Party</option>
-              <option>Other</option>
+        </div>
+
+        <div class="how-connector" aria-hidden="true"></div>
+
+        <div class="how-step">
+          <div class="how-step__number">03</div>
+          <div class="how-step__content">
+            <h3 class="how-step__name">Both Brands Win</h3>
+            <p class="how-step__desc">
+              Your guests leave with something permanent. Your brand is tied to a
+              luxury experience they'll remember and wear forever. The host receives
+              a complimentary chain.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Industries Grid ───────────────────────────────── -->
+  <section class="section--cream section industries-section">
+    <div class="container">
+
+      <div class="section-header section-header--center">
+        <h2 class="section-title">Who We Work With</h2>
+        <p class="section-subtitle">
+          If your clients value beauty, experience, and something that lasts — there's a collab here.
+        </p>
+      </div>
+
+      <div class="industries-grid">
+        {industries.map((industry) => (
+          <div class="industry-card">
+            <span class="industry-name">{industry}</span>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Inquiry Form ───────────────────────────────────── -->
+  <section class="section--dark section inquiry-section" id="inquiry">
+    <div class="container--narrow inquiry-inner">
+
+      <div class="section-header section-header--center">
+        <span class="eyebrow">Let's Work Together</span>
+        <h2 class="section-title inquiry-headline">Start a Collaboration</h2>
+      </div>
+
+      <form class="inquiry-form" action="#" method="post">
+
+        <div class="inquiry-row">
+          <div class="inquiry-field">
+            <label class="form-label" for="business-name">Business Name</label>
+            <input
+              id="business-name"
+              type="text"
+              name="business_name"
+              class="form-input"
+              placeholder="Your studio or business"
+              required
+            />
+          </div>
+
+          <div class="inquiry-field">
+            <label class="form-label" for="industry">Industry</label>
+            <input
+              id="industry"
+              type="text"
+              name="industry"
+              class="form-input"
+              placeholder="e.g. Blow Dry Bar, Yoga Studio"
+            />
+          </div>
+        </div>
+
+        <div class="inquiry-row">
+          <div class="inquiry-field">
+            <label class="form-label" for="contact-name">Contact Name</label>
+            <input
+              id="contact-name"
+              type="text"
+              name="contact_name"
+              class="form-input"
+              placeholder="Your name"
+              required
+            />
+          </div>
+
+          <div class="inquiry-field">
+            <label class="form-label" for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              class="form-input"
+              placeholder="hello@yourbusiness.com"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="inquiry-row">
+          <div class="inquiry-field">
+            <label class="form-label" for="phone">Phone</label>
+            <input
+              id="phone"
+              type="tel"
+              name="phone"
+              class="form-input"
+              placeholder="(831) 000-0000"
+            />
+          </div>
+
+          <div class="inquiry-field">
+            <label class="form-label" for="event-type">Event Type</label>
+            <select id="event-type" name="event_type" class="form-select inquiry-select">
+              <option value="" disabled selected>Select an event type</option>
+              <option value="standing">Standing Partnership</option>
+              <option value="one-time">One-Time Pop-Up</option>
+              <option value="bridal">Bridal / Bachelorette</option>
+              <option value="corporate">Corporate Event</option>
+              <option value="birthday">Birthday Party</option>
+              <option value="brand-activation">Brand Activation</option>
+              <option value="other">Other</option>
             </select>
           </div>
         </div>
-        <div class="form-group">
-          <label>Message</label>
-          <textarea name="message" rows="5" placeholder="Tell us about your space, audience, and what you have in mind..."></textarea>
+
+        <div class="inquiry-field">
+          <label class="form-label" for="message">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            class="form-textarea inquiry-textarea"
+            placeholder="Tell us about your space, your clients, and what you have in mind."
+            rows="5"
+          ></textarea>
         </div>
-        <button type="submit" class="btn btn--gold">Send Inquiry →</button>
-        <p class="form-note">We respond within 48 hours.</p>
+
+        <div class="inquiry-submit">
+          <button type="submit" class="btn btn--gold inquiry-btn">Send Inquiry</button>
+        </div>
+
       </form>
+
     </div>
-  </div>
-</section>
+  </section>
 
 </Layout>
 
-<style>
-  .page-hero { padding: calc(var(--nav-height) + 80px) 0 80px; }
-  .page-hero__title { font-size: clamp(40px, 6vw, 88px); font-weight: 300; line-height: 1.05; margin-bottom: 20px; }
-  .page-hero__title em { color: var(--gold); font-style: italic; }
-  .page-hero__sub { font-size: 16px; color: rgba(255,255,255,0.6); max-width: 480px; line-height: 1.7; }
+<style is:global>
 
-  /* Featured Partner */
-  .featured-partner { border: 1px solid rgba(0,0,0,0.1); }
-  .featured-partner__badge {
-    background: var(--black); color: var(--gold); padding: 8px 20px;
-    font-size: 10px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+  /* ── Collab Hero ───────────────────────────────────────── */
+  .collab-hero {
+    padding-top: calc(var(--nav-height) + 80px);
+    padding-bottom: 100px;
+  }
+
+  .collab-hero__inner {
+    max-width: 900px;
+  }
+
+  .collab-hero__headline {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  .collab-hero__headline em {
+    font-style: italic;
+    font-size: clamp(3rem, 8vw, 7rem);
+    color: var(--warm-white);
+    display: block;
+    line-height: 1.05;
+  }
+
+  .collab-hero__headline-small {
+    font-style: normal;
+    font-size: clamp(1.6rem, 4vw, 3rem);
+    color: var(--butter);
+    display: block;
+    margin-top: 12px;
+    line-height: 1.2;
+    letter-spacing: 0em;
+  }
+
+  .collab-hero__sub {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(254, 252, 248, 0.58);
+    max-width: 52ch;
+    margin-bottom: 40px;
+  }
+
+  /* ── Featured Partner ──────────────────────────────────── */
+  .partner-section {
+    overflow: hidden;
+  }
+
+  .partner-inner {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .partner-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .partner-pill {
     display: inline-block;
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background-color: var(--butter);
+    color: var(--black);
+    padding: 8px 16px;
+    margin-bottom: 24px;
   }
-  .featured-partner__inner { display: grid; grid-template-columns: 1fr 320px; gap: 64px; padding: 56px; align-items: center; }
-  .featured-partner h2 { font-size: 40px; margin-bottom: 20px; }
-  .featured-partner p { font-size: 15px; color: rgba(0,0,0,0.65); line-height: 1.7; margin-bottom: 16px; }
-  .featured-partner__perks { display: flex; gap: 32px; margin: 32px 0; }
-  .perk { display: flex; flex-direction: column; }
-  .perk strong { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 400; color: #8B7340; line-height: 1; }
-  .perk span { font-size: 11px; color: rgba(0,0,0,0.5); letter-spacing: 0.06em; margin-top: 4px; }
-  .featured-partner__visual { background: rgba(139,115,64,0.1); min-height: 280px; border-radius: 2px; }
 
-  /* Collab Steps */
-  .collab-steps { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: start; gap: 0; }
-  .collab-step { padding: 40px; }
-  .collab-step__num { font-family: 'Cormorant Garamond', serif; font-size: 56px; color: rgba(255,255,255,0.07); line-height: 1; margin-bottom: 16px; }
-  .collab-step h3 { font-size: 26px; margin-bottom: 12px; }
-  .collab-step p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7; }
-  .collab-step__arrow { font-size: 24px; color: var(--gold); align-self: center; padding: 0 8px; opacity: 0.5; }
+  .partner-headline {
+    color: var(--charcoal);
+    margin-bottom: 20px;
+  }
 
-  /* Industries */
-  .industries-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+  .partner-body {
+    font-family: 'Jost', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(42, 40, 32, 0.68);
+    max-width: 54ch;
+    margin-bottom: 36px;
+  }
+
+  .partner-perks {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 36px;
+    border-top: 1px solid var(--cream-dark);
+  }
+
+  .partner-perk {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+
+  .partner-perk__title {
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--charcoal);
+    padding-left: 16px;
+    border-left: 1px solid var(--butter-dark);
+    display: block;
+  }
+
+  .partner-photo-block {
+    width: 100%;
+    min-height: 500px;
+  }
+
+  @media (max-width: 960px) {
+    .partner-inner {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .partner-photo {
+      order: -1;
+    }
+
+    .partner-photo-block {
+      min-height: 320px;
+    }
+  }
+
+  /* ── How It Works ──────────────────────────────────────── */
+  .how-steps {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 0;
+    align-items: start;
+  }
+
+  .how-step {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .how-step__number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--butter);
+    opacity: 0.12;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+
+  .how-step__name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--warm-white);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .how-step__desc {
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(254, 252, 248, 0.52);
+    max-width: 32ch;
+  }
+
+  .how-connector {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, transparent, var(--butter), transparent);
+    opacity: 0.35;
+    flex-shrink: 0;
+    align-self: center;
+    margin: 0 32px;
+    transform: rotate(0deg);
+  }
+
+  /* horizontal connector for side-by-side layout */
+  .how-steps .how-connector {
+    width: 48px;
+    height: 1px;
+    margin: 0 0;
+    align-self: center;
+    margin-top: -60px;
+    background: linear-gradient(to right, transparent, var(--butter), transparent);
+  }
+
+  @media (max-width: 860px) {
+    .how-steps {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .how-connector {
+      width: 1px;
+      height: 32px;
+      margin: 0 0 0 8px;
+      background: linear-gradient(to bottom, transparent, var(--butter), transparent);
+    }
+
+    .how-steps .how-connector {
+      width: 1px;
+      height: 32px;
+      margin: 0 0 0 8px;
+      margin-top: 0;
+    }
+  }
+
+  /* ── Industries Grid ───────────────────────────────────── */
+  .industries-section {}
+
+  .industries-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background-color: var(--butter);
+    border: 1px solid var(--butter);
+  }
+
   .industry-card {
-    background: rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.08);
-    padding: 32px 24px; display: flex; flex-direction: column; align-items: center;
-    text-align: center; gap: 12px; transition: background 0.2s;
+    background-color: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    text-align: center;
+    transition: background-color 0.2s var(--ease);
   }
-  .industry-card:hover { background: rgba(0,0,0,0.08); }
-  .industry-card__icon { font-size: 28px; }
-  .industry-card__name { font-size: 13px; font-weight: 500; color: var(--black); letter-spacing: 0.04em; }
 
-  /* Inquiry Form */
-  .inquiry-wrap { max-width: 720px; margin: 0 auto; }
-  .inquiry-header { margin-bottom: 48px; }
-  .inquiry-header h2 { font-size: 40px; margin-bottom: 12px; }
-  .inquiry-header p { font-size: 14px; color: rgba(255,255,255,0.55); }
-  .inquiry-form { display: flex; flex-direction: column; gap: 20px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .form-group { display: flex; flex-direction: column; gap: 8px; }
-  .form-group label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
-  .form-group input, .form-group select, .form-group textarea {
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
-    color: var(--white); padding: 14px 16px;
-    font-family: 'Montserrat', sans-serif; font-size: 13px; outline: none;
-    transition: border-color 0.2s;
+  .industry-card:hover {
+    background-color: var(--cream-dark);
   }
-  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-    border-color: rgba(201,168,76,0.5);
+
+  .industry-name {
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    line-height: 1.4;
   }
-  .form-group select option { background: var(--black); }
-  .form-group textarea { resize: vertical; }
-  .form-note { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 0.06em; margin-top: 4px; }
 
   @media (max-width: 900px) {
-    .featured-partner__inner { grid-template-columns: 1fr; }
-    .featured-partner__visual { min-height: 200px; }
-    .collab-steps { grid-template-columns: 1fr; }
-    .collab-step__arrow { display: none; }
-    .industries-grid { grid-template-columns: repeat(3, 1fr); }
-    .form-row { grid-template-columns: 1fr; }
+    .industries-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
-  @media (max-width: 600px) {
-    .industries-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-</style>
 
-<script>
-  document.getElementById('collab-form')?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    alert(`Thanks, ${data.get('contactName')}! We'll be in touch within 48 hours.`);
-    e.target.reset();
-  });
-</script>
+  @media (max-width: 600px) {
+    .industries-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* ── Inquiry Form ──────────────────────────────────────── */
+  .inquiry-section {}
+
+  .inquiry-inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .inquiry-headline {
+    color: var(--warm-white);
+    margin-top: 8px;
+  }
+
+  .inquiry-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .inquiry-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .inquiry-field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .inquiry-select {
+    width: 100%;
+    padding: 14px 16px;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--warm-white);
+    transition: border-color 0.2s var(--ease);
+    cursor: pointer;
+    /* Custom arrow */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23D4B96A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+  }
+
+  .inquiry-select:focus {
+    border-color: var(--butter);
+    outline: none;
+  }
+
+  .inquiry-select option {
+    background-color: var(--black);
+    color: var(--warm-white);
+  }
+
+  .inquiry-textarea {
+    resize: vertical;
+    min-height: 140px;
+    line-height: 1.7;
+  }
+
+  .inquiry-submit {
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+  }
+
+  .inquiry-btn {
+    padding: 16px 64px;
+    font-size: 12px;
+  }
+
+  @media (max-width: 640px) {
+    .inquiry-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+</style>
