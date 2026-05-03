@@ -1,0 +1,335 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="HUE Journal — HUE Co." description="Stories, inspiration, and news from the HUE Co. studio in Santa Cruz. Style guides, permanent jewelry education, and studio dispatches.">
+
+<!-- ── Hero ──────────────────────────────────────────────────── -->
+<section class="section--dark journal-hero">
+  <div class="container">
+    <span class="eyebrow eyebrow--light">The Studio</span>
+    <h1 class="section-title section-title--xl journal-hero__title">HUE Journal</h1>
+    <p class="section-subtitle">Stories, inspiration, and news from the studio.</p>
+  </div>
+</section>
+
+<!-- ── Articles Grid ─────────────────────────────────────────── -->
+<section class="section section--cream">
+  <div class="container">
+
+    <!-- Featured placeholder -->
+    <div class="journal-featured">
+      <div class="journal-featured__photo">
+        <div class="photo-block photo-block--landscape photo-block--warm" style="aspect-ratio: 16/7;"></div>
+        <div class="journal-coming-badge">Coming Soon</div>
+      </div>
+      <div class="journal-featured__text">
+        <span class="eyebrow eyebrow--dark">Style</span>
+        <h2 class="journal-featured__title">Five Reasons to Stack Your Wrist This Season</h2>
+        <p class="journal-featured__date">May 2025</p>
+        <p class="journal-featured__desc">Stacking is not a trend — it's a practice. We break down how to build a wrist stack that reads intentional, not accumulated.</p>
+        <span class="journal-coming-note">Article publishing soon</span>
+      </div>
+    </div>
+
+    <div class="journal-grid">
+
+      <article class="journal-card">
+        <div class="journal-card__photo-wrap">
+          <div class="photo-block photo-block--landscape photo-block--warm journal-card__photo"></div>
+          <div class="journal-coming-badge journal-coming-badge--sm">Coming Soon</div>
+        </div>
+        <div class="journal-card__body">
+          <span class="eyebrow eyebrow--dark">Studio</span>
+          <h3 class="journal-card__title">Permanent vs. Semi-Permanent Jewelry: What's the Difference?</h3>
+          <p class="journal-card__date">May 2025</p>
+          <p class="journal-card__desc">A clear breakdown of every kind of jewelry on the market — and why the permanent kind is the only one that actually stays.</p>
+          <span class="journal-coming-note">Article publishing soon</span>
+        </div>
+      </article>
+
+      <article class="journal-card">
+        <div class="journal-card__photo-wrap">
+          <div class="photo-block photo-block--landscape photo-block--warm journal-card__photo"></div>
+          <div class="journal-coming-badge journal-coming-badge--sm">Coming Soon</div>
+        </div>
+        <div class="journal-card__body">
+          <span class="eyebrow eyebrow--dark">Collaborations</span>
+          <h3 class="journal-card__title">The Glow &amp; Glint Experience: A Day at HUE + deSoleil</h3>
+          <p class="journal-card__date">May 2025</p>
+          <p class="journal-card__desc">What happens when a permanent jewelry studio and a facial studio share a philosophy? The Glow &amp; Glint package, start to finish.</p>
+          <span class="journal-coming-note">Article publishing soon</span>
+        </div>
+      </article>
+
+      <article class="journal-card">
+        <div class="journal-card__photo-wrap">
+          <div class="photo-block photo-block--landscape photo-block--warm journal-card__photo"></div>
+          <div class="journal-coming-badge journal-coming-badge--sm">Coming Soon</div>
+        </div>
+        <div class="journal-card__body">
+          <span class="eyebrow eyebrow--dark">Aftercare</span>
+          <h3 class="journal-card__title">Your Tier Guide: Which Metal Is Right for You?</h3>
+          <p class="journal-card__date">May 2025</p>
+          <p class="journal-card__desc">We go deeper on the Tier Guide — client stories, real-life examples, and the one question you should ask yourself before choosing your metal.</p>
+          <span class="journal-coming-note">Article publishing soon</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Newsletter ─────────────────────────────────────────────── -->
+<section class="section--dark section--sm">
+  <div class="container container--narrow">
+    <div class="journal-newsletter">
+      <div class="section-header section-header--center">
+        <span class="eyebrow eyebrow--light">Stay Close</span>
+        <h2 class="section-title">Get notified when we publish</h2>
+        <p class="section-subtitle" style="margin-inline:auto;">New articles, new chains, new charm drops — direct to your inbox. No noise.</p>
+      </div>
+      <form id="journal-newsletter-form" class="journal-newsletter-form" novalidate>
+        <div class="journal-newsletter__row">
+          <input class="form-input journal-newsletter__input" type="email" id="jn-email" name="email" placeholder="your@email.com" required />
+          <button type="submit" class="btn btn--gold journal-newsletter__btn">Subscribe</button>
+        </div>
+        <p class="journal-newsletter__note">No spam. Unsubscribe any time.</p>
+        <div class="journal-newsletter__success" id="jn-success" aria-live="polite">You're subscribed. Watch your inbox.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ── Related ─────────────────────────────────────────────────── -->
+<section class="section--butter section--sm">
+  <div class="container">
+    <div class="related-articles">
+      <span class="eyebrow eyebrow--dark">From the Learn Section</span>
+      <div class="related-links">
+        <a href="/learn/what-is-permanent-jewelry" class="related-link">What Is Permanent Jewelry?</a>
+        <a href="/learn/tier-guide" class="related-link">The Tier Guide</a>
+        <a href="/learn/aftercare" class="related-link">Aftercare Guide</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style is:global>
+/* ── Journal Hero ───────────────────────────────────────────── */
+.journal-hero {
+  padding-top: calc(var(--nav-height) + 80px);
+  padding-bottom: 100px;
+}
+
+.journal-hero__title {
+  margin-top: 8px;
+}
+
+/* ── Journal Featured ───────────────────────────────────────── */
+.journal-featured {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 64px;
+  align-items: center;
+  margin-bottom: 64px;
+  position: relative;
+}
+
+.journal-featured__photo {
+  position: relative;
+}
+
+.journal-featured__text {
+  padding: 16px 0;
+}
+
+.journal-featured__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 400;
+  color: var(--black);
+  margin-bottom: 8px;
+  line-height: 1.15;
+}
+
+.journal-featured__date {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  opacity: 0.45;
+  margin-bottom: 16px;
+}
+
+.journal-featured__desc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.8;
+  opacity: 0.65;
+  margin-bottom: 20px;
+  max-width: 44ch;
+}
+
+/* ── Coming Soon Badge ──────────────────────────────────────── */
+.journal-coming-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(10, 10, 10, 0.75);
+  color: var(--butter);
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  backdrop-filter: blur(4px);
+}
+
+.journal-coming-badge--sm {
+  font-size: 9px;
+  padding: 4px 10px;
+}
+
+.journal-coming-note {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.4;
+  display: block;
+}
+
+/* ── Journal Grid ───────────────────────────────────────────── */
+.journal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+}
+
+.journal-card__photo-wrap {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.journal-card__body {
+  padding: 0 4px;
+}
+
+.journal-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  font-weight: 400;
+  color: var(--black);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.journal-card__date {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  opacity: 0.4;
+  margin-bottom: 12px;
+}
+
+.journal-card__desc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.75;
+  opacity: 0.62;
+  margin-bottom: 16px;
+  max-width: 46ch;
+}
+
+/* ── Newsletter ─────────────────────────────────────────────── */
+.journal-newsletter {
+  max-width: 560px;
+  margin-inline: auto;
+}
+
+.journal-newsletter-form {
+  text-align: center;
+}
+
+.journal-newsletter__row {
+  display: flex;
+  gap: 0;
+  margin-bottom: 12px;
+}
+
+.journal-newsletter__input {
+  flex: 1;
+  border-right: none;
+}
+
+.journal-newsletter__btn {
+  flex-shrink: 0;
+  padding: 14px 28px;
+  font-size: 11px;
+}
+
+.journal-newsletter__note {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 300;
+  opacity: 0.4;
+}
+
+.journal-newsletter__success {
+  display: none;
+  margin-top: 16px;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--butter);
+}
+
+.journal-newsletter__success.is-visible {
+  display: block;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .journal-featured {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .journal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .journal-newsletter__row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .journal-newsletter__input {
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+  }
+}
+</style>
+
+<script>
+const jnForm = document.getElementById('journal-newsletter-form') as HTMLFormElement | null;
+const jnSuccess = document.getElementById('jn-success');
+
+jnForm?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const input = document.getElementById('jn-email') as HTMLInputElement | null;
+  if (input) input.style.opacity = '0.4';
+  const btn = jnForm.querySelector('button') as HTMLButtonElement | null;
+  if (btn) btn.style.opacity = '0.4';
+  if (jnSuccess) jnSuccess.classList.add('is-visible');
+});
+</script>

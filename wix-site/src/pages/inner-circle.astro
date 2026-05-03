@@ -1,0 +1,332 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Inner Circle — HUE Co." description="HUE Co.'s private membership for our most devoted clients. Early access, member events, birthday rewards, and referral credits. Free to join.">
+
+<!-- ── Hero ──────────────────────────────────────────────────── -->
+<section class="section--dark ic-hero">
+  <div class="container">
+    <span class="eyebrow eyebrow--light">Membership</span>
+    <h1 class="section-title section-title--xl ic-hero__title">The Inner Circle</h1>
+    <p class="section-subtitle">HUE Co.'s private membership for our most devoted clients. No purchase required. No expiry. Just priority.</p>
+  </div>
+</section>
+
+<!-- ── Benefits ──────────────────────────────────────────────── -->
+<section class="section section--cream">
+  <div class="container">
+    <div class="section-header section-header--center">
+      <span class="eyebrow eyebrow--dark">What You Get</span>
+      <h2 class="section-title">Member Benefits</h2>
+    </div>
+
+    <div class="ic-benefits">
+      <div class="ic-benefit">
+        <div class="ic-benefit__num">01</div>
+        <h3 class="ic-benefit__title">Early Access</h3>
+        <p class="ic-benefit__desc">New chain styles and charms before they're available to the public. Inner Circle members get first notification — usually three weeks ahead of launch — and priority booking.</p>
+      </div>
+      <div class="ic-benefit">
+        <div class="ic-benefit__num">02</div>
+        <h3 class="ic-benefit__title">Member Events</h3>
+        <p class="ic-benefit__desc">Private pop-ups, styling sessions, and first looks — invitation only. These are the evenings that don't get posted until they're over. You'll know about them first.</p>
+      </div>
+      <div class="ic-benefit">
+        <div class="ic-benefit__num">03</div>
+        <h3 class="ic-benefit__title">Birthday Reward</h3>
+        <p class="ic-benefit__desc">A complimentary charm on your birthday, every year. We send it as a credit to your account the week of your birthday. No redemption hoops. Just a gift, from us.</p>
+      </div>
+      <div class="ic-benefit">
+        <div class="ic-benefit__num">04</div>
+        <h3 class="ic-benefit__title">Referral Credit</h3>
+        <p class="ic-benefit__desc">$15 credit for every friend you bring in who books a weld. Credited automatically when they mention your name at checkout. Credits stack. Credits never expire.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Join Form ──────────────────────────────────────────────── -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="ic-form-wrap">
+      <div class="section-header section-header--center">
+        <span class="eyebrow eyebrow--light">Join</span>
+        <h2 class="section-title">Become a Member</h2>
+        <p class="section-subtitle" style="margin-inline:auto;">Inner Circle membership is free. No purchase required. Just fill out the form below.</p>
+      </div>
+
+      <form id="ic-form" class="ic-form" novalidate>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label" for="ic-first">First Name</label>
+            <input class="form-input" type="text" id="ic-first" name="firstName" placeholder="First name" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ic-last">Last Name</label>
+            <input class="form-input" type="text" id="ic-last" name="lastName" placeholder="Last name" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="ic-email">Email Address</label>
+          <input class="form-input" type="email" id="ic-email" name="email" placeholder="your@email.com" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="ic-phone">Phone Number</label>
+          <input class="form-input" type="tel" id="ic-phone" name="phone" placeholder="(831) 000-0000" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="ic-referral">How did you hear about us?</label>
+          <select class="form-select" id="ic-referral" name="referral">
+            <option value="" disabled selected>Select an option</option>
+            <option value="Instagram">Instagram</option>
+            <option value="TikTok">TikTok</option>
+            <option value="Friend or Referral">Friend or Referral</option>
+            <option value="Google Search">Google Search</option>
+            <option value="Walked By">Walked By the Studio</option>
+            <option value="deSoleil">Through deSoleil</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="ic-form__footer">
+          <button type="submit" class="btn btn--gold">Join the Inner Circle</button>
+        </div>
+
+        <p class="ic-form__small">Inner Circle membership is free. No purchase required. You may unsubscribe at any time.</p>
+
+        <div class="ic-form__success" id="ic-success" aria-live="polite">
+          <p class="ic-form__success-title">Welcome to the Inner Circle.</p>
+          <p>You're in. Watch your inbox — you're now first in line for new releases, private events, and your annual birthday charm.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ── Testimonials ───────────────────────────────────────────── -->
+<section class="section section--butter">
+  <div class="container">
+    <div class="section-header section-header--center">
+      <span class="eyebrow eyebrow--dark">From the Circle</span>
+      <h2 class="section-title">What Members Say</h2>
+    </div>
+    <div class="ic-testimonials">
+      <blockquote class="ic-testimonial">
+        <p class="ic-testimonial__quote">"Being an Inner Circle member means I knew about the moonstone charm three weeks before anyone else. I was the first person to wear it out of the studio."</p>
+        <footer class="ic-testimonial__footer">
+          <span class="ic-testimonial__name">Dana L.</span>
+          <span class="ic-testimonial__location">Santa Cruz</span>
+        </footer>
+      </blockquote>
+      <blockquote class="ic-testimonial">
+        <p class="ic-testimonial__quote">"The birthday charm made me cry. I didn't expect HUE to feel so personal. It arrived as a credit the morning of my birthday and I booked that afternoon."</p>
+        <footer class="ic-testimonial__footer">
+          <span class="ic-testimonial__name">Alexis M.</span>
+          <span class="ic-testimonial__location">Capitola</span>
+        </footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style is:global>
+/* ── Inner Circle Hero ──────────────────────────────────────── */
+.ic-hero {
+  padding-top: calc(var(--nav-height) + 80px);
+  padding-bottom: 100px;
+}
+
+.ic-hero__title {
+  margin-top: 8px;
+}
+
+/* ── Benefits ───────────────────────────────────────────────── */
+.ic-benefits {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 48px;
+}
+
+.ic-benefit__num {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  font-weight: 300;
+  line-height: 1;
+  color: rgba(212, 185, 106, 0.25);
+  margin-bottom: 16px;
+}
+
+.ic-benefit__title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--black);
+  margin-bottom: 12px;
+}
+
+.ic-benefit__desc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.8;
+  opacity: 0.68;
+}
+
+/* ── Join Form ──────────────────────────────────────────────── */
+.ic-form-wrap {
+  max-width: 560px;
+  margin-inline: auto;
+}
+
+.ic-form .form-group {
+  margin-bottom: 24px;
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.ic-form__footer {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.ic-form__footer .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+.ic-form__small {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 300;
+  opacity: 0.4;
+  text-align: center;
+  margin-top: 16px;
+  line-height: 1.6;
+}
+
+.ic-form__success {
+  display: none;
+  margin-top: 40px;
+  padding: 32px;
+  border: 1px solid var(--butter);
+  background: rgba(212, 185, 106, 0.06);
+  text-align: center;
+}
+
+.ic-form__success.is-visible {
+  display: block;
+}
+
+.ic-form__success-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--butter);
+  margin-bottom: 8px;
+}
+
+.ic-form__success p {
+  font-size: 14px;
+  font-weight: 300;
+  opacity: 0.75;
+  line-height: 1.7;
+}
+
+/* ── Testimonials ───────────────────────────────────────────── */
+.ic-testimonials {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 48px;
+}
+
+.ic-testimonial {
+  border-left: 2px solid rgba(0, 0, 0, 0.15);
+  padding-left: 32px;
+}
+
+.ic-testimonial__quote {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.7;
+  color: var(--black);
+  opacity: 0.82;
+  margin-bottom: 24px;
+}
+
+.ic-testimonial__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ic-testimonial__name {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--black);
+}
+
+.ic-testimonial__location {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 300;
+  opacity: 0.55;
+  letter-spacing: 0.06em;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .ic-benefits {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ic-benefits {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .ic-testimonials {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<script>
+const icForm = document.getElementById('ic-form') as HTMLFormElement | null;
+const icSuccess = document.getElementById('ic-success');
+
+icForm?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (icForm) {
+    icForm.style.opacity = '0.4';
+    icForm.style.pointerEvents = 'none';
+  }
+  if (icSuccess) {
+    icSuccess.classList.add('is-visible');
+    icSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+});
+</script>
