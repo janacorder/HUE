@@ -1,0 +1,263 @@
+---
+import Layout from '../layouts/Layout.astro';
+const chains = [
+  { name: 'Box', desc: 'Square links, 1–2mm', note: 'Clean and geometric' },
+  { name: 'Cable', desc: 'Oval links, 1–2mm', note: 'Most versatile' },
+  { name: 'Figaro', desc: '3 small, 1 large link, 1.5–3mm', note: 'Italian pattern' },
+  { name: 'Rope', desc: 'Twisted spiral, 1.5–3mm', note: 'High detail' },
+  { name: 'Snake', desc: 'Smooth liquid, 1–2mm', note: 'Ultra-sleek' },
+  { name: 'Curb', desc: 'Flat interlocking, 1.5–3mm', note: 'Bold & edgy' },
+];
+const charms = [
+  { name: 'Star', t1: 12, t2: 28, t3: 75 },
+  { name: 'Moon', t1: 12, t2: 28, t3: 75 },
+  { name: 'Heart', t1: 12, t2: 28, t3: 75 },
+  { name: 'Evil Eye', t1: 12, t2: 28, t3: 75 },
+  { name: 'Initial', t1: 12, t2: 28, t3: 75 },
+  { name: 'Butterfly', t1: 12, t2: 28, t3: 75 },
+  { name: 'Lightning Bolt', t1: 12, t2: 28, t3: 75 },
+  { name: 'Infinity', t1: 12, t2: 28, t3: 75 },
+  { name: 'Sunburst', t1: 12, t2: 28, t3: 75 },
+  { name: 'Zodiac', t1: 18, t2: 40, t3: 95 },
+  { name: 'Pearl Drop', t1: 15, t2: 35, t3: 85 },
+  { name: 'Lock & Key', t1: 20, t2: 45, t3: 110 },
+];
+---
+<Layout title="Collections — HUE Glint" description="Six chain styles, twelve charms, three metal tiers. Build your permanent jewelry exactly the way you want it.">
+
+<!-- Hero -->
+<section class="page-hero section--dark">
+  <div class="container">
+    <span class="eyebrow">The Collection</span>
+    <h1 class="page-hero__title">Wear what lasts.</h1>
+    <p class="page-hero__sub">Three tiers. Six chain styles. Twelve charms. Every combination permanently yours.</p>
+  </div>
+</section>
+
+<!-- Tier Tabs -->
+<section class="section section--cream" id="tiers">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow" style="color:#8B7340">Choose Your Metal</span>
+      <h2 class="section-title" style="color:var(--black)">Three Tiers of Metal</h2>
+    </div>
+    <div class="tier-tabs">
+      <button class="tier-tab tier-tab--active" data-tier="1">Tier 1 — Stainless</button>
+      <button class="tier-tab" data-tier="2">Tier 2 — Gold-Filled</button>
+      <button class="tier-tab" data-tier="3">Tier 3 — Solid Gold</button>
+    </div>
+    <div class="tier-panels">
+      <div class="tier-panel tier-panel--active" data-tier="1">
+        <div class="tier-panel__grid">
+          <div>
+            <h3>Tier 1 — Durable Utility</h3>
+            <p class="tier-panel__metal">Stainless Steel PVD</p>
+            <p class="tier-panel__desc">Lab-hardened stainless with a permanent PVD colour coating. Waterproof, gym-proof, pool-proof. The chain that asks nothing of you.</p>
+          </div>
+          <div class="tier-panel__pricing">
+            <div class="price-row"><span>Per inch</span><strong>$1.75</strong></div>
+            <div class="price-row"><span>Weld fee</span><strong>$30</strong></div>
+            <div class="price-row price-row--total"><span>Starting from</span><strong>$42</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="tier-panel" data-tier="2">
+        <div class="tier-panel__grid">
+          <div>
+            <h3>Tier 2 — Refined Luxury</h3>
+            <p class="tier-panel__metal">14k Gold-Filled · Argentium Silver</p>
+            <p class="tier-panel__desc">14k gold-filled carries 100x more gold than gold-plated. Argentium silver is harder and more tarnish-resistant than standard sterling. This is everyday luxury.</p>
+          </div>
+          <div class="tier-panel__pricing">
+            <div class="price-row"><span>Per inch</span><strong>$3.75</strong></div>
+            <div class="price-row"><span>Weld fee</span><strong>$45</strong></div>
+            <div class="price-row price-row--total"><span>Starting from</span><strong>$72</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="tier-panel" data-tier="3">
+        <div class="tier-panel__grid">
+          <div>
+            <h3>Tier 3 — Solid Gold</h3>
+            <p class="tier-panel__metal">14k Yellow Gold · 14k White Gold</p>
+            <p class="tier-panel__desc">Pure solid 14k gold. No filler, no core. Heirloom quality with real melt and resale value. The chain you pass down.</p>
+          </div>
+          <div class="tier-panel__pricing">
+            <div class="price-row"><span>Per inch</span><strong>$10.00</strong></div>
+            <div class="price-row"><span>Weld fee</span><strong>$75</strong></div>
+            <div class="price-row price-row--total"><span>Starting from</span><strong>$145</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Chain Styles -->
+<section class="section section--dark" id="chains">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">The Styles</span>
+      <h2 class="section-title">Six Chain Styles</h2>
+      <p class="section-subtitle" style="margin:0 auto;text-align:center">Every style is available in all three metal tiers and multiple widths.</p>
+    </div>
+    <div class="chains-grid">
+      {chains.map(chain => (
+        <div class="chain-card">
+          <div class="chain-card__visual"></div>
+          <div class="chain-card__info">
+            <h3 class="chain-card__name">{chain.name}</h3>
+            <p class="chain-card__desc">{chain.desc}</p>
+            <span class="chain-card__note">{chain.note}</span>
+          </div>
+          <a href={`/book?style=${chain.name.toLowerCase()}`} class="chain-card__cta">Design with this →</a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Charms -->
+<section class="section section--cream" id="charms">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow" style="color:#8B7340">Add a Charm</span>
+      <h2 class="section-title" style="color:var(--black)">Twelve Charms</h2>
+      <p class="section-subtitle" style="margin:0 auto;text-align:center;color:rgba(0,0,0,0.6)">Up to 3 charms per chain. Charm Swap available at any time for $10 + charm cost.</p>
+    </div>
+    <div class="charms-grid">
+      {charms.map(charm => (
+        <div class="charm-card">
+          <div class="charm-card__icon"></div>
+          <h4 class="charm-card__name">{charm.name}</h4>
+          <div class="charm-card__prices">
+            <span><em>T1</em> ${charm.t1}</span>
+            <span><em>T2</em> ${charm.t2}</span>
+            <span><em>T3</em> ${charm.t3}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+    <p class="charms-note">Prices shown are per charm. Maximum 3 charms per chain.</p>
+  </div>
+</section>
+
+<!-- Comparison Table -->
+<section class="section section--dark" id="compare">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Side by Side</span>
+      <h2 class="section-title">Tier Comparison</h2>
+    </div>
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Tier 1<br /><small>Stainless PVD</small></th>
+            <th class="featured">Tier 2<br /><small>Gold-Filled / Silver</small></th>
+            <th>Tier 3<br /><small>Solid Gold</small></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Starting price</td><td>$42</td><td class="featured">$72</td><td>$145</td></tr>
+          <tr><td>Per inch</td><td>$1.75</td><td class="featured">$3.75</td><td>$10.00</td></tr>
+          <tr><td>Weld fee</td><td>$30</td><td class="featured">$45</td><td>$75</td></tr>
+          <tr><td>Tarnish resistance</td><td>High</td><td class="featured">Very High</td><td>Excellent</td></tr>
+          <tr><td>Hypoallergenic</td><td>Yes</td><td class="featured">Yes</td><td>Yes</td></tr>
+          <tr><td>Melt / resale value</td><td>None</td><td class="featured">Minimal</td><td>Yes</td></tr>
+          <tr><td>Chlorine safe</td><td>Yes</td><td class="featured">Yes</td><td>Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="text-align:center;margin-top:48px">
+      <a href="/book" class="btn btn--gold">Start Designing →</a>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+  .page-hero { padding: calc(var(--nav-height) + 80px) 0 80px; }
+  .page-hero__title { font-size: clamp(48px, 7vw, 96px); font-weight: 300; margin-bottom: 20px; }
+  .page-hero__sub { font-size: 16px; color: rgba(255,255,255,0.6); max-width: 480px; line-height: 1.7; }
+
+  /* Tier Tabs */
+  .tier-tabs { display: flex; gap: 2px; margin-bottom: 2px; }
+  .tier-tab {
+    flex: 1; padding: 16px; background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.1);
+    font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: rgba(0,0,0,0.5); cursor: pointer; transition: all 0.2s;
+  }
+  .tier-tab--active { background: var(--black); color: var(--gold); border-color: var(--black); }
+  .tier-panels { }
+  .tier-panel { display: none; background: var(--black); color: var(--white); padding: 48px; }
+  .tier-panel--active { display: block; }
+  .tier-panel__grid { display: grid; grid-template-columns: 1fr 280px; gap: 48px; align-items: start; }
+  .tier-panel h3 { font-size: 32px; margin-bottom: 8px; }
+  .tier-panel__metal { font-size: 13px; color: var(--gold); margin-bottom: 16px; }
+  .tier-panel__desc { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7; }
+  .tier-panel__pricing { border: 1px solid rgba(255,255,255,0.1); padding: 32px; }
+  .price-row { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .price-row span { font-size: 13px; color: rgba(255,255,255,0.5); }
+  .price-row strong { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; }
+  .price-row--total { border-bottom: none; }
+  .price-row--total strong { font-size: 36px; color: var(--gold); }
+
+  /* Chains */
+  .chains-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .chain-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 40px; }
+  .chain-card__visual { height: 80px; background: rgba(201,168,76,0.1); margin-bottom: 24px; border-radius: 2px; }
+  .chain-card__name { font-size: 24px; margin-bottom: 8px; }
+  .chain-card__desc { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 6px; }
+  .chain-card__note { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
+  .chain-card__cta { display: block; margin-top: 24px; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); transition: color 0.2s; }
+  .chain-card__cta:hover { color: var(--gold); }
+
+  /* Charms */
+  .charms-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+  .charm-card { background: rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.08); padding: 32px 24px; text-align: center; }
+  .charm-card__icon { width: 56px; height: 56px; background: rgba(139,115,64,0.12); border-radius: 50%; margin: 0 auto 16px; }
+  .charm-card__name { font-size: 16px; color: var(--black); margin-bottom: 12px; }
+  .charm-card__prices { display: flex; gap: 12px; justify-content: center; }
+  .charm-card__prices span { font-size: 11px; color: rgba(0,0,0,0.5); }
+  .charm-card__prices em { font-style: normal; color: #8B7340; font-weight: 500; margin-right: 3px; }
+  .charms-note { text-align: center; font-size: 12px; color: rgba(0,0,0,0.45); margin-top: 32px; letter-spacing: 0.04em; }
+
+  /* Compare Table */
+  .compare-table-wrap { overflow-x: auto; }
+  .compare-table { width: 100%; border-collapse: collapse; }
+  .compare-table th, .compare-table td {
+    padding: 18px 24px; text-align: center; font-size: 13px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .compare-table th { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 400; padding-bottom: 24px; }
+  .compare-table th small { font-family: 'Montserrat', sans-serif; font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; display: block; margin-top: 4px; }
+  .compare-table td:first-child { text-align: left; color: rgba(255,255,255,0.5); }
+  .compare-table .featured { color: var(--gold); background: rgba(201,168,76,0.05); }
+  .compare-table th.featured { color: var(--gold); border-bottom: 1px solid var(--gold); }
+
+  @media (max-width: 900px) {
+    .chains-grid { grid-template-columns: 1fr 1fr; }
+    .charms-grid { grid-template-columns: repeat(3, 1fr); }
+    .tier-panel__grid { grid-template-columns: 1fr; }
+    .tier-tabs { flex-direction: column; }
+  }
+  @media (max-width: 600px) {
+    .charms-grid { grid-template-columns: repeat(2, 1fr); }
+    .chains-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.tier-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tier = tab.dataset.tier;
+      document.querySelectorAll('.tier-tab').forEach(t => t.classList.remove('tier-tab--active'));
+      document.querySelectorAll('.tier-panel').forEach(p => p.classList.remove('tier-panel--active'));
+      tab.classList.add('tier-tab--active');
+      document.querySelector(`.tier-panel[data-tier="${tier}"]`)?.classList.add('tier-panel--active');
+    });
+  });
+</script>
