@@ -1,0 +1,217 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Learn — HUE Co." description="Everything you need to know about permanent jewelry before, during, and after your weld. Guides, FAQs, and the HUE Journal.">
+
+<!-- ── Hero ──────────────────────────────────────────────────── -->
+<section class="section--dark learn-hero">
+  <div class="container">
+    <span class="eyebrow eyebrow--light">Education</span>
+    <h1 class="section-title section-title--xl learn-hero__title">Learn</h1>
+    <p class="section-subtitle">Everything you need to know before, during, and after your weld.</p>
+  </div>
+</section>
+
+<!-- ── Article Grid ───────────────────────────────────────────── -->
+<section class="section section--cream">
+  <div class="container">
+    <div class="learn-grid">
+
+      <article class="learn-card">
+        <a href="/learn/what-is-permanent-jewelry" class="learn-card__link">
+          <div class="photo-block photo-block--landscape photo-block--warm learn-card__photo"></div>
+          <div class="learn-card__body">
+            <span class="eyebrow eyebrow--dark">Basics</span>
+            <h2 class="learn-card__title">What Is Permanent Jewelry?</h2>
+            <p class="learn-card__desc">The basics: no clasp, no closure, just a weld. Everything you need to know before you sit down at the table.</p>
+            <span class="learn-card__read">Read More</span>
+          </div>
+        </a>
+      </article>
+
+      <article class="learn-card">
+        <a href="/learn/tier-guide" class="learn-card__link">
+          <div class="photo-block photo-block--landscape photo-block--warm learn-card__photo"></div>
+          <div class="learn-card__body">
+            <span class="eyebrow eyebrow--dark">Metals</span>
+            <h2 class="learn-card__title">The Tier Guide</h2>
+            <p class="learn-card__desc">Stainless, gold-filled, or solid gold — which is right for you? A complete breakdown of all three metal tiers.</p>
+            <span class="learn-card__read">Read More</span>
+          </div>
+        </a>
+      </article>
+
+      <article class="learn-card">
+        <a href="/learn/aftercare" class="learn-card__link">
+          <div class="photo-block photo-block--landscape photo-block--warm learn-card__photo"></div>
+          <div class="learn-card__body">
+            <span class="eyebrow eyebrow--dark">Care</span>
+            <h2 class="learn-card__title">Aftercare Guide</h2>
+            <p class="learn-card__desc">How to care for your weld in the first 24 hours and beyond. What to avoid, what's fine, and what to do if it breaks.</p>
+            <span class="learn-card__read">Read More</span>
+          </div>
+        </a>
+      </article>
+
+      <article class="learn-card">
+        <a href="/learn/faqs" class="learn-card__link">
+          <div class="photo-block photo-block--landscape photo-block--warm learn-card__photo"></div>
+          <div class="learn-card__body">
+            <span class="eyebrow eyebrow--dark">Questions</span>
+            <h2 class="learn-card__title">FAQs</h2>
+            <p class="learn-card__desc">Does it hurt? Can I remove it? Is it waterproof? All the questions — answered honestly, without marketing language.</p>
+            <span class="learn-card__read">Read More</span>
+          </div>
+        </a>
+      </article>
+
+      <article class="learn-card learn-card--wide">
+        <a href="/learn/journal" class="learn-card__link">
+          <div class="photo-block photo-block--landscape photo-block--warm learn-card__photo"></div>
+          <div class="learn-card__body">
+            <span class="eyebrow eyebrow--dark">Stories</span>
+            <h2 class="learn-card__title">HUE Journal</h2>
+            <p class="learn-card__desc">Stories, inspiration, and news from the studio. Style guides, comparisons, and dispatches from Santa Cruz.</p>
+            <span class="learn-card__read">Read More</span>
+          </div>
+        </a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ────────────────────────────────────────────────────── -->
+<section class="section--butter section--sm">
+  <div class="container">
+    <div class="learn-cta">
+      <h2 class="section-title">Still have questions?</h2>
+      <div class="learn-cta__actions">
+        <a href="/learn/faqs" class="btn btn--outline-dark">Browse FAQs</a>
+        <a href="/book" class="btn btn--outline-dark">Book a Consultation</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style is:global>
+/* ── Learn Hero ─────────────────────────────────────────────── */
+.learn-hero {
+  padding-top: calc(var(--nav-height) + 80px);
+  padding-bottom: 100px;
+}
+
+.learn-hero__title {
+  margin-top: 8px;
+}
+
+/* ── Learn Grid ─────────────────────────────────────────────── */
+.learn-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+}
+
+.learn-card--wide {
+  grid-column: 1 / -1;
+}
+
+.learn-card--wide .learn-card__link {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.learn-card--wide .learn-card__photo {
+  aspect-ratio: 16 / 9;
+}
+
+.learn-card__link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.learn-card__photo {
+  margin-bottom: 24px;
+  transition: opacity 0.3s var(--ease);
+}
+
+.learn-card:hover .learn-card__photo {
+  opacity: 0.85;
+}
+
+.learn-card__body {
+  padding: 0 4px;
+}
+
+.learn-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  font-weight: 400;
+  color: var(--black);
+  margin-bottom: 12px;
+  line-height: 1.15;
+}
+
+.learn-card__desc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.75;
+  opacity: 0.62;
+  margin-bottom: 20px;
+  max-width: 48ch;
+}
+
+.learn-card__read {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--butter-dark);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: opacity 0.2s;
+}
+
+.learn-card:hover .learn-card__read {
+  opacity: 0.7;
+}
+
+/* ── Learn CTA ──────────────────────────────────────────────── */
+.learn-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.learn-cta__actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .learn-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .learn-card--wide .learn-card__link {
+    grid-template-columns: 1fr;
+  }
+
+  .learn-cta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>

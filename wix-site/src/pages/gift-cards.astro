@@ -1,0 +1,416 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Gift Cards — HUE Co." description="Give the gift of permanent jewelry. HUE Co. digital gift cards — from $50. Digital delivery within 24 hours. Valid for 12 months.">
+
+<!-- ── Hero ──────────────────────────────────────────────────── -->
+<section class="section--dark gc-hero">
+  <div class="container">
+    <span class="eyebrow eyebrow--light">Give the Gift of Permanent</span>
+    <h1 class="section-title section-title--xl gc-hero__title">Give the Gift<br />of Permanent</h1>
+    <p class="section-subtitle">A HUE Co. gift card doesn't end up in a drawer. It ends up welded to someone's wrist.</p>
+  </div>
+</section>
+
+<!-- ── Denominations ──────────────────────────────────────────── -->
+<section class="section section--cream">
+  <div class="container">
+    <div class="section-header section-header--center">
+      <span class="eyebrow eyebrow--dark">Choose an Amount</span>
+      <h2 class="section-title">Select Your Gift</h2>
+      <p class="section-subtitle" style="margin-inline:auto;">Every denomination is delivered digitally — beautifully formatted, ready to forward or print.</p>
+    </div>
+
+    <div class="gc-grid">
+      <div class="gc-card" data-amount="50">
+        <div class="gc-card__amount">$50</div>
+        <div class="gc-card__type">Digital Gift Card</div>
+        <div class="rule rule--center"></div>
+        <p class="gc-card__covers">Covers a Tier 1 In-Studio Weld. The full experience — consultation, sizing, spark — as a gift.</p>
+        <button class="btn btn--outline-dark gc-card__btn" data-select-amount="50">Select $50</button>
+      </div>
+      <div class="gc-card gc-card--featured" data-amount="100">
+        <div class="gc-card__amount">$100</div>
+        <div class="gc-card__type">Digital Gift Card</div>
+        <div class="rule rule--center"></div>
+        <p class="gc-card__covers">Covers a Tier 2 weld or a Tier 1 stacking session. Our most popular gift amount.</p>
+        <button class="btn btn--gold gc-card__btn" data-select-amount="100">Select $100</button>
+      </div>
+      <div class="gc-card" data-amount="200">
+        <div class="gc-card__amount">$200</div>
+        <div class="gc-card__type">Digital Gift Card</div>
+        <div class="rule rule--center"></div>
+        <p class="gc-card__covers">Covers a Tier 3 weld or a stacking session with charms. For the client who deserves the real thing.</p>
+        <button class="btn btn--outline-dark gc-card__btn" data-select-amount="200">Select $200</button>
+      </div>
+    </div>
+
+    <div class="gc-custom">
+      <p class="gc-custom__label">Want a custom amount?</p>
+      <p class="gc-custom__note">Select "Custom" in the purchase form below and enter any amount from $25 to $500.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── How It Works ───────────────────────────────────────────── -->
+<section class="section--butter section--sm">
+  <div class="container">
+    <div class="section-header section-header--center">
+      <span class="eyebrow eyebrow--dark">Simple Process</span>
+      <h2 class="section-title">How It Works</h2>
+    </div>
+    <div class="gc-steps">
+      <div class="gc-step">
+        <div class="gc-step__num">1</div>
+        <h3 class="gc-step__title">Purchase</h3>
+        <p class="gc-step__desc">Complete the form below. Select your denomination and personalize with a message.</p>
+      </div>
+      <div class="gc-step__divider"></div>
+      <div class="gc-step">
+        <div class="gc-step__num">2</div>
+        <h3 class="gc-step__title">Receive Digital Card</h3>
+        <p class="gc-step__desc">Your recipient receives a beautifully designed digital gift card via email within 24 hours.</p>
+      </div>
+      <div class="gc-step__divider"></div>
+      <div class="gc-step">
+        <div class="gc-step__num">3</div>
+        <h3 class="gc-step__title">Recipient Books</h3>
+        <p class="gc-step__desc">They use their gift card code when booking an appointment. Applied at checkout. No expiry stress — valid for 12 months.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Purchase Form ──────────────────────────────────────────── -->
+<section class="section section--dark">
+  <div class="container container--narrow">
+    <div class="section-header section-header--center">
+      <span class="eyebrow eyebrow--light">Purchase</span>
+      <h2 class="section-title">Send a Gift Card</h2>
+    </div>
+
+    <form id="gc-form" class="gc-form" novalidate>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label" for="gc-your-name">Your Name</label>
+          <input class="form-input" type="text" id="gc-your-name" name="yourName" placeholder="Your full name" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="gc-recipient-name">Recipient Name</label>
+          <input class="form-input" type="text" id="gc-recipient-name" name="recipientName" placeholder="Their full name" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="gc-recipient-email">Recipient Email</label>
+        <input class="form-input" type="email" id="gc-recipient-email" name="recipientEmail" placeholder="their@email.com" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="gc-amount">Amount</label>
+        <select class="form-select" id="gc-amount" name="amount" required>
+          <option value="" disabled selected>Select an amount</option>
+          <option value="50">$50 — Tier 1 Weld</option>
+          <option value="100">$100 — Tier 2 or Stacking Session</option>
+          <option value="200">$200 — Tier 3 or Stacking with Charms</option>
+          <option value="custom">Custom Amount ($25 – $500)</option>
+        </select>
+      </div>
+
+      <div class="form-group gc-custom-amount-wrap" id="gc-custom-amount-wrap" style="display:none;">
+        <label class="form-label" for="gc-custom-input">Custom Amount</label>
+        <input class="form-input" type="number" id="gc-custom-input" name="customAmount" min="25" max="500" placeholder="Enter amount between $25 and $500" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="gc-message">Personal Message</label>
+        <textarea class="form-textarea" id="gc-message" name="message" placeholder="Write a note for the recipient — they'll see it on their gift card..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="gc-your-email">Your Email (for confirmation)</label>
+        <input class="form-input" type="email" id="gc-your-email" name="yourEmail" placeholder="your@email.com" required />
+      </div>
+
+      <div class="gc-form__footer">
+        <button type="submit" class="btn btn--gold gc-form__submit">Purchase Gift Card</button>
+        <p class="gc-form__note">Digital delivery within 24 hours. Valid for 12 months. Non-refundable.</p>
+      </div>
+
+      <div class="gc-form__success" id="gc-success" aria-live="polite">
+        <p class="gc-form__success-title">Gift card ordered.</p>
+        <p>Your recipient will receive their digital gift card within 24 hours. Thank you for sharing HUE Co.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+</Layout>
+
+<style is:global>
+/* ── Gift Card Hero ─────────────────────────────────────────── */
+.gc-hero {
+  padding-top: calc(var(--nav-height) + 80px);
+  padding-bottom: 100px;
+}
+
+.gc-hero__title {
+  margin-top: 12px;
+  line-height: 1.05;
+}
+
+/* ── Gift Card Grid ─────────────────────────────────────────── */
+.gc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.gc-card {
+  border: 1px solid var(--cream-dark);
+  background: var(--warm-white);
+  padding: 48px 36px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  transition: border-color 0.25s var(--ease);
+}
+
+.gc-card:hover {
+  border-color: var(--butter);
+}
+
+.gc-card--featured {
+  background: var(--cream);
+  border-color: var(--butter);
+}
+
+.gc-card__amount {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--black);
+}
+
+.gc-card__type {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--butter-dark);
+}
+
+.gc-card__covers {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.75;
+  opacity: 0.65;
+  max-width: 28ch;
+}
+
+.gc-card__btn {
+  margin-top: 8px;
+  width: 100%;
+}
+
+/* ── Custom Amount ──────────────────────────────────────────── */
+.gc-custom {
+  text-align: center;
+}
+
+.gc-custom__label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--charcoal);
+  margin-bottom: 4px;
+}
+
+.gc-custom__note {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 300;
+  opacity: 0.55;
+}
+
+/* ── How It Works Steps ─────────────────────────────────────── */
+.gc-steps {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  justify-content: center;
+}
+
+.gc-step {
+  flex: 1;
+  text-align: center;
+  padding: 0 32px;
+  max-width: 300px;
+}
+
+.gc-step__num {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 300;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.12);
+  margin-bottom: 16px;
+}
+
+.gc-step__title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--black);
+  margin-bottom: 12px;
+}
+
+.gc-step__desc {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.75;
+  opacity: 0.65;
+}
+
+.gc-step__divider {
+  width: 1px;
+  height: 80px;
+  background: rgba(0, 0, 0, 0.15);
+  margin-top: 24px;
+  flex-shrink: 0;
+}
+
+/* ── Gift Card Form ─────────────────────────────────────────── */
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.gc-form .form-group {
+  margin-bottom: 24px;
+}
+
+.gc-form__footer {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.gc-form__note {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 300;
+  opacity: 0.45;
+  line-height: 1.6;
+}
+
+.gc-form__success {
+  display: none;
+  margin-top: 40px;
+  padding: 32px;
+  border: 1px solid var(--butter);
+  background: rgba(212, 185, 106, 0.06);
+}
+
+.gc-form__success.is-visible {
+  display: block;
+}
+
+.gc-form__success-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--butter);
+  margin-bottom: 8px;
+}
+
+.gc-form__success p {
+  font-size: 14px;
+  font-weight: 300;
+  opacity: 0.75;
+  line-height: 1.7;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .gc-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin-inline: auto;
+  }
+
+  .gc-steps {
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .gc-step__divider {
+    width: 80px;
+    height: 1px;
+    margin-top: 0;
+  }
+
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .gc-form__footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+</style>
+
+<script>
+// Sync denomination card clicks to select
+document.querySelectorAll<HTMLButtonElement>('[data-select-amount]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const amount = btn.dataset.selectAmount ?? '';
+    const select = document.getElementById('gc-amount') as HTMLSelectElement | null;
+    if (select) {
+      select.value = amount;
+      select.dispatchEvent(new Event('change'));
+    }
+    document.getElementById('gc-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// Show/hide custom amount input
+const amountSelect = document.getElementById('gc-amount') as HTMLSelectElement | null;
+const customWrap = document.getElementById('gc-custom-amount-wrap');
+
+amountSelect?.addEventListener('change', () => {
+  if (customWrap) {
+    customWrap.style.display = amountSelect.value === 'custom' ? 'flex' : 'none';
+  }
+});
+
+// Form submit
+const gcForm = document.getElementById('gc-form') as HTMLFormElement | null;
+const gcSuccess = document.getElementById('gc-success');
+
+gcForm?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (gcForm) {
+    gcForm.style.opacity = '0.4';
+    gcForm.style.pointerEvents = 'none';
+  }
+  if (gcSuccess) {
+    gcSuccess.classList.add('is-visible');
+    gcSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+});
+</script>

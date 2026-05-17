@@ -1,0 +1,643 @@
+---
+import Layout from '../layouts/Layout.astro';
+const wixServices: any[] = [];
+---
+
+<Layout title="Book Your Weld — HUE Co." description="Reserve your permanent jewelry appointment at HUE Co. in Santa Cruz. Choose your service, pick your time — we confirm within 24 hours.">
+
+<!-- ── Hero ──────────────────────────────────────────────────── -->
+<section class="section--dark book-hero">
+  <div class="container">
+    <span class="eyebrow eyebrow--light">Reserve Your Seat</span>
+    <h1 class="section-title section-title--xl book-hero__title">Book Your Weld</h1>
+    <p class="section-subtitle">Choose your service, pick your time. We confirm within 24 hours.</p>
+  </div>
+</section>
+
+<!-- ── Service Selector ──────────────────────────────────────── -->
+<section class="section section--cream">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow eyebrow--dark">Our Services</span>
+      <h2 class="section-title">What brings you in?</h2>
+      <p class="section-subtitle">Select the experience that fits you. All services include a complimentary chain consultation.</p>
+    </div>
+
+    {wixServices.length > 0 ? (
+      <div class="services-grid">
+        {wixServices.map((svc: any) => (
+          <div class="service-card">
+            <div class="service-card__name">{svc.name}</div>
+            {svc.tagLine && <p class="service-card__desc">{svc.tagLine}</p>}
+            {svc.payment?.rateType === 'FIXED' && (
+              <div class="service-card__price">
+                From ${Math.round((svc.payment.fixed?.price?.value ?? 0) / 100)}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="services-grid">
+        <div class="service-card" data-service="In-Studio Weld">
+          <div class="service-card__meta">30 min &middot; $25 deposit</div>
+          <div class="service-card__name">In-Studio Weld</div>
+          <p class="service-card__desc">One chain, one weld. The full experience — consultation, sizing, spark.</p>
+          <div class="service-card__price">From $42</div>
+        </div>
+        <div class="service-card" data-service="Stacking Session">
+          <div class="service-card__meta">~60 min &middot; 3+ chains</div>
+          <div class="service-card__name">Stacking Session</div>
+          <p class="service-card__desc">Build a curated wrist or ankle stack. Mix metals, mix weights, make it yours.</p>
+          <div class="service-card__price">10% off total</div>
+        </div>
+        <div class="service-card" data-service="Glow and Glint">
+          <div class="service-card__meta">With deSoleil &middot; 10% off both</div>
+          <div class="service-card__name">Glow &amp; Glint</div>
+          <p class="service-card__desc">Pair your weld with a deSoleil facial treatment. The glow-up, amplified.</p>
+          <div class="service-card__price">10% off both</div>
+        </div>
+        <div class="service-card" data-service="Bridal and Bachelorette">
+          <div class="service-card__meta">Min 4 guests &middot; Pop-up format</div>
+          <div class="service-card__name">Bridal &amp; Bachelorette</div>
+          <p class="service-card__desc">Private pop-up for your party. Custom setup, champagne optional.</p>
+          <div class="service-card__price">Inquire for pricing</div>
+        </div>
+        <div class="service-card" data-service="Party Favor Events">
+          <div class="service-card__meta">Min 4 guests</div>
+          <div class="service-card__name">Party Favor Events</div>
+          <p class="service-card__desc">Corporate, birthday, brand activation — we bring the studio to you.</p>
+          <div class="service-card__price">From $38/guest</div>
+        </div>
+        <div class="service-card" data-service="Re-Weld and Aftercare">
+          <div class="service-card__meta">30-day warranty</div>
+          <div class="service-card__name">Re-Weld &amp; Aftercare</div>
+          <p class="service-card__desc">Weld came undone? We fix it. Within 30 days: free. After that, from $20.</p>
+          <div class="service-card__price">From $20</div>
+        </div>
+      </div>
+    )}
+  </div>
+</section>
+
+<!-- ── Booking Form ───────────────────────────────────────────── -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow eyebrow--light">Request Your Appointment</span>
+      <h2 class="section-title">Reserve Your Time</h2>
+      <p class="section-subtitle">Once Wix Bookings is configured, the live calendar appears here. Until then, submit a request below.</p>
+    </div>
+
+    <div class="booking-layout">
+
+      <!-- Form -->
+      <div class="booking-form-wrap">
+        <form id="booking-form" class="booking-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="b-name">Full Name</label>
+              <input class="form-input" type="text" id="b-name" name="name" placeholder="Your full name" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="b-email">Email Address</label>
+              <input class="form-input" type="email" id="b-email" name="email" placeholder="your@email.com" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="b-phone">Phone Number</label>
+              <input class="form-input" type="tel" id="b-phone" name="phone" placeholder="(831) 000-0000" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="b-service">Preferred Service</label>
+              <select class="form-select" id="b-service" name="service" required>
+                <option value="" disabled selected>Select a service</option>
+                <option value="In-Studio Weld">In-Studio Weld — from $42</option>
+                <option value="Stacking Session">Stacking Session — 10% off</option>
+                <option value="Glow and Glint">Glow &amp; Glint — 10% off both</option>
+                <option value="Bridal and Bachelorette">Bridal &amp; Bachelorette</option>
+                <option value="Party Favor Events">Party Favor Events — from $38/guest</option>
+                <option value="Re-Weld and Aftercare">Re-Weld &amp; Aftercare — from $20</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="b-date">Preferred Date</label>
+              <input class="form-input" type="date" id="b-date" name="date" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="b-time">Preferred Time</label>
+              <select class="form-select" id="b-time" name="time">
+                <option value="" disabled selected>Select a time</option>
+                <option value="Morning">Morning (10am – 12pm)</option>
+                <option value="Afternoon">Afternoon (12pm – 4pm)</option>
+                <option value="Evening">Evening (4pm – 7pm)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="b-notes">Notes &amp; Special Requests</label>
+            <textarea class="form-textarea" id="b-notes" name="notes" placeholder="Anything we should know — metal tier interest, charm ideas, group size..."></textarea>
+          </div>
+
+          <div class="booking-form__footer">
+            <button type="submit" class="btn btn--gold">Request Appointment</button>
+            <p class="booking-form__note">We respond within 24 hours. Deposit collected upon confirmation.</p>
+          </div>
+
+          <div class="booking-form__success" id="booking-success" aria-live="polite">
+            <p class="booking-form__success-title">Request received.</p>
+            <p>We will be in touch within 24 hours to confirm your appointment and collect the $25 deposit. See you at the studio.</p>
+          </div>
+        </form>
+      </div>
+
+      <!-- Info Box -->
+      <aside class="booking-info">
+        <div class="booking-info__inner">
+          <h3 class="booking-info__heading">How It Works</h3>
+          <div class="rule"></div>
+          <ol class="booking-steps">
+            <li class="booking-step">
+              <span class="booking-step__num">01</span>
+              <div>
+                <strong class="booking-step__title">Submit your request</strong>
+                <p class="booking-step__desc">Fill out the form with your preferred service, date, and time.</p>
+              </div>
+            </li>
+            <li class="booking-step">
+              <span class="booking-step__num">02</span>
+              <div>
+                <strong class="booking-step__title">We confirm within 24h</strong>
+                <p class="booking-step__desc">You receive a confirmation email with your appointment details.</p>
+              </div>
+            </li>
+            <li class="booking-step">
+              <span class="booking-step__num">03</span>
+              <div>
+                <strong class="booking-step__title">$25 deposit secures your slot</strong>
+                <p class="booking-step__desc">Collected upon confirmation. Applied toward your final balance.</p>
+              </div>
+            </li>
+            <li class="booking-step">
+              <span class="booking-step__num">04</span>
+              <div>
+                <strong class="booking-step__title">See you at the studio</strong>
+                <p class="booking-step__desc">We're located in Santa Cruz. Walk in wearing nothing. Walk out wearing something permanent.</p>
+              </div>
+            </li>
+          </ol>
+          <div class="booking-info__detail">
+            <span class="booking-info__label">Studio Location</span>
+            <span class="booking-info__value">Santa Cruz, CA</span>
+          </div>
+          <div class="booking-info__detail">
+            <span class="booking-info__label">Hours</span>
+            <span class="booking-info__value">Tue – Sat, 10am – 7pm</span>
+          </div>
+          <div class="booking-info__detail">
+            <span class="booking-info__label">Removal</span>
+            <span class="booking-info__value">Always free. Always.</span>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Price Reference ────────────────────────────────────────── -->
+<section class="section--butter section--sm">
+  <div class="container">
+    <div class="section-header section-header--center">
+      <span class="eyebrow eyebrow--dark">Transparent Pricing</span>
+      <h2 class="section-title">What Will It Cost?</h2>
+      <p class="section-subtitle" style="margin-inline:auto;">Every quote is: chain length &times; price per inch + weld fee. No surprises at the table.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-tier">
+        <div class="price-tier__label">Tier 1</div>
+        <div class="price-tier__metal">Stainless Steel PVD</div>
+        <div class="price-tier__formula">
+          <span>$1.75<span class="price-tier__unit">/in</span></span>
+          <span class="price-tier__plus">+</span>
+          <span>$30<span class="price-tier__unit"> weld</span></span>
+        </div>
+        <div class="price-tier__from">From $42</div>
+        <div class="price-tier__charm">Charms from $12</div>
+      </div>
+      <div class="price-tier price-tier--featured">
+        <div class="price-tier__label">Tier 2</div>
+        <div class="price-tier__metal">14k Gold-Filled</div>
+        <div class="price-tier__formula">
+          <span>$3.75<span class="price-tier__unit">/in</span></span>
+          <span class="price-tier__plus">+</span>
+          <span>$45<span class="price-tier__unit"> weld</span></span>
+        </div>
+        <div class="price-tier__from">From $72</div>
+        <div class="price-tier__charm">Charms from $28</div>
+      </div>
+      <div class="price-tier">
+        <div class="price-tier__label">Tier 3</div>
+        <div class="price-tier__metal">14k Solid Gold</div>
+        <div class="price-tier__formula">
+          <span>$10.00<span class="price-tier__unit">/in</span></span>
+          <span class="price-tier__plus">+</span>
+          <span>$75<span class="price-tier__unit"> weld</span></span>
+        </div>
+        <div class="price-tier__from">From $145</div>
+        <div class="price-tier__charm">Charms from $75</div>
+      </div>
+    </div>
+    <p class="price-note">All welds include a 30-day warranty. Re-welds after 30 days: $20 (T1/T2) or $35 (T3). Removal is always free.</p>
+  </div>
+</section>
+
+</Layout>
+
+<style is:global>
+/* ── Book Hero ─────────────────────────────────────────────── */
+.book-hero {
+  padding-top: calc(var(--nav-height) + 80px);
+  padding-bottom: 100px;
+}
+
+.book-hero__title {
+  margin-top: 8px;
+  max-width: 14ch;
+}
+
+/* ── Services Grid ─────────────────────────────────────────── */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.service-card {
+  background: var(--warm-white);
+  border: 1px solid var(--cream-dark);
+  padding: 36px 32px;
+  cursor: pointer;
+  transition: border-color 0.25s var(--ease), transform 0.2s var(--ease);
+}
+
+.service-card:hover {
+  border-color: var(--butter);
+  transform: translateY(-2px);
+}
+
+.service-card.is-selected {
+  border-color: var(--butter);
+  background: var(--cream);
+}
+
+.service-card__meta {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--butter-dark);
+  margin-bottom: 12px;
+}
+
+.service-card__name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--black);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.service-card__desc {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--charcoal);
+  opacity: 0.75;
+  margin-bottom: 20px;
+}
+
+.service-card__price {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--butter-dark);
+}
+
+/* ── Booking Layout ────────────────────────────────────────── */
+.booking-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 80px;
+  align-items: start;
+}
+
+.booking-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.booking-form .form-group {
+  margin-bottom: 24px;
+}
+
+.booking-form__footer {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.booking-form__note {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 300;
+  opacity: 0.5;
+  line-height: 1.6;
+}
+
+.booking-form__success {
+  display: none;
+  margin-top: 40px;
+  padding: 32px;
+  border: 1px solid var(--butter);
+  background: rgba(212, 185, 106, 0.06);
+}
+
+.booking-form__success.is-visible {
+  display: block;
+}
+
+.booking-form__success-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--butter);
+  margin-bottom: 8px;
+}
+
+.booking-form__success p {
+  font-size: 14px;
+  font-weight: 300;
+  opacity: 0.75;
+  line-height: 1.7;
+}
+
+/* ── Booking Info ───────────────────────────────────────────── */
+.booking-info__inner {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 48px 40px;
+}
+
+.booking-info__heading {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--warm-white);
+  margin-bottom: 8px;
+}
+
+.booking-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 24px;
+  margin-bottom: 40px;
+}
+
+.booking-step {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.booking-step__num {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--butter);
+  line-height: 1;
+  flex-shrink: 0;
+  width: 36px;
+}
+
+.booking-step__title {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--warm-white);
+  margin-bottom: 4px;
+}
+
+.booking-step__desc {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 300;
+  opacity: 0.6;
+  line-height: 1.6;
+}
+
+.booking-info__detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.booking-info__label {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.45;
+}
+
+.booking-info__value {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 300;
+  opacity: 0.8;
+}
+
+/* ── Price Grid ─────────────────────────────────────────────── */
+.price-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.price-tier {
+  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.price-tier--featured {
+  background: var(--black);
+  border-color: var(--black);
+  color: var(--warm-white);
+}
+
+.price-tier__label {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin-bottom: 8px;
+}
+
+.price-tier__metal {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 400;
+  margin-bottom: 24px;
+  line-height: 1.2;
+}
+
+.price-tier__formula {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  margin-bottom: 16px;
+}
+
+.price-tier__unit {
+  font-size: 0.75rem;
+  font-family: var(--font-body);
+  font-weight: 300;
+  opacity: 0.6;
+}
+
+.price-tier__plus {
+  opacity: 0.35;
+  font-size: 1.1rem;
+}
+
+.price-tier__from {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--butter-dark);
+  margin-bottom: 8px;
+}
+
+.price-tier--featured .price-tier__from {
+  color: var(--butter);
+}
+
+.price-tier__charm {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 300;
+  opacity: 0.5;
+}
+
+.price-note {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 300;
+  opacity: 0.65;
+  text-align: center;
+  max-width: 60ch;
+  margin-inline: auto;
+  line-height: 1.7;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .booking-layout {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-form .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .price-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .booking-form__footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+</style>
+
+<script>
+// Service card selection syncs to the form select
+document.querySelectorAll('.service-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.service-card').forEach(c => c.classList.remove('is-selected'));
+    card.classList.add('is-selected');
+    const serviceSelect = document.getElementById('b-service') as HTMLSelectElement | null;
+    const name = (card as HTMLElement).dataset.service ?? '';
+    if (serviceSelect && name) {
+      for (const opt of Array.from(serviceSelect.options)) {
+        if (opt.value === name) {
+          serviceSelect.value = opt.value;
+          break;
+        }
+      }
+    }
+  });
+});
+
+// Form submit handler
+const form = document.getElementById('booking-form') as HTMLFormElement | null;
+const successEl = document.getElementById('booking-success');
+
+form?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (form) {
+    form.style.opacity = '0.4';
+    form.style.pointerEvents = 'none';
+  }
+  if (successEl) {
+    successEl.classList.add('is-visible');
+    successEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+});
+</script>
